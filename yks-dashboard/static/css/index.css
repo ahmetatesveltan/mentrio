@@ -1,0 +1,467 @@
+/* =========================
+   GLOBAL
+========================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: row;
+    font-family: Arial, sans-serif;
+}
+#app {
+    height: 100vh;
+    width: 100vw;
+}
+/* =========================
+   GENEL BAŞLIKLAR
+========================= */
+
+.baslik {
+    width: calc(100% - 40px);
+    margin: 10px 20px 20px;
+
+    font-family: "MS Serif", serif;
+    font-size: 16px;
+    font-weight: bold;
+
+    padding: 8px;
+
+    border: 5px ridge #808080;
+    background-color: #e3e3e3;
+
+    text-align: center;
+}
+
+
+/* =========================
+   BUGÜN ÇALIŞILACAKLAR
+========================= */
+
+#calisilacaklar-bolumu {
+    background-color: #ffd9df;
+    width: 100vw;
+    height: 100vh;
+    padding-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#calisilacaklar-baslik {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    margin: 20px auto;
+}
+#calisilacaklar-baslik h2{
+    font-size: 5rem;
+}
+#calisilacaklar-bottom {
+    display:flex;
+    flex-direction: column;
+    height: 80%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+.calisilacak-satir {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    margin: 20px;
+    width: 80%;
+    height: 40%
+}
+
+#calisilacak-buton-bolumu{
+    display: flex;
+    justify-content: center;
+    width: 100%
+
+}
+.calisilacak-buton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width:100%;
+    background-color: #d9fff9;
+    border: 3px outset;
+    font-family: Papyrus, fantasy;
+    font-size: 10rem;
+    text-align: center;
+    overflow: hidden;
+    text-decoration: none;
+    color: black;
+}
+
+.calisilacak-ustalik {
+    display: flex;
+    font-family: "MS Serif", serif;
+    text-align: center;
+    width: 100%;
+    justify-content: center;
+
+}
+.calisilacak-ustalik h3{
+    font-size: 5rem;
+}
+/* =========================
+   DERSLER
+========================= */
+
+#dersler-bolumu {
+    width: 100%;
+    min-height: 50vh;
+
+    padding-top: 10px;
+
+    border-bottom: 4px solid #2b2b2b;
+}
+
+#dersler-baslik {
+    margin: 10px 20px 20px;
+}
+
+.ders-satir {
+    display: flex;
+    justify-content: center;
+
+    gap: 20px;
+
+    margin: 0 20px 30px;
+}
+
+.ders-butonu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 130px;
+    height: 60px;
+
+    background-color: #d9fff9;
+
+    border: 2px outset;
+
+    font-family: Papyrus, fantasy;
+    font-size: 20px;
+
+    text-decoration: none;
+    color: black;
+}
+
+
+/* Artık ekstra margin gerekmiyor */
+#tarih-buton,
+#din-buton {
+    margin: 0;
+}
+
+
+/* =========================
+   HAFTALIK HEDEFLER
+========================= */
+
+#haftalik-hedef-baslik {
+    margin: 10px 20px 20px;
+}
+
+
+/* =========================
+   DENEME ANALİZLERİ
+========================= */
+
+#deneme-analizleri-baslik {
+    margin: 10px 20px 20px;
+}
+
+
+/* =========================
+   YANLIŞ SORULAR
+========================= */
+
+#yanlis-sorular-baslik {
+    margin: 10px 20px 20px;
+}
+
+#ys-giris-bolumu {
+    margin-top: 0;
+}
+
+.ys-giris-ust {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
+
+    gap: 20px;
+
+    padding: 0 20px;
+}
+
+.ys-yazi {
+    margin: 0 0 8px;
+
+    font-size: 20px;
+    text-align: center;
+}
+
+.ys-select {
+    display: block;
+
+    width: 120px;
+    height: 180px;
+
+    margin: 0;
+
+    background-color: #d9fff9;
+
+    scrollbar-width: none;
+}
+
+.ys-select option {
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.ys-select option:checked {
+    background-color: #b7ece2;
+}
+
+
+/* Yanlış ekle */
+
+#ys-giris-submit {
+    width: 120px;
+    height: 60px;
+
+    margin: 110px 0 20px;
+
+    background-color: #d9fff9;
+
+    border: 3px outset;
+
+    font-size: 15px;
+}
+
+#ys-bildirim {
+    display: block;
+
+    width: 120px;
+
+    margin: 0;
+
+    color: green;
+
+    text-align: center;
+}
+
+
+/* =========================
+   YANLIŞ SORU GİRİŞ SEÇENEKLERİ
+========================= */
+
+#ys-giris-alt {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+
+    gap: 20px;
+
+    margin: 5px 20px 0;
+
+    padding: 10px 0;
+
+    border-bottom: 2px dotted #2b2b2b;
+}
+
+.ys-sik,
+.ys-cikti-sik {
+    background-color: #d9fff9;
+}
+
+
+/* Görsel ekle */
+
+#ys-gorsel-label {
+    display: inline-block;
+
+    padding: 5px;
+
+    background-color: #d9fff9;
+
+    border: 3px outset;
+
+    cursor: pointer;
+}
+
+
+/* =========================
+   YANLIŞ SORULAR ÇIKTI
+========================= */
+
+#ys-cikti-bolumu {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+}
+
+#ys-cikti-baslik {
+    margin: 15px 20px;
+
+    font-size: 15px;
+
+    text-align: center;
+}
+
+
+/* Soru değiştirme okları */
+
+#ys-cikti-oklar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 20px;
+
+    width: 100%;
+    height: 40px;
+
+    margin: 0;
+}
+
+#ys-sol-ok,
+#ys-sag-ok {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 40px;
+    height: 40px;
+}
+
+#ys-sol-ok i,
+#ys-sag-ok i {
+    font-size: 30px;
+}
+
+#ys-cikti-oklar h3 {
+    margin: 0;
+
+    text-align: center;
+}
+
+
+/* =========================
+   SORU GÖRSELİ
+========================= */
+
+#ys-cikti-soru {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 220px;
+    height: 220px;
+
+    margin: 15px auto;
+
+    overflow: hidden;
+
+    background-color: #eeeeee;
+
+    border: 1px solid #ccc;
+}
+
+#ys-cikti-soru:fullscreen {
+    width: 100vw;
+    height: 100vh;
+
+    background-color: #000;
+}
+
+#ys-soru-gorseli {
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+}
+
+
+/* Tam ekran butonu */
+
+#ys-tam-ekran {
+    position: absolute;
+
+    right: 5px;
+    bottom: 5px;
+}
+
+#ys-cikis-tam-ekran {
+    position: absolute;
+
+    right: 20px;
+    bottom: 20px;
+
+    width: 50px;
+    height: 50px;
+}
+
+
+/* =========================
+   SORU CEVAPLARI
+========================= */
+
+#ys-cikti-siklar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+
+    gap: 15px;
+
+    margin: 20px;
+
+    min-height: 25px;
+}
+
+.ys-cikti-sik {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 2px 6px;
+
+    border-radius: 8px;
+}
+
+#ys-cevapla {
+    min-width: 100px;
+    min-height: 35px;
+
+    background-color: #d9fff9;
+
+    border: 3px outset;
+
+    cursor: pointer;
+}
+
+

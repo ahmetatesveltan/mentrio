@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>konu</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/konu.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+<body data-ders="{{ ders }}"
+      data-konu="{{ konu }}"
+      data-dogru_bilgisi="{{dogru_bilgisi}}",
+      data-yanlis_bilgisi="{{yanlis_bilgisi}}",
+      data-yuzde_bilgisi = "{{yuzde_bilgisi}}">
+
+    <main>
+        <section id="top-panel">
+            <button id="anasayfa-geri-don" onclick="window.location.href='/ders/{{ders}}'">
+                <i class="fa-solid fa-circle-arrow-left"></i>
+            </button>
+            <h1>{{konu}}</h1>
+        </section>
+            <section id="other-panels">
+                <section id="left-panel">
+                    <div id="left-panel-top">
+                        <h2 id="left-top-baslik" class="baslik">SORU EKLE</h2>
+                    </div>
+                    <div id="left-soru-bolumu">
+                        <div id="left-dogru">
+                            <div id="left-dogru-baslik">
+                                <h3>Doğru</h3>
+                            </div>
+                            <div id="left-dogru-sayilar">
+                                <button id="d-10">-10</button>
+                                <button id="d-1">-1</button>
+                                <p id="ds">0</p>
+                                <button id="d+1">+1</button>
+                                <button id="d+10">+10</button>
+                            </div>
+                        </div>
+                        <div id="left-yanlis">
+                            <div id="left-yanlis-baslik">
+                                <h3>Yanlış</h3>
+                            </div>
+                            <div id="left-yanlis-sayilar">
+                                <button id="y-10">-10</button>
+                                <button id="y-1">-1</button>
+                                <p id="ys">0</p>
+                                <button id="y+1">+1</button>
+                                <button id="y+10">+10</button>
+                            </div>
+                        </div>
+                        <div id="left-kaydet">
+                            <button id="left-kaydet-buton">Kaydet</button>
+                        </div>
+                        <div id="left-bilgiler">
+                            <p id="left-dogru-bilgi">Toplam Doğru Sayısı: {{dogru_bilgisi}}</p>
+                            <p id="left-yanlis-bilgi">Toplam Yanlış Sayısı: {{yanlis_bilgisi}}</p>
+                            <p id="left-yuzde-bilgi">Başarı Yüzdesi: %{{yuzde_bilgisi}}</p>
+                        </div>
+                    </div>
+                </section>
+                <section id="middle-panel">
+
+                </section>
+                <section id="right-panel">
+
+                </section>
+            </section>
+    </main>
+    <script src="{{ url_for('static', filename='js/konu.js') }}"></script>
+</body>
+</html>

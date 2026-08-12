@@ -1,0 +1,167 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    height : 100vh
+}
+main{
+    display:flex;
+    flex-direction:column;
+    flex: 1
+}
+
+body{
+    display: flex;
+    flex-direction: column
+}
+.baslik{
+    font: bold 18px "Sans Serif";
+    padding: 8px;
+    border: 5px ridge;
+    background: #e3e3e3;
+    text-align: center
+}
+#top-panel{
+    display: flex;
+    flex: 1;
+    border-bottom: 4px solid #2b2b2b;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8f2e8;
+    position: relative
+}
+
+#anasayfa-geri-don{
+    background: transparent;
+    border: transparent;
+    position: absolute;
+    left: 25px
+}
+#anasayfa-geri-don i{
+    font-size: 50px
+}
+
+#other-panels {
+    display: flex;
+    flex: 9;
+    width: 100%;
+}
+#left-panel {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    width: 35%;
+    background-color: #f6d7d1;
+    border-right: 4px solid #2b2b2b;
+}
+#left-panel-top{
+    display: flex;
+    flex: 13;
+    align-items: center;
+    justify-content: center;
+    position: relative
+}
+
+#left-panel-konular {
+    display: grid;
+    align-content: start;
+    flex: 87;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    padding: 5px
+}
+#konu-form {
+    position: absolute;
+    left:10px;
+    top:63px;
+    visibility: hidden
+}
+#konu-ekle-buton {
+    position: absolute;
+    left: 20px;
+    top: 15px;
+}
+#konu-ekle-buton i{
+    font-size: 40px
+}
+.konu-butonu {
+    background-color: #d9fff9;
+    border: 2px outset;
+    font: 15px Papyrus;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: black;
+    height: 40px
+}
+
+
+
+#middle-panel {
+    display: flex;
+    width: 34%;
+    background-color: #d9edd4;
+    border-right: 4px solid #2b2b2b;
+    position: relative;
+    padding-top: 90px
+}
+#middle-baslik {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+#middle-left {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    border-right: 2px dotted #2b2b2b;
+
+}
+#middle-left-konular, #middle-right-konular{
+    display: block;
+    flex: 95;
+}
+#middle-left-konular h4, #middle-right-konular h4 {
+    font-family: Papyrus;
+    padding: 20px
+}
+
+#middle-left-baslik, #middle-right-baslik{
+    display: flex;
+    flex: 5;
+    font-family: Calibri;
+    font-size: 15px;
+    justify-content: center;
+    align-items: center;
+    position: relative
+}
+#middle-left-baslik::after, #middle-right-baslik::after {
+    position: absolute;
+    left: 20px;
+    right: 20px;
+    bottom: 0;
+    content: "";
+    height: 1.5px;
+    background: #2b2b2b
+}
+#middle-right {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+
+}
+
+#right-panel {
+    width: 31%;
+    background-color: #ddddf4;
+}
+#right-baslik{
+    display: flex;
+    align-items: center;
+    justify-content: center
+}

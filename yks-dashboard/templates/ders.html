@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ders</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/ders.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+<body>
+    <main>
+        <section id="top-panel">
+            <button id="anasayfa-geri-don" onclick="window.location.href='/'">
+                <i class="fa-solid fa-circle-arrow-left"></i>
+            </button>
+
+            <h1>{{secilen_ders}}</h1>
+        </section>
+
+        <section id="other-panels">
+
+            <section id="left-panel">
+                <div id="left-panel-top">
+                    <button id="konu-ekle-buton">
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+                    <form id="konu-form">
+                        <input id="konu-form-input" placeholder="Konu girin." type="text">
+                    </form>
+                    <h2 class="baslik">KONULAR</h2>
+                </div>
+                <div id="left-panel-konular">
+                    {% for konu in ders_konulari %}
+                        <div>
+                            <a href="/ders/{{secilen_ders.lower()}}/konu/{{konu.lower()}}" class="konu-butonu">{{konu}}</a>
+                        </div>
+                    {% endfor %}
+                </div>
+            </section>
+
+            <section id="middle-panel">
+                <div id="middle-baslik">
+                    <h2 class="baslik">ZAYIF KONULAR</h2>
+                </div>
+                <div id="middle-left">
+                    <div id="middle-left-baslik">
+                        <h3>Soru Yeterliliği Düşük Konular</h3>
+                    </div>
+                    <div id="middle-left-konular">
+                        {% for konu, yuzde in basari_zayif_konular %}
+                            <h4>{{loop.index}}. {{konu}} : %{{yuzde}}</h4>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div id="middle-right">
+                    <div id="middle-right-baslik">
+                        <h3>Tekrar Edilmeyen Konular</h3>
+                    </div>
+                    <div id="middle-right-konular">
+                        {% for konu, sure in calisma_zayif_konular %}
+                            <h4>{{loop.index}}. {{konu}} : {{sure}} Gün</h4>
+                        {% endfor %}
+                    </div>
+
+                </div>
+            </section>
+            <section id="right-panel">
+                <div id="right-baslik">
+                    <h2 class="baslik">DERS ÖZETİ</h2>
+                </div>
+            </section>
+        </section>
+    </main>
+    <script src="{{ url_for('static', filename='js/ders.js') }}"></script>
+</body>
+</html>
