@@ -1,0 +1,10 @@
+[33mfdf7202[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m, [m[1;32mmain[m[33m)[m Bugün çalışılacaklar ekranı telefona uyumlu hale getirildi.
+[33ma6a7ef0[m[33m ([m[1;31morigin/main[m[33m)[m gunicorn eklendi
+[33m4616a55[m requirements.txt eklendi
+[33ma6ae635[m Konu sayfasına soru ekleme özelliği yapıldı.
+[33mf51266f[m Konu sayfası tasarımı yapıldı.
+[33m7ff3ef3[m Ders sayfasında zayıf başarılı konular ve en uzun süre çalışılmayan konular geri bildiriliyor. Ders sayfası bitti.
+[33m30e7766[m Konu ekleme özelliği yapıldı. + anasayfaya geri dönme butonu eklendi
+[33m34aef80[m Ders Sayfasının tasarımı tamamen halledildi.
+[33m1676844[m Ders sayfası frontend iskeleti oluşturuldu.
+[33m2932f46[m Günlük çalışılacak konular sistemindeki edge caseler düzeltildi. Mükemmel çalışıyor.
