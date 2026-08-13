@@ -1,168 +1,308 @@
-html, body {
-    margin: 0;
-    padding: 0;
-    height : 100vh
-}
-main{
-    display:flex;
-    flex-direction:column;
-    flex: 1
+* {
+    box-sizing: border-box;
 }
 
-body{
-    display: flex;
-    flex-direction: column
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
 }
-.baslik{
+
+body {
+    display: flex;
+    flex-direction: column;
+    font-family: Arial, sans-serif;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
+    width: 100vw;
+    overflow: hidden;
+}
+#app {
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
+    width: 100vw;
+    overflow: hidden;
+}
+h1 {
+    font-size: 5rem;
+}
+
+/* =========================
+   GENEL
+========================= */
+
+.baslik {
     font: bold 18px "Sans Serif";
     padding: 8px;
     border: 5px ridge;
     background: #e3e3e3;
-    text-align: center
+    text-align: center;
 }
 
-#top-panel{
+
+/* =========================
+   ÜST PANEL
+========================= */
+
+#top-panel {
+    position: sticky;
     display: flex;
-    flex: 1;
+    flex: 0 0 10%;
     border-bottom: 4px solid #2b2b2b;
     width: 100%;
     align-items: center;
     justify-content: center;
     background-color: #d8f3c4;
-    position: relative
 }
-#anasayfa-geri-don{
+
+#anasayfa-geri-don {
     background: transparent;
     border: transparent;
     position: absolute;
-    left: 25px
+    left: 5%;
 }
-#anasayfa-geri-don i{
-    font-size: 50px
+
+#anasayfa-geri-don i {
+    font-size: 6rem;
 }
+
+
+/* =========================
+   YATAY KAYAN PANELLER
+========================= */
+
 #other-panels {
     display: flex;
-    flex: 9;
     width: 100%;
+    flex: 1;
+    overflow-x: auto;
+    overflow-y: hidden;
+    min-height: 0;
+    scroll-snap-type: x mandatory;
 }
+
+
+/* =========================
+   SOL PANEL
+========================= */
+
 #left-panel {
     display: flex;
     flex-direction: column;
-    width: 35%;
+    position: relative;
+    flex: 0 0 100%;
+    width: 100vw;
+    height: 100dvh;
     background-color: #c4d8f3;
     border-right: 4px solid #2b2b2b;
+    scroll-snap-align: start;
 }
-#left-panel-top{
-    display:flex;
-    flex: 5;
-    justify-content: center;
-    align-items: center;
-}
-#left-top-baslik{
-    display: flex;
-}
-#left-soru-bolumu{
-    flex: 95;
 
+#left-panel-top {
+    display: flex;
+    height: 10%;
+    justify-content: center;
+    align-items: center;
 }
-#left-dogru{
-    display:flex;
+
+#left-top-baslik {
+    display: flex;
+    font-size: 4rem;
+}
+
+#left-soru-bolumu {
+    flex: 95;
+}
+
+
+/* =========================
+   DOĞRU
+========================= */
+
+#left-dogru {
+    display: flex;
+    height: 25%;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
-#left-dogru-baslik{
+
+#left-dogru-baslik {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-end;
+    height: 40%
 }
-#left-dogru-baslik h3{
+
+#left-dogru-baslik h3 {
     display: flex;
-    font-size: 25px;
+    font-size: 3rem;
 }
+
 #left-dogru-sayilar {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 30px;
+    width: 100%;
+    gap: 5%;
 }
-#left-dogru-sayilar button{
-    font-size: 20px;
+
+#left-dogru-sayilar button {
+    font-size: 2rem;
     background-color: #68fda6;
     border: 5px ridge #68fda6;
 }
-#left-dogru-sayilar p{
-    font-size: 20px
+
+#left-dogru-sayilar p {
+    font-size: 2rem;
 }
 
-#left-yanlis{
-    display:flex;
+
+/* =========================
+   YANLIŞ
+========================= */
+
+#left-yanlis {
+    display: flex;
+    height: 25%;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
-#left-yanlis-baslik{
+
+#left-yanlis-baslik {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    height: 40%;
 }
-#left-yanlis-baslik h3{
+
+#left-yanlis-baslik h3 {
     display: flex;
-    font-size: 25px;
+    font-size: 3rem;
 }
+
 #left-yanlis-sayilar {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 30px;
+    width: 100%;
+    gap: 5%;
 }
-#left-yanlis-sayilar button{
-    font-size: 20px;
+
+#left-yanlis-sayilar button {
+    font-size: 2rem;
     background-color: #fe869a;
     border: 5px ridge #fd6881;
 }
-#left-yanlis-sayilar p{
-    font-size: 20px
+
+#left-yanlis-sayilar p {
+    font-size: 2rem;
 }
 
-#left-kaydet{
+
+/* =========================
+   KAYDET
+========================= */
+
+#left-kaydet {
     display: flex;
     align-items: center;
     justify-content: center;
     padding-top: 40px;
     padding-bottom: 20px;
     position: relative;
+    height: 15%
 }
+
 #left-kaydet-buton {
-    font: 18px "Sans Serif";
+    font: 3rem "Sans Serif";
     padding: 8px;
     border: 5px ridge;
     background: #e3e3e3;
     text-align: center;
 }
-#left-kaydet::after{
+
+#left-kaydet::after {
     position: absolute;
     left: 50px;
     right: 50px;
     bottom: 0;
     content: "";
     height: 1.5px;
-    background: #2b2b2b
+    background: #2b2b2b;
 }
-#left-bilgiler{
+
+
+/* =========================
+   BİLGİLER
+========================= */
+
+#left-bilgiler {
     display: flex;
-    flex: 27;
+    height: 25%;
+    padding-left: 5%;
     flex-direction: column;
-    padding-left: 20px;
-    padding-top: 15px
+    justify-content: center;
 }
+#left-bilgiler p {
+    font-size: 2rem;
+}
+
+
+/* =========================
+   ORTA PANEL
+========================= */
+
 #middle-panel {
     display: flex;
-    width: 34%;
+    width: 100vw;
+    height: 100dvh;
+    flex: 0 0 100%;
     background-color: #dfc4f3;
     border-right: 4px solid #2b2b2b;
-    position: relative;
-    padding-top: 90px
+
+    scroll-snap-align: start;
 }
+#middle-icerik{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90%
+}
+#middle-icerik h3{
+    font-size: 10rem;
+    text-align: center;
+}
+
+/* =========================
+   SAĞ PANEL
+========================= */
+
 #right-panel {
-    width: 31%;
+    width: 100vw;
+    height: 100dvh;
+    flex: 0 0 100%;
     background-color: #f3dfc4;
+    scroll-snap-align: start;
+}
+#right-icerik{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90%
+}
+#right-icerik h3{
+    font-size: 10rem;
+    text-align: center;
 }

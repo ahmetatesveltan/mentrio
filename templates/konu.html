@@ -13,7 +13,7 @@
       data-yuzde_bilgisi = "{{yuzde_bilgisi}}">
 
     <main>
-        <section id="top-panel">
+        <div id="app"><section id="top-panel">
             <button id="anasayfa-geri-don" onclick="window.location.href='/ders/{{ders}}'">
                 <i class="fa-solid fa-circle-arrow-left"></i>
             </button>
@@ -60,12 +60,12 @@
                     </div>
                 </section>
                 <section id="middle-panel">
-
+                    <div id="middle-icerik"><h3>Yakında Gelecek...</h3></div>
                 </section>
                 <section id="right-panel">
-
+                    <div id="right-icerik"><h3>Yakında Gelecek...</h3></div>
                 </section>
-            </section>
+            </section></div>
     </main>
     <script src="{{ url_for('static', filename='js/konu.js') }}"></script>
 </body>

@@ -44,7 +44,11 @@ def konu_sayfasi(ders_adi, konu_adi):
     secilen_konu = konu_adi
     dogru_bilgisi = data["Dersler"][secilen_ders.capitalize()][secilen_konu.capitalize()]["dogru"]
     yanlis_bilgisi = data["Dersler"][secilen_ders.capitalize()][secilen_konu.capitalize()]["yanlis"]
-    yuzde_bilgisi = round(100*dogru_bilgisi/(yanlis_bilgisi+dogru_bilgisi),2)
+    try:
+        yuzde_bilgisi = round(100*dogru_bilgisi/(yanlis_bilgisi+dogru_bilgisi),2)
+    except ZeroDivisionError:
+        yuzde_bilgisi = 0
+
     return render_template("konu.html",
                            ders= secilen_ders.capitalize(),
                            konu=secilen_konu.capitalize(),
