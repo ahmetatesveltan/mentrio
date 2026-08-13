@@ -129,7 +129,7 @@ h1 {
 
 #left-dogru {
     display: flex;
-    height: 25%;
+    height: 23%;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -173,7 +173,7 @@ h1 {
 
 #left-yanlis {
     display: flex;
-    height: 25%;
+    height: 23%;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -250,7 +250,7 @@ h1 {
 
 #left-bilgiler {
     display: flex;
-    height: 25%;
+    height: 29%;
     padding-left: 5%;
     flex-direction: column;
     justify-content: center;
