@@ -22,7 +22,62 @@
         "Felsefe": {},
         "Din": {}
     },
-    "Soru Havuzu": {},
-    "SonrakiSoruID": 1,
-    "Gunluk Cozulen Sorular": {}
+    "Soru Havuzu": {
+        "q0001": {
+            "Ders": "Matematik",
+            "Konu": "Fonksiyon",
+            "Cevap": "E",
+            "Foto": "q0001.jfif",
+            "Tekrar Seviyesi": 0,
+            "Sonraki Tekrar": "2026-08-14"
+        },
+        "q0002": {
+            "Ders": "Matematik",
+            "Konu": "Fonksiyon",
+            "Cevap": "E",
+            "Foto": "q0002.jfif",
+            "Tekrar Seviyesi": 0,
+            "Sonraki Tekrar": "2026-08-14"
+        },
+        "q0003": {
+            "Ders": "Matematik",
+            "Konu": "Olasılık",
+            "Cevap": "E",
+            "Foto": "q0003.jfif",
+            "Tekrar Seviyesi": 0,
+            "Sonraki Tekrar": "2026-08-14"
+        },
+        "q0004": {
+            "Ders": "Matematik",
+            "Konu": "Fonksiyon",
+            "Cevap": "D",
+            "Foto": "q0004.jfif",
+            "Tekrar Seviyesi": 0,
+            "Sonraki Tekrar": "2026-08-14"
+        },
+        "q0005": {
+            "Ders": "Matematik",
+            "Konu": "Olasılık",
+            "Cevap": "D",
+            "Foto": "q0005.jfif",
+            "Tekrar Seviyesi": 0,
+            "Sonraki Tekrar": "2026-08-14"
+        },
+        "q0006": {
+            "Ders": "Matematik",
+            "Konu": "Olasılık",
+            "Cevap": "A",
+            "Foto": "q0006.jfif",
+            "Tekrar Seviyesi": 0,
+            "Sonraki Tekrar": "2026-08-14"
+        }
+    },
+    "SonrakiSoruID": 7,
+    "Gunluk Cozulen Sorular": {
+        "2026-08-13": [
+            "q0002",
+            "q0003",
+            "q0001"
+        ]
+    }
 }

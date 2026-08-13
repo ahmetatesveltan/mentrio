@@ -92,7 +92,6 @@ function gunluk_sorulari_ekle() {
         .then(function(response) {
             ysBildirim.textContent = "Soru Kaydedildi."
 
-
             setTimeout(function() {
                 ysBildirim.textContent = ""
         }, 2000);

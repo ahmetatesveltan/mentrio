@@ -23,10 +23,10 @@ body {
     flex-direction: row;
     height: 100vh;
     width: 100vw;
-    overflow-x: auto;
     overflow-y: hidden;
     scroll-snap-type: x mandatory;
 }
+
 /* =========================
    GENEL BAŞLIKLAR
 ========================= */
@@ -130,13 +130,23 @@ body {
 ========================= */
 #haftalik-hedef-bolumu{
     flex: 0 0 100%;
-    background-color: #ffd9df;
+    background-color: #ffeed9;
     width: 100vw;
     height: 100vh;
     padding-top: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+#haftalik-hedef-icerik{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90%
+}
+#haftalik-hedef-icerik h3{
+    font-size: 10rem;
+    text-align: center;
 }
 
 #haftalik-hedef-baslik {
@@ -156,7 +166,7 @@ body {
 
 #dersler-bolumu {
     flex: 0 0 100%;
-    background-color: #ffe6d9;
+    background-color: #e3ffd9;
     width: 100vw;
     height: 100vh;
     padding-top: 10px;
@@ -164,42 +174,38 @@ body {
     flex-direction: column;
     align-items: center;
 }
-.dersler {
-    background-color: blueviolet;
-}
-#dersler-baslik {
-    display: flex;
-    text-align: center;
+#dersler {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap:20px;
+    grid-template-rows: repeat(5, 1fr);
+    width: 90%;
+    height: 80%;
     justify-content: center;
     align-items: center;
-    width: fit-content;
-    margin: 20px auto;
-    font-size: 5rem;
 }
-
-.ders-satir {
+#dersler-baslik-bolumu {
     display: flex;
     justify-content: center;
-    gap: 20px;
-    margin: 0 20px 30px;
-    background-color: red;
-    width: 90%;
+    align-items: center;
+    margin: 20px auto;
+    height: 10%;
+}
+#dersler-baslik {
+    font-size: 5rem;
+    width: fit-content;
 }
 
 .ders-butonu {
     display: flex;
     align-items: center;
     justify-content: center;
-
     flex: 1;
-    min-width: 0;
     aspect-ratio: 16 / 9;
-
     background-color: #d9fff9;
     border: 2px outset;
-
     font-family: Papyrus, fantasy;
-    font-size: clamp(1rem, 3vw, 3rem);
+    font-size: 6rem;
     text-decoration: none;
     color: black;
 }
@@ -210,9 +216,9 @@ body {
 /* =========================
    DENEME ANALİZLERİ
 ========================= */
-#deneme-analizleri-bolumu {
+#deneme-analizleri-bolumu{
     flex: 0 0 100%;
-    background-color: #d9ffe6;
+    background-color: #d9fffd;
     width: 100vw;
     height: 100vh;
     padding-top: 10px;
@@ -220,9 +226,25 @@ body {
     flex-direction: column;
     align-items: center;
 }
+#deneme-analizleri-icerik{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90%
+}
+#deneme-analizleri-icerik h3{
+    font-size: 10rem;
+    text-align: center;
+}
 
 #deneme-analizleri-baslik {
-    margin: 10px 20px 20px;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    margin: 20px auto;
+    font-size: 5rem;
 }
 
 
@@ -231,56 +253,67 @@ body {
 ========================= */
 #yanlis-sorular-bolumu{
     flex: 0 0 100%;
-    background-color: #d9f2ff;
+    background-color: #ded9ff;
     width: 100vw;
     height: 100vh;
     padding-top: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    box-sizing: border-box;
 }
 #yanlis-sorular-baslik {
-    margin: 10px 20px 20px;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    margin: 20px auto;
+    font-size: 5rem;
+    height: 7%
 }
-
-#ys-giris-bolumu {
-    margin-top: 0;
+#ys-giris-bolumu{
+    width: 90%;
+    height: 40%;
 }
-
 .ys-giris-ust {
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    flex-wrap: wrap;
-
     gap: 20px;
+    box-sizing: border-box;
+    height: 75%;
 
-    padding: 0 20px;
 }
 
 .ys-yazi {
-    margin: 0 0 8px;
+    display: flex;
+    font-size: 3rem;
+    height: 10%;
+    margin: 0;
+    justify-content: center;
+}
 
-    font-size: 20px;
-    text-align: center;
+#ys-giris-dersler, #ys-giris-konular {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    height: 85%;
+    gap: 5%
 }
 
 .ys-select {
     display: block;
-
-    width: 120px;
-    height: 180px;
-
-    margin: 0;
-
+    width: 100%;
+    height: fit-content;
     background-color: #d9fff9;
-
     scrollbar-width: none;
+    flex: 1;
 }
-
 .ys-select option {
-    font-size: 13px;
+    font-size: 2rem;
     font-weight: bold;
+    padding: 0.2rem;
 }
 
 .ys-select option:checked {
@@ -290,29 +323,32 @@ body {
 
 /* Yanlış ekle */
 
+#ys-giris-buton-bolumu {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    height: 75%;
+    justify-content: center;
+    align-items: center;
+    gap: 10%
+}
 #ys-giris-submit {
-    width: 120px;
-    height: 60px;
-
-    margin: 110px 0 20px;
-
+    width: 100%;
+    height: 30%;
     background-color: #d9fff9;
-
     border: 3px outset;
-
-    font-size: 15px;
+    font-size: 3rem;
+    transform: translateY(20%);
 }
 
 #ys-bildirim {
     display: block;
-
-    width: 120px;
-
-    margin: 0;
-
+    width: 100%;
+    height: 20%;
+    font-size: 2rem;
     color: green;
-
     text-align: center;
+    justify-content: center;
 }
 
 
@@ -322,37 +358,48 @@ body {
 
 #ys-giris-alt {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-
-    gap: 20px;
-
-    margin: 5px 20px 0;
-
-    padding: 10px 0;
-
+    justify-content: flex-start;
+    align-items: flex-start;
+    box-sizing: border-box;
+    gap: 3%;
     border-bottom: 2px dotted #2b2b2b;
+    height: 25%;
 }
-
+.ys-sik{
+    display: flex;
+    width: 13%;
+    height: 30%;
+    transform: translateX(20%);
+    gap: 30%
+}
+.ys-sik label{
+    font-size: 3rem;
+}
+.ys-sik input{
+    transform: scale(2);
+}
 .ys-sik,
 .ys-cikti-sik {
     background-color: #d9fff9;
 }
 
+#ys-gorsel-bolumu{
+    display: flex;
+    width: 20%;
+    height: 30%;
+    justify-content: center;
+    align-items: center;
 
-/* Görsel ekle */
-
+}
 #ys-gorsel-label {
     display: inline-block;
-
     padding: 5px;
-
     background-color: #d9fff9;
-
     border: 3px outset;
-
     cursor: pointer;
+    width: 80%;
+    height: 80%;
+    font-size: 1.5rem;
 }
 
 
@@ -363,15 +410,14 @@ body {
 #ys-cikti-bolumu {
     display: flex;
     flex-direction: column;
-
-    width: 100%;
+    width: 90%;
+    height: 60%;
 }
-
+#ys-cikti-baslik-bolumu{
+    height: 20%
+}
 #ys-cikti-baslik {
-    margin: 15px 20px;
-
-    font-size: 15px;
-
+    font-size: 3rem;
     text-align: center;
 }
 
@@ -382,12 +428,9 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-
     gap: 20px;
-
     width: 100%;
-    height: 40px;
-
+    height: 15%;
     margin: 0;
 }
 
@@ -396,20 +439,19 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-
-    width: 40px;
-    height: 40px;
+    width: 10%;
+    height: 50%;
 }
 
 #ys-sol-ok i,
 #ys-sag-ok i {
-    font-size: 30px;
+    font-size: 3rem;
 }
 
 #ys-cikti-oklar h3 {
     margin: 0;
-
     text-align: center;
+    font-size: 3rem;
 }
 
 
@@ -419,34 +461,26 @@ body {
 
 #ys-cikti-soru {
     position: relative;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
-    width: 220px;
-    height: 220px;
-
+    width: 80%;
+    height: 40%;
     margin: 15px auto;
-
     overflow: hidden;
-
     background-color: #eeeeee;
-
     border: 1px solid #ccc;
 }
 
 #ys-cikti-soru:fullscreen {
     width: 100vw;
     height: 100vh;
-
     background-color: #000;
 }
 
 #ys-soru-gorseli {
     width: 100%;
     height: 100%;
-
     object-fit: contain;
 }
 
@@ -455,17 +489,16 @@ body {
 
 #ys-tam-ekran {
     position: absolute;
-
-    right: 5px;
-    bottom: 5px;
+    right: 2%;
+    bottom: 2%;
+    width: 8%;
+    height: 10%
 }
 
 #ys-cikis-tam-ekran {
     position: absolute;
-
     right: 20px;
     bottom: 20px;
-
     width: 50px;
     height: 50px;
 }
@@ -479,34 +512,39 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-wrap: wrap;
-
-    gap: 15px;
-
-    margin: 20px;
-
-    min-height: 25px;
+    gap: 3%;
+    height: 20%;
 }
 
 .ys-cikti-sik {
     display: flex;
     align-items: center;
     justify-content: center;
-
     padding: 2px 6px;
-
     border-radius: 8px;
+    width: 15%;
+    height: 30%;
+    gap: 20%
 }
 
+.ys-cikti-sik label{
+    font-size: 2.5rem;
+}
+.ys-cikti-sik input{
+    transform: scale(2);
+}
+#ys-cevapla-bolumu{
+    display: flex;
+    height: 10%;
+    justify-content: center;
+    align-items: center;
+
+}
 #ys-cevapla {
-    min-width: 100px;
-    min-height: 35px;
-
+    width: 25%;
+    height: 80%;
     background-color: #d9fff9;
-
     border: 3px outset;
-
     cursor: pointer;
+    font-size: 3rem;
 }
-
-
