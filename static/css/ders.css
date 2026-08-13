@@ -141,11 +141,14 @@ h1{
     align-items: center;
     justify-content: center;
 }
-
-#middle-top {
+#middle-top,
+#middle-bottom {
     display: flex;
     flex: 1;
     flex-direction: column;
+    min-height: 0;
+}
+#middle-top {
     border-bottom: 2px dotted #2b2b2b;
 }
 
@@ -153,6 +156,8 @@ h1{
 #middle-bottom-konular {
     display: block;
     flex: 95;
+    min-height: 0;
+    overflow-y: auto;
 }
 
 #middle-top-konular h4,
@@ -172,12 +177,6 @@ h1{
     align-items: center;
 }
 
-
-#middle-bottom {
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-}
 
 #right-panel {
     width: 100vw;
