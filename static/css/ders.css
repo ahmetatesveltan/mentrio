@@ -1,167 +1,200 @@
-html, body {
-    margin: 0;
-    padding: 0;
-    height : 100vh
-}
-main{
-    display:flex;
-    flex-direction:column;
-    flex: 1
+* {
+    box-sizing: border-box;
 }
 
-body{
-    display: flex;
-    flex-direction: column
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100%;
 }
-.baslik{
-    font: bold 18px "Sans Serif";
+
+body {
+    display: flex;
+    flex-direction: row;
+    font-family: Arial, sans-serif;
+}
+
+#app {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+}
+h1{
+    font-size: 5rem;
+}
+.baslik {
+    font: bold 4rem "Sans Serif";
     padding: 8px;
     border: 5px ridge;
     background: #e3e3e3;
-    text-align: center
+    text-align: center;
 }
-#top-panel{
+
+#top-panel {
+    position: sticky;
     display: flex;
-    flex: 1;
+    flex: 0 0 10%;
     border-bottom: 4px solid #2b2b2b;
     width: 100%;
     align-items: center;
     justify-content: center;
     background-color: #f8f2e8;
-    position: relative
 }
 
-#anasayfa-geri-don{
+#anasayfa-geri-don {
     background: transparent;
     border: transparent;
     position: absolute;
-    left: 25px
+    left: 5%;
 }
-#anasayfa-geri-don i{
-    font-size: 50px
+
+#anasayfa-geri-don i {
+    font-size: 6rem;
 }
 
 #other-panels {
     display: flex;
-    flex: 9;
     width: 100%;
+    height: 100%;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
 }
+
 #left-panel {
     display: flex;
     position: relative;
     flex-direction: column;
-    width: 35%;
+    flex: 0 0 100%;
+    width: 100vw;
     background-color: #f6d7d1;
     border-right: 4px solid #2b2b2b;
+    scroll-snap-align: start;
 }
-#left-panel-top{
+
+#left-panel-top {
     display: flex;
     flex: 13;
     align-items: center;
     justify-content: center;
-    position: relative
+    position: relative;
 }
-
 #left-panel-konular {
     display: grid;
     align-content: start;
     flex: 87;
     grid-template-columns: repeat(5, 1fr);
-    gap: 10px;
-    padding: 5px
+    grid-auto-rows: 5%;
+    gap: 3%;
+    padding: 5px;
 }
+
 #konu-form {
+    display: flex;
     position: absolute;
-    left:10px;
-    top:63px;
-    visibility: hidden
+    left: 2%;
+    top: 50%;
+    visibility: hidden;
+    width: 25%;
+    height: 10%;
 }
+
 #konu-ekle-buton {
     position: absolute;
-    left: 20px;
-    top: 15px;
+    left: 2%;
+    top: 5%;
 }
-#konu-ekle-buton i{
-    font-size: 40px
+
+#konu-ekle-buton i {
+    font-size: 5rem;
 }
 .konu-butonu {
     background-color: #d9fff9;
     border: 2px outset;
-    font: 15px Papyrus;
+    font: 2rem Papyrus;
     display: flex;
     align-items: center;
     justify-content: center;
     text-decoration: none;
     color: black;
-    height: 40px
+    height: 100%;
+    width: 100%;
 }
-
-
 
 #middle-panel {
     display: flex;
-    width: 34%;
+    flex-direction: column;
+    width: 100vw;
+    flex: 0 0 100%;
     background-color: #d9edd4;
-    border-right: 4px solid #2b2b2b;
-    position: relative;
-    padding-top: 90px
+    scroll-snap-align: start;
 }
+
 #middle-baslik {
     display: flex;
     align-items: center;
     justify-content: center;
-    position: absolute;
-    top: 10px;
-    left: 50%;
-    transform: translateX(-50%);
 }
-#middle-left {
+
+#middle-top {
     display: flex;
     flex: 1;
     flex-direction: column;
-    border-right: 2px dotted #2b2b2b;
-
+    border-bottom: 2px dotted #2b2b2b;
 }
-#middle-left-konular, #middle-right-konular{
+
+#middle-top-konular,
+#middle-bottom-konular {
     display: block;
     flex: 95;
 }
-#middle-left-konular h4, #middle-right-konular h4 {
+
+#middle-top-konular h4,
+#middle-bottom-konular h4 {
     font-family: Papyrus;
-    padding: 20px
+    padding: 20px;
+    font-size: 2rem;
 }
 
-#middle-left-baslik, #middle-right-baslik{
+#middle-top-baslik,
+#middle-bottom-baslik {
     display: flex;
     flex: 5;
     font-family: Calibri;
-    font-size: 15px;
+    font-size: 3rem;
     justify-content: center;
     align-items: center;
-    position: relative
 }
-#middle-left-baslik::after, #middle-right-baslik::after {
-    position: absolute;
-    left: 20px;
-    right: 20px;
-    bottom: 0;
-    content: "";
-    height: 1.5px;
-    background: #2b2b2b
-}
-#middle-right {
+
+
+#middle-bottom {
     display: flex;
     flex: 1;
     flex-direction: column;
-
 }
 
 #right-panel {
-    width: 31%;
+    width: 100vw;
+    flex: 0 0 100%;
     background-color: #ddddf4;
+    scroll-snap-align: start;
 }
-#right-baslik{
+
+#right-baslik {
     display: flex;
     align-items: center;
-    justify-content: center
+    justify-content: center;
+}
+#ders-ozeti-icerik{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90%
+}
+#ders-ozeti-icerik h3{
+    font-size: 10rem;
+    text-align: center;
 }

@@ -255,9 +255,11 @@ def konu_calisma_sure_siralama(secilen_ders):
     for konu in data["Dersler"][secilen_ders]:
         son_calisma = data["Dersler"][secilen_ders][konu]["son_tekrar"]
         son_calisma_tarihi = datetime.strptime(son_calisma, "%Y-%m-%d").date()
-        calisilmayan_gun = (date.today() - son_calisma_tarihi).days
+        if datetime.strftime(son_calisma_tarihi, "%Y-%m-%d") == "2000-01-01":
+            calisilmayan_gun = "Henüz Çalışılmadı"
+        else:
+            calisilmayan_gun = f"{(date.today() - son_calisma_tarihi).days} Gün"
         calisilmayan_gunler[konu] = calisilmayan_gun
-
     calisilmayan_gunler = sorted(calisilmayan_gunler.items(), key=lambda item: item[1], reverse=True)
 
     return calisilmayan_gunler

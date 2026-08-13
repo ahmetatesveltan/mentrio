@@ -10,6 +10,21 @@
                 "dogru": 0,
                 "yanlis": 0,
                 "son_tekrar": "2000-01-01"
+            },
+            "Trigonometri": {
+                "dogru": 0,
+                "yanlis": 0,
+                "son_tekrar": "2000-01-01"
+            },
+            "Problemler": {
+                "dogru": 0,
+                "yanlis": 0,
+                "son_tekrar": "2000-01-01"
+            },
+            "Türev": {
+                "dogru": 0,
+                "yanlis": 0,
+                "son_tekrar": "2000-01-01"
             }
         },
         "Geometri": {},
