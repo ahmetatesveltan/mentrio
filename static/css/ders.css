@@ -154,14 +154,10 @@ h1{
 
 #middle-top-konular,
 #middle-bottom-konular {
-    display: grid;
-    grid-auto-flow: column;
-    grid-template-rows: repeat(3, 1fr);
-    grid-auto-columns: 1fr;
+    display: block;
     flex: 95;
     min-height: 0;
-    overflow-x: auto;
-    overflow-y: hidden;
+    overflow-y: auto;
 }
 
 #middle-top-konular h4,
