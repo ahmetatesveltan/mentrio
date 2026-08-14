@@ -372,15 +372,7 @@ body {
     height: 75%;
 
 }
-#ys-giris-submit,
-#ys-konu-select,
-#ys-ders-select{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    line-height: 1;
-}
+
 .ys-yazi {
     display: flex;
     font-size: 3rem;
@@ -407,6 +399,9 @@ body {
     overflow-y: auto;
     scrollbar-width: none;
     font-size: 2rem;
+    line-height: 1;
+    padding: 0;
+    text-align: center;
 }
 .ys-select-wrapper {
     position: relative;
@@ -486,7 +481,6 @@ body {
     align-items: center;
     justify-content: center;
     width: 13%;
-    height: 60%;
     height: 30%;
     gap: 30%
 }
@@ -511,7 +505,10 @@ body {
 
 }
 #ys-gorsel-label {
-    display: inline-block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
     padding: 5px;
     background-color: #d9fff9;
     border: 3px outset;
@@ -519,6 +516,8 @@ body {
     width: 80%;
     height: 80%;
     font-size: 1.5rem;
+    line-height: 1;
+    text-align: center;
 }
 
 
