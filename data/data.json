@@ -1,0 +1,47 @@
+{
+    "Dersler": {
+        "Matematik": {
+            "Fonksiyon": {
+                "dogru": 20,
+                "yanlis": 5,
+                "son_tekrar": "2000-01-01"
+            },
+            "Olasılık": {
+                "dogru": 0,
+                "yanlis": 0,
+                "son_tekrar": "2000-01-01"
+            },
+            "Trigonometri": {
+                "dogru": 0,
+                "yanlis": 0,
+                "son_tekrar": "2000-01-01"
+            },
+            "Problemler": {
+                "dogru": 0,
+                "yanlis": 0,
+                "son_tekrar": "2000-01-01"
+            },
+            "Türev": {
+                "dogru": 0,
+                "yanlis": 0,
+                "son_tekrar": "2000-01-01"
+            }
+        },
+        "Geometri": {},
+        "Fizik": {},
+        "Kimya": {},
+        "Biyoloji": {},
+        "Edebiyat": {},
+        "Tarih": {},
+        "Cografya": {},
+        "Felsefe": {},
+        "Din": {}
+    },
+    "Soru Havuzu": {
+
+    },
+    "SonrakiSoruID": 1,
+    "Gunluk Cozulen Sorular": {
+
+    }
+}

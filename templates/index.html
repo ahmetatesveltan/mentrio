@@ -8,162 +8,187 @@
 </head>
 <body>
     <div id="app">
-        <section id="calisilacaklar-bolumu">
-            <div id="calisilacaklar-baslik">
-                <h2 class="baslik">BUGÜN ÇALIŞILACAKLAR</h2>
+        <section id="login-bolumu">
+            <h2 id="login-bolumu-baslik">{% if giris_yapildi %}
+                                            Giriş yapıldı.
+                                         {% else %}
+                                            Lütfen Giriş Yapın.
+                                         {% endif %}</h2>
+            {% if giris_yapildi %}
+                <div id="login-bilgilendirme-div"><h3 id="login-bilgilendirme">Hoşgeldin, {{user}}. Devam etmek için yana kaydır.</h3></div>
+            {% endif %}
+            <div id="login-div">
+                {% if not giris_yapildi %}
+                        <form id="login-form">
+                            <input type="text" id="kullanici-input" placeholder="Kullanıcı adı">
+                            <button id="login-submit" type="submit" >Giriş Yap</button>
+                        </form>
+                {% endif %}
             </div>
-            <div id="calisilacaklar-bottom">{% for ders, konu in calisilacak_konular %}
-                <div class="calisilacak-satir">
-                        <div id="calisilacak-buton-bolumu">
-                            <a class="calisilacak-buton" href="/ders/{{calisilacak_konular[loop.index0][0].lower()}}/konu/{{calisilacak_konular[loop.index0][1].lower()}}"  id="calisilacak[loop.index]">{{calisilacak_konular[loop.index0][1]}}</a>
+            <div id="login-bildirim-bolumu"><span id="login-bildirim"></span></div>
+            {% if giris_yapildi %}
+                <a id="logout-button" href="api/logout">Çıkış Yap</a>
+            {% endif %}
+        </section>
+
+        {% if giris_yapildi %}
+            <section id="calisilacaklar-bolumu">
+                <div id="calisilacaklar-baslik">
+                    <h2 class="baslik">BUGÜN ÇALIŞILACAKLAR</h2>
+                </div>
+                <div id="calisilacaklar-bottom">{% for ders, konu in calisilacak_konular %}
+                    <div class="calisilacak-satir">
+                            <div id="calisilacak-buton-bolumu">
+                                <a class="calisilacak-buton" href="/ders/{{calisilacak_konular[loop.index0][0].lower()}}/konu/{{calisilacak_konular[loop.index0][1].lower()}}"  id="calisilacak[loop.index]">{{calisilacak_konular[loop.index0][1]}}</a>
+                            </div>
+                            <div class="calisilacak-ustalik">
+                                <h3>Ustalık: % {{ calisilacak_ustaliklar[loop.index0] }}</h3>
+                            </div>
+                    </div>
+                {% endfor %}</div>
+
+            </section>
+
+            <section id="haftalik-hedef-bolumu">
+                <h2 class="baslik" id="haftalik-hedef-baslik">HAFTALIK HEDEFLER</h2>
+                <div id="haftalik-hedef-icerik"><h3>Yakında Gelecek...</h3></div>
+            </section>
+
+            <section id="dersler-bolumu">
+                <div id="dersler-baslik-bolumu"><h2 class="baslik" id="dersler-baslik">DERSLER</h2></div>
+                <div id="dersler">
+                    <a href="/ders/matematik" class="ders-butonu" id="matematik-buton">Matematik</a>
+                    <a href="/ders/geometri" class="ders-butonu" id="geometri-buton">Geometri</a>
+                    <a href="/ders/edebiyat" class="ders-butonu" id="edebiyat-buton">Edebiyat</a>
+                    <a href="/ders/tarih" class="ders-butonu" id="tarih-buton">Tarih</a>
+                    <a href="/ders/cografya" class="ders-butonu" id="cografya-buton">Coğrafya</a>
+                    <a href="/ders/felsefe" class="ders-butonu" id="felsefe-buton">Felsefe</a>
+                    <a href="/ders/din" class="ders-butonu" id="din-buton">Din</a>
+                    <a href="/ders/fizik" class="ders-butonu" id="fizik-buton">Fizik</a>
+                    <a href="/ders/kimya" class="ders-butonu" id="kimya-buton">Kimya</a>
+                    <a href="/ders/biyoloji" class="ders-butonu" id="biyoloji-buton">Biyoloji</a>
+                </div>
+            </section>
+
+            <section id="deneme-analizleri-bolumu">
+                <h2 class="baslik" id="deneme-analizleri-baslik">DENEME ANALİZLERİ</h2>
+                <div id="deneme-analizleri-icerik"><h3>Yakında Gelecek...</h3></div>
+            </section>
+
+            <section id="yanlis-sorular-bolumu">
+                <h2 class="baslik", id="yanlis-sorular-baslik">YANLIŞ SORULAR</h2>
+                <div id="ys-giris-bolumu">
+                    <div class="ys-giris-ust">
+                        <div id="ys-giris-dersler">
+                            <h4 class="ys-yazi">Dersler</h4>
+                            <select class="ys-select"  id="ys-ders-select" size="10">
+                                <option class="ys-ders-option"  value="matematik">Matematik</option>
+                                <option class="ys-ders-option" value="geometri">Geometri</option>
+                                <option class="ys-ders-option" value="edebiyat">Edebiyat</option>
+                                <option class="ys-ders-option" value="fizik">Fizik</option>
+                                <option class="ys-ders-option" value="kimya">Kimya</option>
+                                <option class="ys-ders-option" value="biyoloji">Biyoloji</option>
+                                <option class="ys-ders-option" value="tarih">Tarih</option>
+                                <option class="ys-ders-option" value="cografya">Coğrafya</option>
+                                <option class="ys-ders-option" value="felsefe">Felsefe</option>
+                                <option class="ys-ders-option" value="din">Din</option>
+                            </select>
                         </div>
-                        <div class="calisilacak-ustalik">
-                            <h3>Ustalık: % {{ calisilacak_ustaliklar[loop.index0] }}</h3>
+                        <div id="ys-giris-konular">
+                            <h4 class="ys-yazi">Konular</h4>
+                            <select class="ys-select" id="ys-konu-select" size="10">
+
+                            </select>
                         </div>
-                </div>
-            {% endfor %}</div>
-
-        </section>
-
-        <section id="haftalik-hedef-bolumu">
-            <h2 class="baslik" id="haftalik-hedef-baslik">HAFTALIK HEDEFLER</h2>
-            <div id="haftalik-hedef-icerik"><h3>Yakında Gelecek...</h3></div>
-        </section>
-
-        <section id="dersler-bolumu">
-            <div id="dersler-baslik-bolumu"><h2 class="baslik" id="dersler-baslik">DERSLER</h2></div>
-            <div id="dersler">
-                <a href="/ders/matematik" class="ders-butonu" id="matematik-buton">Matematik</a>
-                <a href="/ders/geometri" class="ders-butonu" id="geometri-buton">Geometri</a>
-                <a href="/ders/edebiyat" class="ders-butonu" id="edebiyat-buton">Edebiyat</a>
-                <a href="/ders/tarih" class="ders-butonu" id="tarih-buton">Tarih</a>
-                <a href="/ders/cografya" class="ders-butonu" id="cografya-buton">Coğrafya</a>
-                <a href="/ders/felsefe" class="ders-butonu" id="felsefe-buton">Felsefe</a>
-                <a href="/ders/din" class="ders-butonu" id="din-buton">Din</a>
-                <a href="/ders/fizik" class="ders-butonu" id="fizik-buton">Fizik</a>
-                <a href="/ders/kimya" class="ders-butonu" id="kimya-buton">Kimya</a>
-                <a href="/ders/biyoloji" class="ders-butonu" id="biyoloji-buton">Biyoloji</a>
-            </div>
-        </section>
-
-        <section id="deneme-analizleri-bolumu">
-            <h2 class="baslik" id="deneme-analizleri-baslik">DENEME ANALİZLERİ</h2>
-            <div id="deneme-analizleri-icerik"><h3>Yakında Gelecek...</h3></div>
-        </section>
-
-        <section id="yanlis-sorular-bolumu">
-            <h2 class="baslik", id="yanlis-sorular-baslik">YANLIŞ SORULAR</h2>
-            <div id="ys-giris-bolumu">
-                <div class="ys-giris-ust">
-                    <div id="ys-giris-dersler">
-                        <h4 class="ys-yazi">Dersler</h4>
-                        <select class="ys-select"  id="ys-ders-select" size="10">
-                            <option class="ys-ders-option"  value="matematik">Matematik</option>
-                            <option class="ys-ders-option" value="geometri">Geometri</option>
-                            <option class="ys-ders-option" value="edebiyat">Edebiyat</option>
-                            <option class="ys-ders-option" value="fizik">Fizik</option>
-                            <option class="ys-ders-option" value="kimya">Kimya</option>
-                            <option class="ys-ders-option" value="biyoloji">Biyoloji</option>
-                            <option class="ys-ders-option" value="tarih">Tarih</option>
-                            <option class="ys-ders-option" value="cografya">Coğrafya</option>
-                            <option class="ys-ders-option" value="felsefe">Felsefe</option>
-                            <option class="ys-ders-option" value="din">Din</option>
-                        </select>
+                        <div id="ys-giris-buton-bolumu">
+                            <button disabled type="submit" id="ys-giris-submit">Yanlış Ekle</button>
+                            <span id="ys-bildirim"></span>
+                        </div>
                     </div>
-                    <div id="ys-giris-konular">
-                        <h4 class="ys-yazi">Konular</h4>
-                        <select class="ys-select" id="ys-konu-select" size="10">
+                    <div id="ys-giris-alt">
+                        <div class="ys-sik">
+                            <label for="ysg-A" >A</label>
+                            <input type=radio id="ysg-A" class="ys-sikları" name=ys-sikları value="A">
+                        </div>
+                        <div class="ys-sik">
+                            <label for="ysg-B">B</label>
+                            <input type=radio id="ysg-B" class="ys-sikları" name=ys-sikları value="B">
+                        </div>
+                        <div class="ys-sik">
+                           <label for="ysg-C" >C</label>
+                            <input type=radio id="ysg-C" class="ys-sikları" name=ys-sikları value="C">
+                        </div>
+                        <div class="ys-sik">
+                            <label for="ysg-D" >D</label>
+                            <input type=radio id="ysg-D" class="ys-sikları" name=ys-sikları value="D">
+                        </div>
+                        <div class="ys-sik">
+                            <label for="ysg-E" >E</label>
+                            <input type=radio id="ysg-E" class="ys-sikları" name=ys-sikları value="E">
+                        </div>
+                        <div id="ys-gorsel-bolumu">
+                            <input type="file" accept="image/*" id="ys-gorsel-ekle" hidden></input>
+                            <label for="ys-gorsel-ekle" id="ys-gorsel-label">
+                                Görsel Ekle
+                            </label>
+                        </div>
 
-                        </select>
-                    </div>
-                    <div id="ys-giris-buton-bolumu">
-                        <button disabled type="submit" id="ys-giris-submit">Yanlış Ekle</button>
-                        <span id="ys-bildirim"></span>
+
                     </div>
                 </div>
-                <div id="ys-giris-alt">
-                    <div class="ys-sik">
-                        <label for="ysg-A" >A</label>
-                        <input type=radio id="ysg-A" class="ys-sikları" name=ys-sikları value="A">
-                    </div>
-                    <div class="ys-sik">
-                        <label for="ysg-B">B</label>
-                        <input type=radio id="ysg-B" class="ys-sikları" name=ys-sikları value="B">
-                    </div>
-                    <div class="ys-sik">
-                       <label for="ysg-C" >C</label>
-                        <input type=radio id="ysg-C" class="ys-sikları" name=ys-sikları value="C">
-                    </div>
-                    <div class="ys-sik">
-                        <label for="ysg-D" >D</label>
-                        <input type=radio id="ysg-D" class="ys-sikları" name=ys-sikları value="D">
-                    </div>
-                    <div class="ys-sik">
-                        <label for="ysg-E" >E</label>
-                        <input type=radio id="ysg-E" class="ys-sikları" name=ys-sikları value="E">
-                    </div>
-                    <div id="ys-gorsel-bolumu">
-                        <input type="file" accept="image/*" id="ys-gorsel-ekle" hidden></input>
-                        <label for="ys-gorsel-ekle" id="ys-gorsel-label">
-                            Görsel Ekle
-                        </label>
+                <div id="ys-cikti-bolumu">
+                    <div id="ys-cikti-baslik-bolumu"><h5 id="ys-cikti-baslik">Bugün çözeceğin sorular:</h5></div>
+                    <div id="ys-cikti-oklar">
+                        <button id="ys-sol-ok">
+                            <i class="fa-solid fa-arrow-left"></i>
+                        </button>
+                        <h3 id="ys-cikti-label">Soru 0/0</h3>
+                        <button id="ys-sag-ok">
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
                     </div>
 
+                    <div id="ys-cikti-soru">
+                        <img id="ys-soru-gorseli">
+                        <button id="ys-tam-ekran">
+                            <i class="fa-solid fa-maximize"></i>
+                        </button>
+                        <button id="ys-cikis-tam-ekran" hidden>
+                            <i class="fa-solid fa-minimize"></i>
+                        </button>
+                    </div>
+                    <div id="ys-cikti-siklar">
+                        <div class="ys-cikti-sik">
+                            <label for="ysc-BOS" >Boş</label>
+                            <input type=radio id="ysc-BOS" name=ys-cikti-sikları value="BOS">
+                        </div>
+                        <div class="ys-cikti-sik">
+                            <label for="ysc-A" >A</label>
+                            <input type=radio id="ysc-A" name=ys-cikti-sikları value="A">
+                        </div>
+                        <div class="ys-cikti-sik">
+                            <label for="ysc-B">B</label>
+                            <input type=radio id="ysc-B" name=ys-cikti-sikları value="B">
+                        </div>
+                        <div class="ys-cikti-sik">
+                           <label for="ysc-C" >C</label>
+                            <input type=radio id="ysc-C" name=ys-cikti-sikları value="C">
+                        </div>
+                        <div class="ys-cikti-sik">
+                            <label for="ysc-D" >D</label>
+                            <input type=radio id="ysc-D"name=ys-cikti-sikları value="D">
+                        </div>
+                        <div class="ys-cikti-sik">
+                            <label for="ysc-E" >E</label>
+                            <input type=radio id="ysc-E" name=ys-cikti-sikları value="E">
+                        </div>
 
+
+                    </div>
+                    <div id="ys-cevapla-bolumu"><button disabled id="ys-cevapla">Cevapla</button></div>
                 </div>
-            </div>
-            <div id="ys-cikti-bolumu">
-                <div id="ys-cikti-baslik-bolumu"><h5 id="ys-cikti-baslik">Bugün çözeceğin sorular:</h5></div>
-                <div id="ys-cikti-oklar">
-                    <button id="ys-sol-ok">
-                        <i class="fa-solid fa-arrow-left"></i>
-                    </button>
-                    <h3 id="ys-cikti-label">Soru 0/0</h3>
-                    <button id="ys-sag-ok">
-                        <i class="fa-solid fa-arrow-right"></i>
-                    </button>
-                </div>
-
-                <div id="ys-cikti-soru">
-                    <img id="ys-soru-gorseli">
-                    <button id="ys-tam-ekran">
-                        <i class="fa-solid fa-maximize"></i>
-                    </button>
-                    <button id="ys-cikis-tam-ekran" hidden>
-                        <i class="fa-solid fa-minimize"></i>
-                    </button>
-                </div>
-                <div id="ys-cikti-siklar">
-                    <div class="ys-cikti-sik">
-                        <label for="ysc-BOS" >Boş</label>
-                        <input type=radio id="ysc-BOS" name=ys-cikti-sikları value="BOS">
-                    </div>
-                    <div class="ys-cikti-sik">
-                        <label for="ysc-A" >A</label>
-                        <input type=radio id="ysc-A" name=ys-cikti-sikları value="A">
-                    </div>
-                    <div class="ys-cikti-sik">
-                        <label for="ysc-B">B</label>
-                        <input type=radio id="ysc-B" name=ys-cikti-sikları value="B">
-                    </div>
-                    <div class="ys-cikti-sik">
-                       <label for="ysc-C" >C</label>
-                        <input type=radio id="ysc-C" name=ys-cikti-sikları value="C">
-                    </div>
-                    <div class="ys-cikti-sik">
-                        <label for="ysc-D" >D</label>
-                        <input type=radio id="ysc-D"name=ys-cikti-sikları value="D">
-                    </div>
-                    <div class="ys-cikti-sik">
-                        <label for="ysc-E" >E</label>
-                        <input type=radio id="ysc-E" name=ys-cikti-sikları value="E">
-                    </div>
-
-
-                </div>
-                <div id="ys-cevapla-bolumu"><button disabled id="ys-cevapla">Cevapla</button></div>
-            </div>
-        </section>
+            </section>
+        {% endif %}
     </div>
     <script src="{{ url_for('static', filename='js/index.js') }}"></script>
 </body>

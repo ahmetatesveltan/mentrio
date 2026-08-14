@@ -46,8 +46,87 @@ body {
 
     text-align: center;
 }
+/* =========================
+  LOGIN
+========================= */
+#login-bolumu {
+    flex: 0 0 100%;
+    background-color: #e5e4e2;
+    width: 100vw;
+    height: 100vh;
+    padding-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    scroll-snap-align: start;
+}
+#login-div{
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    height: 30%;
+    align-items: center;
+    justify-content: center;
+    gap: 10%;
+}
 
+#login-bolumu h2{
+    font-size: 6rem;
+}
+#login-form{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 40%;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 15%
+}
+#login-form input{
+    width: 60%;
+    height: 50%;
+    font-size: 4rem;
+    text-align: center;
+}
+#login-form button{
+    width: 40%;
+    height: 35%;
+    font-size: 3rem;
+    background-color: #bab9b0;
+}
+#login-bildirim-bolumu {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    height:10%;
 
+}
+#login-bildirim-bolumu span{
+    font-size: 3rem
+}
+
+#logout-button {
+    display: flex;
+    font-size: 3rem;
+    width: 36%;
+    height: 6%;
+    background-color: #bab9b0;
+    text-decoration: none;
+    align-items: center;
+    justify-content: center;
+    color: black;
+}
+#login-bilgilendirme-div {
+    display: flex;
+    width:80%;
+    height: 70%;
+    align-items: flex-end;
+}
+#login-bilgilendirme{
+    font-size: 5rem;
+    text-align: center;
+}
 /* =========================
    BUGÜN ÇALIŞILACAKLAR
 ========================= */
@@ -107,11 +186,12 @@ body {
     background-color: #d9fff9;
     border: 3px outset;
     font-family: Papyrus, fantasy;
-    font-size: 10rem;
+    font-size: 8rem;
     text-align: center;
     overflow: hidden;
     text-decoration: none;
     color: black;
+
 }
 
 .calisilacak-ustalik {

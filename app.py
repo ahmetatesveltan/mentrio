@@ -1,4 +1,6 @@
-from flask import Flask, render_template, request, jsonify
+from typing import Protocol
+
+from flask import Flask, render_template, request, jsonify, session, redirect
 from main import *
 import main
 from flask import request
@@ -6,22 +8,31 @@ import json
 from datetime import *
 
 app = Flask(__name__)
+app.secret_key = "Secret key"
 
-
+users = ["Ates", "İbisoglu"]
 
 @app.route("/")
 def home():
+    user = session.get("user")
+
+
+    if user is None:
+        return render_template("index.html", giris_yapildi=False)
+
     data = load_data()
 
     calisilacak_konular = bugun_calisilacaklar(data) #Çalışılacak 2 konu
-    #2konunun ustalığı
+                                                      #2konunun ustalığı
     calisilacak_ustaliklar = []
     for ders, konu in calisilacak_konular:
         ustalik = ustalik_hesapla(data, ders, konu)
         calisilacak_ustaliklar.append(ustalik)
     return render_template("index.html",
                            calisilacak_konular = calisilacak_konular,
-                           calisilacak_ustaliklar = calisilacak_ustaliklar)
+                           calisilacak_ustaliklar = calisilacak_ustaliklar,
+                           giris_yapildi = True,
+                           user = user)
 
 @app.route("/ders/<ders_adi>")  #DERS SAYFASINI AÇAR
 def ders_sayfasi(ders_adi):
@@ -55,6 +66,25 @@ def konu_sayfasi(ders_adi, konu_adi):
                            dogru_bilgisi = dogru_bilgisi,
                            yanlis_bilgisi = yanlis_bilgisi,
                            yuzde_bilgisi = yuzde_bilgisi)
+
+@app.route("/api/login", methods=["POST"])
+def login_page():
+    veri = request.json
+    user = veri["user"].capitalize()
+    if user in users:
+        session["user"] = user
+        giris_basarisi = True
+    else:
+        giris_basarisi = False
+    return jsonify({"giris_basarisi": giris_basarisi,
+                    "kullanici": user})
+
+@app.route("/api/logout")
+def logout():
+
+    session.pop("user", None)
+    return redirect("/")
+
 
 @app.route("/api/ys-select") #KONU SELECTINI DOLDURUR
 def ys_konu_select():

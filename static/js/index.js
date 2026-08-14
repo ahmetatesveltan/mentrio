@@ -1,6 +1,12 @@
-//YS-DERS-SELECTİNE GÖRE KONU SELECT AYARLAMA
+// =========================
+// YANLIŞ SORU - KONU SELECT
+// =========================
 function konu_select() {
     const ysDersSelect = document.getElementById("ys-ders-select");
+
+    if (ysDersSelect === null) {
+        return;
+    }
 
     ysDersSelect.addEventListener("change", function () {
 
@@ -12,7 +18,11 @@ function konu_select() {
 
                 const select = document.getElementById("ys-konu-select");
 
-                select.innerHTML = ""
+                if (select === null) {
+                    return;
+                }
+
+                select.innerHTML = "";
 
                 konular.forEach(konu => {
                     const option = document.createElement("option");
@@ -22,63 +32,85 @@ function konu_select() {
                 });
             });
     });
-};
-konu_select()
+}
 
-//YANLIŞ SORU EKLEME
+konu_select();
+
+
+// =========================
+// YANLIŞ SORU EKLEME
+// =========================
 function gunluk_sorulari_ekle() {
+
+    const gorselInput = document.getElementById("ys-gorsel-ekle");
+    const cevaplar = document.querySelectorAll(".ys-sikları");
+    const ysDersSelect = document.getElementById("ys-ders-select");
+    const ysKonuSelect = document.getElementById("ys-konu-select");
+    const ysSubmit = document.getElementById("ys-giris-submit");
+
+    if (
+        gorselInput === null ||
+        ysDersSelect === null ||
+        ysKonuSelect === null ||
+        ysSubmit === null
+    ) {
+        return;
+    }
+
     let secilenGorsel = null;
     let secilenCevap = null;
     let secilenDers = null;
     let secilenKonu = null;
 
-
-    const gorselInput = document.getElementById("ys-gorsel-ekle");
-    const cevaplar = document.querySelectorAll(".ys-sikları");
-
-    const ysDersSelect = document.getElementById("ys-ders-select");
-    const ysKonuSelect = document.getElementById("ys-konu-select");
-
     ysDersSelect.addEventListener("change", function () {
-
         secilenDers = ysDersSelect.value;
         submitControl();
     });
 
     ysKonuSelect.addEventListener("change", function () {
-
         secilenKonu = ysKonuSelect.value;
         submitControl();
     });
 
     for (const cevap of cevaplar) {
-           cevap.addEventListener("change", function(){
-               secilenCevap = cevap.value;
-               console.log(secilenCevap);
-               submitControl();
+
+        if (cevap === null) {
+            continue;
+        }
+
+        cevap.addEventListener("change", function () {
+            secilenCevap = cevap.value;
+            console.log(secilenCevap);
+            submitControl();
         });
-    };
+    }
 
-    gorselInput.addEventListener("change",  function(){
+    gorselInput.addEventListener("change", function () {
         secilenGorsel = gorselInput.files[0];
-
         submitControl();
-
     });
 
-    const ysSubmit = document.getElementById("ys-giris-submit")
     function submitControl() {
-        if(secilenGorsel!== null && secilenCevap !== null && secilenDers !== null && secilenKonu!== null){
-            ysSubmit.disabled = false
-        }
-        else {
-            ysSubmit.disabled = true
+        if (
+            secilenGorsel !== null &&
+            secilenCevap !== null &&
+            secilenDers !== null &&
+            secilenKonu !== null
+        ) {
+            ysSubmit.disabled = false;
+        } else {
+            ysSubmit.disabled = true;
         }
     }
-    ysSubmit.addEventListener("click", function(){
+
+    ysSubmit.addEventListener("click", function () {
 
         const ysData = new FormData();
         const ysBildirim = document.getElementById("ys-bildirim");
+
+        if (ysBildirim === null) {
+            return;
+        }
 
         ysData.append("ders", secilenDers);
         ysData.append("konu", secilenKonu);
@@ -89,37 +121,34 @@ function gunluk_sorulari_ekle() {
             method: "POST",
             body: ysData
         })
-        .then(function(response) {
-            ysBildirim.textContent = "Soru Kaydedildi."
+            .then(function (response) {
 
-            setTimeout(function() {
-                ysBildirim.textContent = ""
-        }, 2000);
+                ysBildirim.textContent = "Soru Kaydedildi.";
 
-        });
-        ysSubmit.disabled = true
+                setTimeout(function () {
+                    ysBildirim.textContent = "";
+                }, 2000);
 
+            });
 
+        ysSubmit.disabled = true;
     });
-};
-gunluk_sorulari_ekle()
-// SPACED REPETİTON SORULARINI ALMA
+}
+
+gunluk_sorulari_ekle();
+
+
+// =========================
+// SPACED REPETITION SORULARI
+// =========================
 function gunluk_sorulari_goster() {
-    let sorular = [];
 
-    let aktifIndex = 0;
-    let aktifSoru = null;
-    let secilenCevap = null;
-
-    soru_gorseli = document.getElementById("ys-soru-gorseli");
-    solOk = document.getElementById("ys-sol-ok");
-    sagOk = document.getElementById("ys-sag-ok");
-    label = document.getElementById("ys-cikti-label");
-
-    const cevaplar = document.querySelectorAll('[name="ys-cikti-sikları"]');
+    const soru_gorseli = document.getElementById("ys-soru-gorseli");
+    const solOk = document.getElementById("ys-sol-ok");
+    const sagOk = document.getElementById("ys-sag-ok");
+    const label = document.getElementById("ys-cikti-label");
     const ysSubmit = document.getElementById("ys-cevapla");
 
-    // Tam ekran butonu
     const tam_ekran_buton = document.getElementById("ys-tam-ekran");
     const tam_ekran_cikis_buton = document.getElementById("ys-cikis-tam-ekran");
     const panel = document.getElementById("ys-cikti-soru");
@@ -131,55 +160,109 @@ function gunluk_sorulari_goster() {
     const butonE = document.getElementById("ysc-E");
     const butonBOS = document.getElementById("ysc-BOS");
 
+    if (
+        soru_gorseli === null ||
+        solOk === null ||
+        sagOk === null ||
+        label === null ||
+        ysSubmit === null ||
+        tam_ekran_buton === null ||
+        tam_ekran_cikis_buton === null ||
+        panel === null ||
+        butonA === null ||
+        butonB === null ||
+        butonC === null ||
+        butonD === null ||
+        butonE === null ||
+        butonBOS === null
+    ) {
+        return;
+    }
+
+    let sorular = [];
+    let aktifIndex = 0;
+    let aktifSoru = null;
+    let secilenCevap = null;
+
+    const cevaplar = document.querySelectorAll('[name="ys-cikti-sikları"]');
+
+    // TAM EKRAN
     tam_ekran_buton.addEventListener("click", function () {
         panel.requestFullscreen();
-        tam_ekran_buton.hidden = true
-        tam_ekran_cikis_buton.hidden = false
-    });
-    tam_ekran_cikis_buton.addEventListener("click", function () {
-        document.exitFullscreen();
-        tam_ekran_buton.hidden = false
-        tam_ekran_cikis_buton.hidden = true
+        tam_ekran_buton.hidden = true;
+        tam_ekran_cikis_buton.hidden = false;
     });
 
+    tam_ekran_cikis_buton.addEventListener("click", function () {
+        document.exitFullscreen();
+        tam_ekran_buton.hidden = false;
+        tam_ekran_cikis_buton.hidden = true;
+    });
+
+    // SORULARI AL
     fetch("/api/cozulecek-sorular")
         .then(function (response) {
             return response.json();
         })
         .then(function (data) {
+
             sorular = data;
+
+            if (sorular.length === 0) {
+                return;
+            }
+
             aktifSoru = sorular[aktifIndex];
+
             let gorselYolu = "/static/questions/" + aktifSoru.Foto;
+
             soru_gorseli.src = gorselYolu;
-            label.textContent = "Soru " + (aktifIndex + 1) + "/" + sorular.length;
+
+            label.textContent =
+                "Soru " + (aktifIndex + 1) + "/" + sorular.length;
 
             soru_durumunu_guncelle();
-
         });
 
-    function soru_durumunu_guncelle(){
-        if(aktifSoru.bugun_cozuldu === true){
-                ysSubmit.disabled = true;
-                butonA.disabled = true;
-                butonB.disabled = true;
-                butonC.disabled = true;
-                butonD.disabled = true;
-                butonE.disabled = true;
-                butonBOS.disabled = true;
-            }
-            else{
-                ysSubmit.disabled = false;
-                butonA.disabled = false;
-                butonB.disabled = false;
-                butonC.disabled = false;
-                butonD.disabled = false;
-                butonE.disabled = false;
-                butonBOS.disabled = false;
-            }
 
+    function soru_durumunu_guncelle() {
+
+        if (aktifSoru === null) {
+            return;
+        }
+
+        if (aktifSoru.bugun_cozuldu === true) {
+
+            ysSubmit.disabled = true;
+
+            butonA.disabled = true;
+            butonB.disabled = true;
+            butonC.disabled = true;
+            butonD.disabled = true;
+            butonE.disabled = true;
+            butonBOS.disabled = true;
+
+        } else {
+
+            ysSubmit.disabled = false;
+
+            butonA.disabled = false;
+            butonB.disabled = false;
+            butonC.disabled = false;
+            butonD.disabled = false;
+            butonE.disabled = false;
+            butonBOS.disabled = false;
+        }
     }
 
+
+    // SOL OK
     solOk.addEventListener("click", function () {
+
+        if (sorular.length === 0) {
+            return;
+        }
+
         aktifIndex -= 1;
 
         if (aktifIndex < 0) {
@@ -188,14 +271,24 @@ function gunluk_sorulari_goster() {
 
         aktifSoru = sorular[aktifIndex];
 
-        gorselYolu = "/static/questions/" + aktifSoru.Foto;
+        let gorselYolu = "/static/questions/" + aktifSoru.Foto;
+
         soru_gorseli.src = gorselYolu;
-        label.textContent = "Soru " + (aktifIndex + 1) + "/" + sorular.length;
+
+        label.textContent =
+            "Soru " + (aktifIndex + 1) + "/" + sorular.length;
 
         soru_durumunu_guncelle();
     });
 
+
+    // SAĞ OK
     sagOk.addEventListener("click", function () {
+
+        if (sorular.length === 0) {
+            return;
+        }
+
         aktifIndex += 1;
 
         if (aktifIndex >= sorular.length) {
@@ -204,21 +297,38 @@ function gunluk_sorulari_goster() {
 
         aktifSoru = sorular[aktifIndex];
 
-        gorselYolu = "/static/questions/" + aktifSoru.Foto;
+        let gorselYolu = "/static/questions/" + aktifSoru.Foto;
+
         soru_gorseli.src = gorselYolu;
-        label.textContent = "Soru " + (aktifIndex + 1) + "/" + sorular.length;
+
+        label.textContent =
+            "Soru " + (aktifIndex + 1) + "/" + sorular.length;
 
         soru_durumunu_guncelle();
     });
 
+
+    // CEVAP SEÇİMİ
     for (const cevap of cevaplar) {
+
+        if (cevap === null) {
+            continue;
+        }
+
         cevap.addEventListener("change", function () {
             secilenCevap = cevap.value;
             submitControl();
         });
     }
 
+
+    // CEVAPLA
     ysSubmit.addEventListener("click", function () {
+
+        if (aktifSoru === null || secilenCevap === null) {
+            return;
+        }
+
         fetch("/api/cozulecek-sorular-kontrol", {
             method: "POST",
             headers: {
@@ -233,6 +343,7 @@ function gunluk_sorulari_goster() {
                 return response.json();
             })
             .then(function (data) {
+
                 let dogruluk = data["dogruluk"];
                 let dogru_cevap = data["dogru_cevap"];
 
@@ -240,24 +351,38 @@ function gunluk_sorulari_goster() {
                 let yanlis_kutu = null;
 
                 if (dogruluk === true) {
-                    kutu = document.querySelector(`label[for="ysc-${secilenCevap}"]`).parentElement;
-                    kutu.style.backgroundColor = "#50dc2e";
-                }
 
-                else if (dogruluk === false) {
-                    yanlis_kutu = document.querySelector(`label[for="ysc-${secilenCevap}"]`).parentElement;
+                    kutu = document
+                        .querySelector(`label[for="ysc-${secilenCevap}"]`)
+                        .parentElement;
+
+                    kutu.style.backgroundColor = "#50dc2e";
+
+                } else if (dogruluk === false) {
+
+                    yanlis_kutu = document
+                        .querySelector(`label[for="ysc-${secilenCevap}"]`)
+                        .parentElement;
+
                     yanlis_kutu.style.backgroundColor = "#d25663";
 
-                    kutu = document.querySelector(`label[for="ysc-${dogru_cevap}"]`).parentElement;
-                    kutu.style.backgroundColor = "#50dc2e";
-                }
+                    kutu = document
+                        .querySelector(`label[for="ysc-${dogru_cevap}"]`)
+                        .parentElement;
 
-                else {
-                    kutu = document.querySelector(`label[for="ysc-${dogru_cevap}"]`).parentElement;
+                    kutu.style.backgroundColor = "#50dc2e";
+
+                } else {
+
+                    kutu = document
+                        .querySelector(`label[for="ysc-${dogru_cevap}"]`)
+                        .parentElement;
+
                     kutu.style.backgroundColor = "#50dc2e";
                 }
 
                 setTimeout(function () {
+
                     if (kutu) {
                         kutu.style.backgroundColor = "#d9fff9";
                     }
@@ -265,22 +390,99 @@ function gunluk_sorulari_goster() {
                     if (yanlis_kutu) {
                         yanlis_kutu.style.backgroundColor = "#d9fff9";
                     }
+
                 }, 3000);
 
                 aktifSoru.bugun_cozuldu = true;
+
                 soru_durumunu_guncelle();
-                
             });
     });
 
+
     function submitControl() {
+
         if (secilenCevap !== null) {
             ysSubmit.disabled = false;
-        }
-        else {
+        } else {
             ysSubmit.disabled = true;
         }
     }
 }
 
 gunluk_sorulari_goster();
+
+
+// =========================
+// LOGIN
+// =========================
+function login_sayfasi() {
+
+    const input = document.getElementById("kullanici-input");
+    const submit = document.getElementById("login-submit");
+    const bildirim = document.getElementById("login-bildirim");
+    const baslik = document.getElementById("login-bolumu-baslik")
+
+    if (
+        input === null ||
+        submit === null ||
+        bildirim === null
+    ) {
+        return;
+    }
+
+    submit.addEventListener("click", function (e) {
+
+        e.preventDefault();
+
+        const user = input.value;
+
+        fetch("/api/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                user: user
+            })
+        })
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (data) {
+
+                let giris_basarisi = data["giris_basarisi"];
+                let kullanici = data["kullanici"];
+
+                if (giris_basarisi === true) {
+
+                    bildirim.textContent =
+                        "Giriş başarılı. Hoşgeldin " + kullanici + ".";
+
+                    bildirim.style.color = "#14b82b";
+                    setTimeout(function () {
+                        window.location.reload("/");
+                     }, 4000);
+
+
+
+
+
+                } else {
+
+                    bildirim.textContent =
+                        "Kullanıcı adı bulunamadı. Tekrar deneyin.";
+
+                    bildirim.style.color = "#ca1602";
+
+
+                }
+                setTimeout(function () {
+                        bildirim.textContent = "";
+                     }, 3000);
+
+            });
+    });
+}
+
+login_sayfasi();
