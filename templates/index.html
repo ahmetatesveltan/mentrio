@@ -81,24 +81,31 @@
                     <div class="ys-giris-ust">
                         <div id="ys-giris-dersler">
                             <h4 class="ys-yazi">Dersler</h4>
-                            <select class="ys-select"  id="ys-ders-select" size="10">
-                                <option class="ys-ders-option"  value="matematik">Matematik</option>
-                                <option class="ys-ders-option" value="geometri">Geometri</option>
-                                <option class="ys-ders-option" value="edebiyat">Edebiyat</option>
-                                <option class="ys-ders-option" value="fizik">Fizik</option>
-                                <option class="ys-ders-option" value="kimya">Kimya</option>
-                                <option class="ys-ders-option" value="biyoloji">Biyoloji</option>
-                                <option class="ys-ders-option" value="tarih">Tarih</option>
-                                <option class="ys-ders-option" value="cografya">Coğrafya</option>
-                                <option class="ys-ders-option" value="felsefe">Felsefe</option>
-                                <option class="ys-ders-option" value="din">Din</option>
-                            </select>
+                            <div class="ys-select-wrapper">
+                                <select class="ys-select"  id="ys-ders-select">
+                                    <option value="" selected disabled>Ders seçin</option>
+                                    <option class="ys-ders-option"  value="matematik">Matematik</option>
+                                    <option class="ys-ders-option" value="geometri">Geometri</option>
+                                    <option class="ys-ders-option" value="edebiyat">Edebiyat</option>
+                                    <option class="ys-ders-option" value="fizik">Fizik</option>
+                                    <option class="ys-ders-option" value="kimya">Kimya</option>
+                                    <option class="ys-ders-option" value="biyoloji">Biyoloji</option>
+                                    <option class="ys-ders-option" value="tarih">Tarih</option>
+                                    <option class="ys-ders-option" value="cografya">Coğrafya</option>
+                                    <option class="ys-ders-option" value="felsefe">Felsefe</option>
+                                    <option class="ys-ders-option" value="din">Din</option>
+                                </select>
+                                <span class="ys-select-ok">▼</span>
+                            </div>
                         </div>
                         <div id="ys-giris-konular">
                             <h4 class="ys-yazi">Konular</h4>
-                            <select class="ys-select" id="ys-konu-select" size="10">
-
-                            </select>
+                            <div class="ys-select-wrapper">
+                                <select class="ys-select" id="ys-konu-select">
+                                    <option value="" selected disabled>Konu Seçin</option>
+                                </select>
+                                <span class="ys-select-ok">▼</span>
+                            </div>
                         </div>
                         <div id="ys-giris-buton-bolumu">
                             <button disabled type="submit" id="ys-giris-submit">Yanlış Ekle</button>

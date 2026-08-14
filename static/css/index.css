@@ -397,11 +397,23 @@ body {
     overflow-y: auto;
     scrollbar-width: none;
 }
-
+.ys-select-wrapper {
+    position: relative;
+    width: 100%;
+}
 .ys-select option {
     font-size: 2rem;
     font-weight: bold;
     padding: 0.2rem;
+}
+.ys-select-ok {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    font-size: 1.5rem;
+    pointer-events: none;
 }
 
 .ys-select option:checked {
