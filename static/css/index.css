@@ -384,7 +384,8 @@ body {
     flex-direction: column;
     width: 30%;
     height: 85%;
-    gap: 5%
+    gap: 5%;
+    min-height: 0;
 }
 
 .ys-select {
@@ -393,10 +394,10 @@ body {
     height: 100%;
     min-height: 0;
     background-color: #d9fff9;
-    font-size: 2rem;
-    font-weight: bold;
-    padding: 5px;
+    overflow-y: auto;
+    scrollbar-width: none;
 }
+
 .ys-select option {
     font-size: 2rem;
     font-weight: bold;
