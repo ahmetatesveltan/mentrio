@@ -27,6 +27,7 @@ body {
     scroll-snap-type: x mandatory;
 }
 
+
 /* =========================
    GENEL BAŞLIKLAR
 ========================= */
@@ -371,7 +372,15 @@ body {
     height: 75%;
 
 }
-
+#ys-giris-submit,
+#ys-konu-select,
+#ys-ders-submit{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    line-height: 1;
+}
 .ys-yazi {
     display: flex;
     font-size: 3rem;
