@@ -193,7 +193,7 @@ function gunluk_sorulari_goster() {
 
     // TAM EKRAN
     tam_ekran_buton.addEventListener("click", function () {
-        panel.requestFullscreen();
+        console.log("basıldı")
         tam_ekran_buton.hidden = true;
         tam_ekran_cikis_buton.hidden = false;
     });
