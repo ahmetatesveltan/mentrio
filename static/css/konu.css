@@ -30,6 +30,7 @@ main {
     height: 100dvh;
     width: 100vw;
     overflow: hidden;
+    scroll-snap-type: x-mandatory
 }
 h1 {
     font-size: 5rem;
