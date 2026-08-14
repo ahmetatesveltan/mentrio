@@ -400,9 +400,10 @@ body {
 .ys-select-wrapper {
     position: relative;
     width: 100%;
+    height: 10%
 }
 .ys-select option {
-    font-size: 2rem;
+    font-size: 2.5rem;
     font-weight: bold;
     padding: 0.2rem;
 }
