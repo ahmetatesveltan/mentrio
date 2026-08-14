@@ -40,6 +40,9 @@ konu_select();
 // =========================
 // YANLIŞ SORU EKLEME
 // =========================
+// =========================
+// YANLIŞ SORU EKLEME
+// =========================
 function gunluk_sorulari_ekle() {
 
     const gorselInput = document.getElementById("ys-gorsel-ekle");
@@ -47,54 +50,43 @@ function gunluk_sorulari_ekle() {
     const ysDersSelect = document.getElementById("ys-ders-select");
     const ysKonuSelect = document.getElementById("ys-konu-select");
     const ysSubmit = document.getElementById("ys-giris-submit");
+    const ysBildirim = document.getElementById("ys-bildirim");
 
     if (
         gorselInput === null ||
         ysDersSelect === null ||
         ysKonuSelect === null ||
-        ysSubmit === null
+        ysSubmit === null ||
+        ysBildirim === null
     ) {
         return;
     }
 
-    let secilenGorsel = null;
-    let secilenCevap = null;
-    let secilenDers = null;
-    let secilenKonu = null;
 
-    ysDersSelect.addEventListener("change", function () {
-        secilenDers = ysDersSelect.value;
-        submitControl();
-    });
-
-    ysKonuSelect.addEventListener("change", function () {
-        secilenKonu = ysKonuSelect.value;
-        submitControl();
-    });
-
-    for (const cevap of cevaplar) {
-
-        if (cevap === null) {
-            continue;
-        }
-
-        cevap.addEventListener("change", function () {
-            secilenCevap = cevap.value;
-            submitControl();
-        });
-    }
-
-    gorselInput.addEventListener("change", function () {
-        secilenGorsel = gorselInput.files[0];
-        submitControl();
-    });
-
+    // =========================
+    // BUTON KONTROLÜ
+    // =========================
     function submitControl() {
+
+        const ders = ysDersSelect.value;
+        const konu = ysKonuSelect.value;
+
+        const seciliCevap = document.querySelector(
+            '.ys-sikları:checked'
+        );
+
+        const gorselSecildi =
+            gorselInput.files.length > 0;
+
+        const cevapSecildi =
+            seciliCevap !== null;
+
+
         if (
-            secilenGorsel !== null &&
-            secilenCevap !== null &&
-            secilenDers !== null &&
-            secilenKonu !== null
+            ders !== "" &&
+            konu !== "" &&
+            cevapSecildi &&
+            gorselSecildi
         ) {
             ysSubmit.disabled = false;
         } else {
@@ -102,43 +94,164 @@ function gunluk_sorulari_ekle() {
         }
     }
 
+
+    // =========================
+    // DERS SEÇİMİ
+    // =========================
+    ysDersSelect.addEventListener("change", function () {
+
+        // Konular API'den geldiği için önce eski konuları temizle
+        ysKonuSelect.innerHTML = "";
+
+        // Butonu hemen kapat
+        ysSubmit.disabled = true;
+
+        const ders = ysDersSelect.value;
+
+        fetch("/api/ys-select?ders=" + ders)
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (konular) {
+
+                konular.forEach(function (konu) {
+
+                    const option = document.createElement("option");
+
+                    option.textContent = konu;
+                    option.value = konu;
+
+                    ysKonuSelect.appendChild(option);
+                });
+
+
+                // İlk konu otomatik seçilir
+                if (konular.length > 0) {
+                    ysKonuSelect.value = konular[0];
+                }
+
+                submitControl();
+            })
+            .catch(function (error) {
+
+                console.log("Konu yükleme hatası:", error);
+
+                ysSubmit.disabled = true;
+            });
+    });
+
+
+    // =========================
+    // KONU SEÇİMİ
+    // =========================
+    ysKonuSelect.addEventListener("change", function () {
+        submitControl();
+    });
+
+
+    // =========================
+    // CEVAP SEÇİMİ
+    // =========================
+    for (const cevap of cevaplar) {
+
+        cevap.addEventListener("change", function () {
+            submitControl();
+        });
+    }
+
+
+    // =========================
+    // GÖRSEL SEÇİMİ
+    // =========================
+    gorselInput.addEventListener("change", function () {
+        submitControl();
+    });
+
+
+    // =========================
+    // YANLIŞ EKLE
+    // =========================
     ysSubmit.addEventListener("click", function (e) {
-        e.preventDefault()
+
+        e.preventDefault();
 
 
-        const ysData = new FormData();
-        const ysBildirim = document.getElementById("ys-bildirim");
+        const ders = ysDersSelect.value;
+        const konu = ysKonuSelect.value;
 
-        if (ysBildirim === null) {
+        const seciliCevap = document.querySelector(
+            '.ys-sikları:checked'
+        );
+
+
+        if (
+            ders === "" ||
+            konu === "" ||
+            seciliCevap === null ||
+            gorselInput.files.length === 0
+        ) {
             return;
         }
 
-        ysData.append("ders", secilenDers);
-        ysData.append("konu", secilenKonu);
-        ysData.append("cevap", secilenCevap);
-        ysData.append("image", secilenGorsel);
+
+        const cevap = seciliCevap.value;
+        const gorsel = gorselInput.files[0];
+
+
+        const ysData = new FormData();
+
+        ysData.append("ders", ders);
+        ysData.append("konu", konu);
+        ysData.append("cevap", cevap);
+        ysData.append("image", gorsel);
+
 
         fetch("/api/ys-ekle", {
             method: "POST",
             body: ysData
         })
-            .then(function (response) {
+        .then(function (response) {
 
-                ysBildirim.textContent = "Soru Kaydedildi.";
+            if (!response.ok) {
+                throw new Error("Soru eklenemedi.");
+            }
 
-                 gorselInput.value = "";
-                 secilenGorsel = null;
+            return response.text();
+        })
+        .then(function () {
+
+            ysBildirim.textContent = "Soru Kaydedildi.";
+
+            // Görseli temizle
+            gorselInput.value = "";
+
+            // Cevabı temizle
+            for (const cevap of cevaplar) {
+                cevap.checked = false;
+            }
+
+            // Butonu tekrar kapat
+            ysSubmit.disabled = true;
 
 
-                setTimeout(function () {
-                    ysBildirim.textContent = "";
-                }, 2000);
+            setTimeout(function () {
+                ysBildirim.textContent = "";
+            }, 2000);
+        })
+        .catch(function (error) {
 
-            });
+            console.log(error);
 
-        ysSubmit.disabled = true;
+            ysBildirim.textContent =
+                "Hata: " + error.message;
+        });
     });
+
+
+    // Başlangıçta buton kapalı
+    submitControl();
 }
+
 
 gunluk_sorulari_ekle();
 
@@ -192,77 +305,29 @@ function gunluk_sorulari_goster() {
     const cevaplar = document.querySelectorAll('[name="ys-cikti-sikları"]');
 
     // TAM EKRAN
-    function debug(mesaj) {
-    const debugDiv = document.getElementById("debug");
-    if (debugDiv) {
-        debugDiv.textContent += mesaj + "\n";
-    }
-}
+    tam_ekran_buton.addEventListener("click", function (e) {
+        e.preventDefault();
 
-tam_ekran_buton.addEventListener("click", function (e) {
-    e.preventDefault();
+        console.log("fullscreen click");
 
-    debug("fullscreen butonuna basıldı");
+        panel.classList.add("css-fullscreen");
+        document.body.classList.add("css-fullscreen-active");
 
-    if (!panel) {
-        debug("HATA: panel bulunamadı");
-        return;
-    }
+        tam_ekran_buton.hidden = true;
+        tam_ekran_cikis_buton.hidden = false;
+    });
 
-    debug("panel bulundu");
+    tam_ekran_cikis_buton.addEventListener("click", function (e) {
+        e.preventDefault();
 
-    if (!document.fullscreenEnabled) {
-        debug("HATA: fullscreenEnabled FALSE");
-        return;
-    }
+        console.log("exit screen click");
 
-    debug("fullscreenEnabled TRUE");
-    debug("requestFullscreen çağrılıyor");
+        panel.classList.remove("css-fullscreen");
+        document.body.classList.remove("css-fullscreen-active");
 
-    panel.requestFullscreen()
-        .then(function () {
-            debug("requestFullscreen BAŞARILI");
-
-            tam_ekran_buton.hidden = true;
-            tam_ekran_cikis_buton.hidden = false;
-
-            debug("butonlar değiştirildi");
-        })
-        .catch(function (error) {
-            debug("requestFullscreen HATA");
-            debug("error: " + error.name);
-            debug("message: " + error.message);
-        });
-});
-
-document.addEventListener("fullscreenchange", function () {
-    debug("fullscreenchange çalıştı");
-
-    if (document.fullscreenElement) {
-        debug("fullscreenElement VAR");
-    } else {
-        debug("fullscreenElement YOK");
-    }
-});
-
-document.addEventListener("fullscreenerror", function () {
-    debug("fullscreenerror çalıştı");
-});
-
-tam_ekran_cikis_buton.addEventListener("click", function (e) {
-    e.preventDefault();
-
-    debug("çıkış butonuna basıldı");
-
-    document.exitFullscreen()
-        .then(function () {
-            debug("fullscreen'den çıkıldı");
-        })
-        .catch(function (error) {
-            debug("çıkış HATASI: " + error.name);
-        });
-});
-
+        tam_ekran_buton.hidden = false;
+        tam_ekran_cikis_buton.hidden = true;
+    });
     // SORULARI AL
     fetch("/api/cozulecek-sorular")
         .then(function (response) {
