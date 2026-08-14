@@ -292,8 +292,8 @@ h1 {
 
 /* =========================
    SAĞ PANEL
-    ========================= */#
-right-panel {
+    ========================= */
+#right-panel {
     width: 100vw;
     height: 100dvh;
     flex: 0 0 100%;
@@ -301,8 +301,6 @@ right-panel {
     scroll-snap-align: start;
     box-sizing: border-box;
     overflow-x: hidden;
-    min-width: 100%;
-    flex-shrink:0;
 }
 
 #konu-ozeti-baslik {
