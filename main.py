@@ -2,37 +2,40 @@ import json
 from datetime import *
 import os
 
-def load_data():
+def load_data(user):
     try:
-        with open("data/data.json", "r", encoding="utf-8") as f:
+        with open(f"data/{user}.json", "r", encoding="utf-8") as f:
             return json.load(f)
 
     except json.JSONDecodeError:
         print("JSON dosyası boş veya bozuk!")
         return None
 
-def save_data(data):
-    with open("data_temp.json", "w", encoding="utf-8") as f:
+def save_data(user, data):
+    temp_path = f"data/{user}_temp.json"
+    user_path = f"data/{user}.json"
+
+    with open(temp_path, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=4, ensure_ascii=False)
 
-    os.replace("data_temp.json", "data/data.json")
+    os.replace(temp_path, user_path)
 
 
 #DERS EKLEME
-def ders_ekle(ders):
-    data = load_data()
+def ders_ekle(user, ders):
+    data = load_data(user)
     if ders not in data["Dersler"]:
             data["Dersler"][ders] = {}
 
-    save_data(data)
-def ders_listesi():
-    data = load_data()
+    save_data(user, data)
+def ders_listesi(user):
+    data = load_data(user)
     dersler = []
     for ders in data["Dersler"]:
         dersler.append(ders)
     return dersler
-def konu_listesi(ders):
-    data = load_data()
+def konu_listesi(user, ders):
+    data = load_data(user)
     konular = []
     for konu in data["Dersler"][ders].keys():
         konular.append(konu)
@@ -40,8 +43,8 @@ def konu_listesi(ders):
 
 
 #KONU EKLEME
-def konu_ekle(ders, konu):
-    data = load_data()
+def konu_ekle(user, ders, konu):
+    data = load_data(user)
 
 
     if konu not in data["Dersler"][ders]:
@@ -50,11 +53,11 @@ def konu_ekle(ders, konu):
             "yanlis": 0,
             "son_tekrar":  "2000-01-01"
         }
-    save_data(data)
+    save_data(user, data)
 
 #SORU EKLEME
-def soru_ekle(ders, konu, dogru, yanlis):
-    data = load_data()
+def soru_ekle(user, ders, konu, dogru, yanlis):
+    data = load_data(user)
     #DOĞRU VE YANLIŞ SAYISI EKLEME
     try:
         data["Dersler"][ders][konu]["dogru"] += dogru
@@ -63,15 +66,15 @@ def soru_ekle(ders, konu, dogru, yanlis):
         print("Bu ders veya konu programa henüz ekli değil. Lütfen önce sisteme ekleyin.")
 
 
-    save_data(data)
+    save_data(user, data)
 
 
 #SON KONU TEKRAR TARİHİ EKLEME
-def konu_tekrari(ders, konu):
-    data = load_data()
+def konu_tekrari(user, ders, konu):
+    data = load_data(user)
     data["Dersler"][ders][konu]["son_tekrar"] = str(date.today())
 
-    save_data(data)
+    save_data(user, data)
 
 #USTALIK HESAPLAMA
 
@@ -152,18 +155,16 @@ def bugun_calisilacaklar(data):
 
     return sonuc
 
-data = load_data()
-bugun_calisilacaklar(data)
-def soru_kaydetme_butonu(secilen_ders, secilen_konu, dogru_degeri, yanlis_degeri):
-    data = load_data()
+def soru_kaydetme_butonu(user, secilen_ders, secilen_konu, dogru_degeri, yanlis_degeri):
+    data = load_data(user)
 
     data["Dersler"][secilen_ders][secilen_konu]["dogru"] += dogru_degeri
     data["Dersler"][secilen_ders][secilen_konu]["yanlis"] += yanlis_degeri
 
-    save_data(data)
+    save_data(user, data)
 
-def soru_havuzuna_ekle(ders, konu, cevap, gorsel):
-    data = load_data()
+def soru_havuzuna_ekle(user, ders, konu, cevap, gorsel):
+    data = load_data(user)
 
     sifir_str = "0"
     sonraki_id = data["SonrakiSoruID"]
@@ -183,7 +184,7 @@ def soru_havuzuna_ekle(ders, konu, cevap, gorsel):
                            "Sonraki Tekrar": str((date.today() + timedelta(days=1)))
     }
     data["SonrakiSoruID"] +=1
-    save_data(data)
+    save_data(user, data)
 
 
 def soru_havuzu_tekrar(data):
@@ -198,7 +199,7 @@ def soru_havuzu_tekrar(data):
 
     return (calisilacak_sorular[:10])
 
-def soru_havuzu_cozme(data, soru, cevap):
+def soru_havuzu_cozme(user, data, soru, cevap):
     if cevap == "BOS":
         dogruluk = "BOS"
     elif cevap == data["Soru Havuzu"][soru]["Cevap"] == cevap:
@@ -220,11 +221,12 @@ def soru_havuzu_cozme(data, soru, cevap):
 
     if tekrar_seviyesi > len(tekrar_araliklari)-1:
         data["Soru Havuzu"].pop(soru)
+    save_data(user,data)
 
 
     return dogruluk
-def konu_basari_siralama(secilen_ders):
-    data = load_data()
+def konu_basari_siralama(user, secilen_ders):
+    data = load_data(user)
     konu_soru_siralama = {}  # Soru yüzdesi kısmı
 
 
@@ -249,9 +251,9 @@ def konu_basari_siralama(secilen_ders):
 
     return konu_soru_siralama[:5]
 
-def konu_calisma_sure_siralama(secilen_ders):
+def konu_calisma_sure_siralama(user, secilen_ders):
     calisilmayan_gunler = {}
-    data = load_data()
+    data = load_data(user)
     for konu in data["Dersler"][secilen_ders]:
         son_calisma = data["Dersler"][secilen_ders][konu]["son_tekrar"]
         son_calisma_tarihi = datetime.strptime(son_calisma, "%Y-%m-%d").date()

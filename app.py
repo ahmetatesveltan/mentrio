@@ -1,4 +1,3 @@
-from typing import Protocol
 
 from flask import Flask, render_template, request, jsonify, session, redirect
 from main import *
@@ -20,7 +19,7 @@ def home():
     if user is None:
         return render_template("index.html", giris_yapildi=False)
 
-    data = load_data()
+    data = load_data(user)
 
     calisilacak_konular = bugun_calisilacaklar(data) #Çalışılacak 2 konu
                                                       #2konunun ustalığı
@@ -36,11 +35,12 @@ def home():
 
 @app.route("/ders/<ders_adi>")  #DERS SAYFASINI AÇAR
 def ders_sayfasi(ders_adi):
-    data = load_data()
+    user = session.get("user")
+    data = load_data(user)
     secilen_ders = ders_adi.capitalize()
     konu_butonlari = [konu for konu in data["Dersler"][secilen_ders.capitalize()].keys()]
-    basari_zayif_konular = konu_basari_siralama(secilen_ders)[:5]
-    calisma_zayif_konular = konu_calisma_sure_siralama(secilen_ders)[:5]
+    basari_zayif_konular = konu_basari_siralama(user, secilen_ders)[:5]
+    calisma_zayif_konular = konu_calisma_sure_siralama(user, secilen_ders)[:5]
     print(calisma_zayif_konular)
     return render_template("ders.html",
                     secilen_ders=secilen_ders.capitalize(),
@@ -50,7 +50,8 @@ def ders_sayfasi(ders_adi):
 
 @app.route("/ders/<ders_adi>/konu/<konu_adi>") #KONU SAYFASINI AÇAR
 def konu_sayfasi(ders_adi, konu_adi):
-    data = load_data()
+    user = session.get("user")
+    data = load_data(user)
     secilen_ders = ders_adi
     secilen_konu = konu_adi
     dogru_bilgisi = data["Dersler"][secilen_ders.capitalize()][secilen_konu.capitalize()]["dogru"]
@@ -88,7 +89,8 @@ def logout():
 
 @app.route("/api/ys-select") #KONU SELECTINI DOLDURUR
 def ys_konu_select():
-    data = load_data()
+    user = session.get("user")
+    data = load_data(user)
 
     ders = request.args.get("ders")
     ys_select_konular = list(data["Dersler"][ders.capitalize()].keys())
@@ -96,17 +98,18 @@ def ys_konu_select():
 
 @app.route("/api/ys-ekle", methods=["POST"]) #YANLIŞ YAPILAN SORULARI VERİTABANINA EKLER
 def ys_ekle():
-
+    user = session.get("user")
     secilenDers = request.form["ders"]
     secilenKonu = request.form["konu"]
     secilenCevap = request.form["cevap"]
     secilenGorsel = request.files["image"]
-    soru_havuzuna_ekle(secilenDers.capitalize(), secilenKonu.capitalize(), secilenCevap, secilenGorsel)
+    soru_havuzuna_ekle(user, secilenDers.capitalize(), secilenKonu.capitalize(), secilenCevap, secilenGorsel)
     return "Cevaplar JSON'a Kaydedildi"
 
 @app.route("/api/cozulecek-sorular") #BUGÜN ÇÖZÜLECEK SORULARI VERİR
 def cozulecek_sorular():
-    data = load_data()
+    user = session.get("user")
+    data = load_data(user)
     liste = soru_havuzu_tekrar(data)
     idler = []
     for soru in liste:
@@ -129,7 +132,8 @@ def cozulecek_sorular():
 
 @app.route("/api/cozulecek-sorular-kontrol", methods=["POST"]) #ÇÖZÜLEN SORULARIN DOĞRULUĞUNU 
 def cozulecek_sorular_kontrol():                                   #KONTROL EDER
-    data = load_data()
+    user = session.get("user")
+    data = load_data(user)
     bugun = str(date.today())
     if bugun not in data["Gunluk Cozulen Sorular"]:
         data["Gunluk Cozulen Sorular"][bugun] = []
@@ -140,17 +144,18 @@ def cozulecek_sorular_kontrol():                                   #KONTROL EDER
     dogru_cevap = data["Soru Havuzu"][id]["Cevap"]
     dogruluk = soru_havuzu_cozme(data, id, cevap)
 
-    save_data(data)
+    save_data(user, data)
 
     return jsonify({"dogruluk": dogruluk, "dogru_cevap": dogru_cevap})
 
 @app.route("/api/konu-ekle", methods=["POST"]) #DERS SAYFASINA KONU BUTONLARI KOYAR 
 def sayfaya_konu_ekle():
+    user = session.get("user")
     veri = request.json
     ders = veri["ders"].capitalize()
     konu = veri["konu"]
 
-    konu_ekle(ders, konu)
+    konu_ekle(user, ders, konu)
 
     return jsonify({
         "basarili": True
@@ -158,7 +163,8 @@ def sayfaya_konu_ekle():
 
 @app.route("/api/soru-yuklemesi", methods=["POST"])
 def soru_yuklemesi():
-    data = load_data()
+    user = session.get("user")
+    data = load_data(user)
     veri = request.json
 
     dogru_sayisi = int(veri["dogru_sayisi"])
@@ -170,7 +176,7 @@ def soru_yuklemesi():
     data["Dersler"][ders][konu]["yanlis"] += yanlis_sayisi
 
 
-    save_data(data)
+    save_data(user, data)
 
     return jsonify({
         "basarili": True
