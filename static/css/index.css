@@ -396,6 +396,7 @@ body {
     background-color: #d9fff9;
     overflow-y: auto;
     scrollbar-width: none;
+    font-size: 2rem;
 }
 .ys-select-wrapper {
     position: relative;
@@ -403,7 +404,7 @@ body {
     height: 10%
 }
 .ys-select option {
-    font-size: 2.5rem;
+    font-size: 2rem;
     font-weight: bold;
     padding: 0.2rem;
 }
