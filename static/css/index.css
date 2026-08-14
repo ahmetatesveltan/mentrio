@@ -469,9 +469,11 @@ body {
 }
 .ys-sik{
     display: flex;
+    align-items: center;
+    justify-content: center;
     width: 13%;
+    height: 60%;
     height: 30%;
-    transform: translateX(20%);
     gap: 30%
 }
 .ys-sik label{
