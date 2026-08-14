@@ -374,7 +374,7 @@ body {
 }
 #ys-giris-submit,
 #ys-konu-select,
-#ys-ders-submit{
+#ys-ders-select{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -451,7 +451,6 @@ body {
     background-color: #d9fff9;
     border: 3px outset;
     font-size: 3rem;
-    transform: translateY(20%);
 }
 #ys-giris-submit:disabled{
     color: dimgray;
