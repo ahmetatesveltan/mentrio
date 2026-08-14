@@ -390,10 +390,12 @@ body {
 .ys-select {
     display: block;
     width: 100%;
-    height: fit-content;
+    height: 100%;
+    min-height: 0;
     background-color: #d9fff9;
-    scrollbar-width: none;
-    flex: 1;
+    font-size: 2rem;
+    font-weight: bold;
+    padding: 5px;
 }
 .ys-select option {
     font-size: 2rem;
