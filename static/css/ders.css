@@ -102,8 +102,11 @@ h1{
     left: 2%;
     top: 50%;
     visibility: hidden;
-    width: 25%;
-    height: 10%;
+    width: 30%;
+    height: 17%;
+}
+#konu-form-input{
+    font-size: 1.4rem
 }
 
 #konu-ekle-buton {
