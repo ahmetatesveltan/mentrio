@@ -284,7 +284,8 @@ body {
     align-items: center;
     justify-content: center;
     flex: 1;
-    aspect-ratio: 16 / 9;
+    width: 98%;
+    height: 80%;
     background-color: #d9fff9;
     border: 2px outset;
     font-family: Papyrus, fantasy;
