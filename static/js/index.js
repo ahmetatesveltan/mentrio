@@ -194,6 +194,7 @@ function gunluk_sorulari_goster() {
     // TAM EKRAN
     tam_ekran_buton.addEventListener("click", function (e) {
         e.preventDefault()
+        console.log("fullscreen click")
         panel.requestFullscreen()
         tam_ekran_buton.hidden = true;
         tam_ekran_cikis_buton.hidden = false;
@@ -201,6 +202,7 @@ function gunluk_sorulari_goster() {
 
     tam_ekran_cikis_buton.addEventListener("click", function (e) {
         e.preventDefault()
+        console.log("exit screen click")
         document.exitFullscreen();
         tam_ekran_buton.hidden = false;
         tam_ekran_cikis_buton.hidden = true;
