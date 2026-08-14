@@ -293,6 +293,7 @@ h1 {
 /* =========================
    SAĞ PANEL
     ========================= */
+
 #right-panel {
     display: flex;
     flex-direction: column;
@@ -311,14 +312,17 @@ h1 {
 #konu-ozeti-baslik {
     width: 100%;
     height: 10%;
+
     display: flex;
     align-items: center;
     justify-content: center;
+
+    flex-shrink: 0;
 }
 
 #konu-ozeti-baslik .baslik {
     margin: 0;
-    font-size: 2rem;
+    font-size: 4rem;
 }
 
 #right-icerik {
@@ -328,18 +332,22 @@ h1 {
     display: flex;
     justify-content: center;
     align-items: center;
+
+    flex-shrink: 0;
 }
 
 #right-icerik h3 {
-    font-size: 10rem;
+    font-size: 7rem;
     text-align: center;
 }
 
 #calisildi-buton {
     width: 80%;
     height: 8%;
-    margin: 1% auto 0 auto;
+    margin: 1% auto;
 
     font-size: 1.1rem;
     cursor: pointer;
+
+    flex-shrink: 0;
 }
