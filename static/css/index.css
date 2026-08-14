@@ -26,7 +26,17 @@ body {
     overflow-y: hidden;
     scroll-snap-type: x mandatory;
 }
-
+#debug {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 99999;
+    background-color: white;
+    color: black;
+    font-size: 16px;
+    padding: 10px;
+    white-space: pre-line;
+}
 
 /* =========================
    GENEL BAŞLIKLAR

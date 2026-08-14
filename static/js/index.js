@@ -192,21 +192,76 @@ function gunluk_sorulari_goster() {
     const cevaplar = document.querySelectorAll('[name="ys-cikti-sikları"]');
 
     // TAM EKRAN
-    tam_ekran_buton.addEventListener("click", function (e) {
-        e.preventDefault()
-        console.log("fullscreen click")
-        panel.requestFullscreen()
-        tam_ekran_buton.hidden = true;
-        tam_ekran_cikis_buton.hidden = false;
-    });
+    function debug(mesaj) {
+    const debugDiv = document.getElementById("debug");
+    if (debugDiv) {
+        debugDiv.textContent += mesaj + "\n";
+    }
+}
 
-    tam_ekran_cikis_buton.addEventListener("click", function (e) {
-        e.preventDefault()
-        console.log("exit screen click")
-        document.exitFullscreen();
-        tam_ekran_buton.hidden = false;
-        tam_ekran_cikis_buton.hidden = true;
-    });
+tam_ekran_buton.addEventListener("click", function (e) {
+    e.preventDefault();
+
+    debug("fullscreen butonuna basıldı");
+
+    if (!panel) {
+        debug("HATA: panel bulunamadı");
+        return;
+    }
+
+    debug("panel bulundu");
+
+    if (!document.fullscreenEnabled) {
+        debug("HATA: fullscreenEnabled FALSE");
+        return;
+    }
+
+    debug("fullscreenEnabled TRUE");
+    debug("requestFullscreen çağrılıyor");
+
+    panel.requestFullscreen()
+        .then(function () {
+            debug("requestFullscreen BAŞARILI");
+
+            tam_ekran_buton.hidden = true;
+            tam_ekran_cikis_buton.hidden = false;
+
+            debug("butonlar değiştirildi");
+        })
+        .catch(function (error) {
+            debug("requestFullscreen HATA");
+            debug("error: " + error.name);
+            debug("message: " + error.message);
+        });
+});
+
+document.addEventListener("fullscreenchange", function () {
+    debug("fullscreenchange çalıştı");
+
+    if (document.fullscreenElement) {
+        debug("fullscreenElement VAR");
+    } else {
+        debug("fullscreenElement YOK");
+    }
+});
+
+document.addEventListener("fullscreenerror", function () {
+    debug("fullscreenerror çalıştı");
+});
+
+tam_ekran_cikis_buton.addEventListener("click", function (e) {
+    e.preventDefault();
+
+    debug("çıkış butonuna basıldı");
+
+    document.exitFullscreen()
+        .then(function () {
+            debug("fullscreen'den çıkıldı");
+        })
+        .catch(function (error) {
+            debug("çıkış HATASI: " + error.name);
+        });
+});
 
     // SORULARI AL
     fetch("/api/cozulecek-sorular")
