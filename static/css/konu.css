@@ -294,11 +294,16 @@ h1 {
    SAĞ PANEL
     ========================= */
 #right-panel {
+    display: flex;
+    flex-direction: column;
+
     width: 100vw;
     height: 100dvh;
     flex: 0 0 100%;
+
     background-color: #f3dfc4;
     scroll-snap-align: start;
+
     box-sizing: border-box;
     overflow-x: hidden;
 }
@@ -317,10 +322,12 @@ h1 {
 }
 
 #right-icerik {
+    width: 100%;
+    height: 75%;
+
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 75%;
 }
 
 #right-icerik h3 {
@@ -329,10 +336,10 @@ h1 {
 }
 
 #calisildi-buton {
-    display: block;
     width: 80%;
-    height: 50px;
-    margin: 10px auto;
+    height: 8%;
+    margin: 1% auto 0 auto;
+
     font-size: 1.1rem;
     cursor: pointer;
 }
