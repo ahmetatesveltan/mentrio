@@ -276,6 +276,7 @@ h1 {
     border-right: 4px solid #2b2b2b;
 
     scroll-snap-align: start;
+    
 }
 #middle-icerik{
     display: flex;
@@ -297,6 +298,10 @@ right-panel {
     flex: 0 0 100%;
     background-color: #f3dfc4;
     scroll-snap-align: start;
+    box-sizing: border-box;
+    overflow-x: hidden;
+    min-width: 100%;
+    flex-shrink:0;
 }
 
 #konu-ozeti-baslik {
