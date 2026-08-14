@@ -38,7 +38,15 @@
         "Din": {}
     },
     "Soru Havuzu": {
+        "q0001": {
+            "Ders": "Matematik",
+            "Konu": "Fonksiyon",
+            "Cevap": "C",
+            "Foto": "q0001.jfif",
+            "Tekrar Seviyesi": 0,
+            "Sonraki Tekrar": "2026-08-16"
+        }
     },
-    "SonrakiSoruID": 1,
+    "SonrakiSoruID": 2,
     "Gunluk Cozulen Sorular": {}
 }

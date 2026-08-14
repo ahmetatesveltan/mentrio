@@ -174,7 +174,7 @@ def soru_havuzuna_ekle(user, ders, konu, cevap, gorsel):
 
     dosya_ismi = soru_id + uzanti
 
-    gorsel.save(f"static/questions/{user}/{dosya_ismi}")
+    gorsel.save(f"static/questions/{user.lower()}/{dosya_ismi}")
 
     data["Soru Havuzu"][soru_id] = {"Ders": ders,
                            "Konu":konu,

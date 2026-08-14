@@ -9,12 +9,12 @@ from datetime import *
 app = Flask(__name__)
 app.secret_key = "Secret key"
 
-users = ["Ates", "İbisoglu"]
+
+users = ["Ates", "Batu", "Beyza", "Can", "Elif", "Emre", "Hazal", "Işıl", "Nese", "Recep", "Utku" ]
 
 @app.route("/")
 def home():
     user = session.get("user")
-
 
     if user is None:
         return render_template("index.html", giris_yapildi=False)
