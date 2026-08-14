@@ -437,10 +437,15 @@ body {
 #ys-giris-submit {
     width: 100%;
     height: 30%;
+    color: black;
     background-color: #d9fff9;
     border: 3px outset;
     font-size: 3rem;
     transform: translateY(20%);
+}
+#ys-giris-submit:disabled{
+    color: dimgray;
+    background-color: #c8eee9;
 }
 
 #ys-bildirim {

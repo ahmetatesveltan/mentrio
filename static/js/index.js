@@ -80,7 +80,6 @@ function gunluk_sorulari_ekle() {
 
         cevap.addEventListener("change", function () {
             secilenCevap = cevap.value;
-            console.log(secilenCevap);
             submitControl();
         });
     }
@@ -103,7 +102,9 @@ function gunluk_sorulari_ekle() {
         }
     }
 
-    ysSubmit.addEventListener("click", function () {
+    ysSubmit.addEventListener("click", function (e) {
+        e.preventDefault()
+
 
         const ysData = new FormData();
         const ysBildirim = document.getElementById("ys-bildirim");
@@ -124,6 +125,10 @@ function gunluk_sorulari_ekle() {
             .then(function (response) {
 
                 ysBildirim.textContent = "Soru Kaydedildi.";
+
+                 gorselInput.value = "";
+                 secilenGorsel = null;
+
 
                 setTimeout(function () {
                     ysBildirim.textContent = "";
