@@ -36,7 +36,14 @@ main {
 h1 {
     font-size: 5rem;
 }
-
+#panels-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+    width: 100%;
+    overflow: hidden;
+}
 
 /* =========================
    GENEL
@@ -86,9 +93,9 @@ h1 {
     display: flex;
     width: 100%;
     flex: 19;
+    min-height: 0;
     overflow-x: auto;
     overflow-y: hidden;
-    min-height: 0;
     scroll-snap-type: x mandatory;
 }
 
@@ -379,7 +386,8 @@ h1 {
 
 #konu-calisildi {
     width: 80%;
-    height: 50%;
+    height: 80%;
+    margin-bottom: 5%;
     font-size: 3rem;
     cursor: pointer;
 }
