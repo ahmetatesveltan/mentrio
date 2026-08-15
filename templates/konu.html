@@ -3,78 +3,204 @@
 <head>
     <meta charset="UTF-8">
     <title>konu</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/konu.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-</head>
-<body data-ders="{{ ders }}"
-      data-konu="{{ konu }}"
-      data-dogru_bilgisi="{{dogru_bilgisi}}",
-      data-yanlis_bilgisi="{{yanlis_bilgisi}}",
-      data-yuzde_bilgisi = "{{yuzde_bilgisi}}">
 
-    <main>
-        <div id="app"><section id="top-panel">
-            <button id="anasayfa-geri-don" onclick="window.location.href='/ders/{{ders}}'">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/konu.css') }}">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+
+<body
+    data-ders="{{ ders }}"
+    data-konu="{{ konu }}"
+    data-dogru_bilgisi="{{ dogru_bilgisi }}"
+    data-yanlis_bilgisi="{{ yanlis_bilgisi }}"
+    data-yuzde_bilgisi="{{ yuzde_bilgisi }}"
+>
+
+<main>
+
+    <div id="app">
+
+        <section id="top-panel">
+            <button id="anasayfa-geri-don"
+                    onclick="window.location.href='/ders/{{ders}}'">
                 <i class="fa-solid fa-circle-arrow-left"></i>
             </button>
-            <h1>{{konu}}</h1>
+
+            <h1>{{ konu }}</h1>
         </section>
+
+
+        <div id="panels-container">
+
             <section id="other-panels">
+
+                <!-- =========================
+                     SOL PANEL
+                ========================== -->
+
                 <section id="left-panel">
+
                     <div id="left-panel-top">
-                        <h2 id="left-top-baslik" class="baslik">SORU EKLE</h2>
+                        <h2 id="left-top-baslik" class="baslik">
+                            SORU EKLE
+                        </h2>
                     </div>
+
                     <div id="left-soru-bolumu">
+
                         <div id="left-dogru">
+
                             <div id="left-dogru-baslik">
                                 <h3>Doğru</h3>
                             </div>
+
                             <div id="left-dogru-sayilar">
                                 <button id="d-10">-10</button>
                                 <button id="d-1">-1</button>
+
                                 <p id="ds">0</p>
+
                                 <button id="d+1">+1</button>
                                 <button id="d+10">+10</button>
                             </div>
+
                         </div>
+
+
                         <div id="left-yanlis">
+
                             <div id="left-yanlis-baslik">
                                 <h3>Yanlış</h3>
                             </div>
+
                             <div id="left-yanlis-sayilar">
                                 <button id="y-10">-10</button>
                                 <button id="y-1">-1</button>
+
                                 <p id="ys">0</p>
+
                                 <button id="y+1">+1</button>
                                 <button id="y+10">+10</button>
                             </div>
+
                         </div>
+
+
                         <div id="left-kaydet">
-                            <button id="left-kaydet-buton">Kaydet</button>
+                            <button id="left-kaydet-buton">
+                                Kaydet
+                            </button>
                         </div>
+
+
                         <div id="left-bilgiler">
-                            <p id="left-dogru-bilgi">Toplam Doğru Sayısı: {{dogru_bilgisi}}</p>
-                            <p id="left-yanlis-bilgi">Toplam Yanlış Sayısı: {{yanlis_bilgisi}}</p>
-                            <p id="left-yuzde-bilgi">Başarı Yüzdesi: %{{yuzde_bilgisi}}</p>
+                            <p id="left-dogru-bilgi">
+                                Toplam Doğru Sayısı: {{ dogru_bilgisi }}
+                            </p>
+
+                            <p id="left-yanlis-bilgi">
+                                Toplam Yanlış Sayısı: {{ yanlis_bilgisi }}
+                            </p>
+
+                            <p id="left-yuzde-bilgi">
+                                Başarı Yüzdesi: %{{ yuzde_bilgisi }}
+                            </p>
                         </div>
+
                     </div>
+
                 </section>
+
+
+                <!-- =========================
+                     ORTA PANEL
+                ========================== -->
+
                 <section id="middle-panel">
-                    <div id="middle-icerik"><h3>Yakında Gelecek...</h3></div>
+                    <div id="middle-icerik">
+                        <h3>Yakında Gelecek...</h3>
+                    </div>
                 </section>
+
+
+                <!-- =========================
+                     SAĞ PANEL
+                ========================== -->
+
                 <section id="right-panel">
-                    <div id="konu-ozeti-baslik">
-                        <h2 class="baslik">Konu Özeti</h2>
+
+                    <div id="ozet-baslik-div">
+                        <h2 class="baslik">
+                            KONU ÖZETİ
+                        </h2>
                     </div>
-                
+
+
                     <div id="right-icerik">
-                        <h3>Daha Fazlası Yakında Gelecek...</h3>
+                        <h3>
+                            Daha Fazla Özellik Yakında Gelecek...
+                        </h3>
                     </div>
-                
-                    <button id="calisildi-buton">Çalışıldı</button>
+
+
+                    <div id="calisma-bilgisi">
+
+                        {% if konu_calisilmayan_gun == "hiç çalışılmadı" %}
+
+                            <h3>
+                                Bu konuyu henüz hiç çalışmadın.
+                            </h3>
+
+                        {% elif konu_calisilmayan_gun == 0 %}
+
+                            <h3>
+                                Bu konuyu bugün çalıştın. Aferin sana :)
+                            </h3>
+
+                        {% else %}
+
+                            <h3>
+                                Bu konuyu en son
+                                {{ konu_calisilmayan_gun }}
+                                gün önce çalıştın. Devam et.
+                            </h3>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <div id="calisildi-div">
+                        <button id="konu-calisildi">
+                            Çalışınca Bana Bas
+                        </button>
+                    </div>
+
                 </section>
-            </section></div>
-    </main>
-    <script src="{{ url_for('static', filename='js/konu.js') }}"></script>
+
+            </section>
+
+
+            <!-- =========================
+                 SAYFA NOKTALARI
+            ========================== -->
+
+            <div id="sayfa-noktaları">
+
+                <span class="sayfa-noktasi aktif"></span>
+                <span class="sayfa-noktasi"></span>
+                <span class="sayfa-noktasi"></span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+<script src="{{ url_for('static', filename='js/konu.js') }}"></script>
+
 </body>
 </html>

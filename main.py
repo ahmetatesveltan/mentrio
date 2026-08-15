@@ -265,3 +265,13 @@ def konu_calisma_sure_siralama(user, secilen_ders):
     calisilmayan_gunler = sorted(calisilmayan_gunler.items(), key=lambda item: item[1], reverse=True)
 
     return calisilmayan_gunler
+
+def konu_calisilmayan_gun_hesaplama(user, ders, konu):
+    data= load_data(user)
+    son_calisma = data["Dersler"][ders.capitalize()][konu.capitalize()]["son_tekrar"]
+    if son_calisma == "2000-01-01":
+        return "hiç çalışılmadı"
+    son_calisma_tarihi = datetime.strptime(son_calisma, "%Y-%m-%d").date()
+    calisilmayan_gun = (date.today() - son_calisma_tarihi).days
+
+    return calisilmayan_gun

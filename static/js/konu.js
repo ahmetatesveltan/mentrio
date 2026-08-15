@@ -95,3 +95,29 @@ function soru_yuklemesi(){
 
 }
 soru_yuklemesi();
+function konu_ozeti(){
+    const body = document.body;
+    const ders = body.dataset.ders;
+    const konu = body.dataset.konu;
+
+    const calisma_butonu = document.getElementById("konu-calisildi")
+    const calisma_bilgisi = document.querySelector("#calisma-bilgisi h3");
+
+    calisma_butonu.addEventListener("click", function(){
+        fetch("/api/konu-calisildi", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({ders: ders,
+                                        konu: konu})
+        })
+        .then(response => response.json())
+        .then(data => {
+
+            calisma_bilgisi.textContent = "Bu konuyu bugün çalıştın. Aferin sana :)"
+        });
+
+    });
+
+
+};
+konu_ozeti()

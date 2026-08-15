@@ -56,6 +56,9 @@ def konu_sayfasi(ders_adi, konu_adi):
     secilen_konu = konu_adi
     dogru_bilgisi = data["Dersler"][secilen_ders.capitalize()][secilen_konu.capitalize()]["dogru"]
     yanlis_bilgisi = data["Dersler"][secilen_ders.capitalize()][secilen_konu.capitalize()]["yanlis"]
+
+    konu_calisilmayan_gun = konu_calisilmayan_gun_hesaplama(user, secilen_ders, secilen_konu)
+
     try:
         yuzde_bilgisi = round(100*dogru_bilgisi/(yanlis_bilgisi+dogru_bilgisi),2)
     except ZeroDivisionError:
@@ -66,7 +69,8 @@ def konu_sayfasi(ders_adi, konu_adi):
                            konu=secilen_konu.capitalize(),
                            dogru_bilgisi = dogru_bilgisi,
                            yanlis_bilgisi = yanlis_bilgisi,
-                           yuzde_bilgisi = yuzde_bilgisi)
+                           yuzde_bilgisi = yuzde_bilgisi,
+                           konu_calisilmayan_gun = konu_calisilmayan_gun)
 
 @app.route("/api/login", methods=["POST"])
 def login_page():
@@ -181,6 +185,17 @@ def soru_yuklemesi():
     return jsonify({
         "basarili": True
     })
+@app.route("/api/konu-calisildi", methods=["POST"])
+def konu_calisildi():
+    user = session.get("user")
+
+    veri = request.json
+    ders = veri["ders"]
+    konu = veri["konu"]
+
+    konu_tekrari(user, ders, konu)
+
+    return jsonify({"basarili": True})
 
 if __name__ == "__main__":
     app.run(debug=True)
