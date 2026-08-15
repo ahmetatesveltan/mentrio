@@ -23,21 +23,18 @@
 
         <section id="top-panel">
             <button id="anasayfa-geri-don"
-                    onclick="window.location.href='/ders/{{ders}}'">
+                    onclick="window.location.href='/ders/{{ ders }}'">
                 <i class="fa-solid fa-circle-arrow-left"></i>
             </button>
 
             <h1>{{ konu }}</h1>
         </section>
 
-
         <div id="panels-container">
 
             <section id="other-panels">
 
-                <!-- =========================
-                     SOL PANEL
-                ========================== -->
+                <!-- SOL PANEL -->
 
                 <section id="left-panel">
 
@@ -58,9 +55,7 @@
                             <div id="left-dogru-sayilar">
                                 <button id="d-10">-10</button>
                                 <button id="d-1">-1</button>
-
                                 <p id="ds">0</p>
-
                                 <button id="d+1">+1</button>
                                 <button id="d+10">+10</button>
                             </div>
@@ -77,9 +72,7 @@
                             <div id="left-yanlis-sayilar">
                                 <button id="y-10">-10</button>
                                 <button id="y-1">-1</button>
-
                                 <p id="ys">0</p>
-
                                 <button id="y+1">+1</button>
                                 <button id="y+10">+10</button>
                             </div>
@@ -95,6 +88,7 @@
 
 
                         <div id="left-bilgiler">
+
                             <p id="left-dogru-bilgi">
                                 Toplam Doğru Sayısı: {{ dogru_bilgisi }}
                             </p>
@@ -106,6 +100,7 @@
                             <p id="left-yuzde-bilgi">
                                 Başarı Yüzdesi: %{{ yuzde_bilgisi }}
                             </p>
+
                         </div>
 
                     </div>
@@ -113,9 +108,7 @@
                 </section>
 
 
-                <!-- =========================
-                     ORTA PANEL
-                ========================== -->
+                <!-- ORTA PANEL -->
 
                 <section id="middle-panel">
                     <div id="middle-icerik">
@@ -124,9 +117,7 @@
                 </section>
 
 
-                <!-- =========================
-                     SAĞ PANEL
-                ========================== -->
+                <!-- SAĞ PANEL -->
 
                 <section id="right-panel">
 
@@ -182,9 +173,7 @@
             </section>
 
 
-            <!-- =========================
-                 SAYFA NOKTALARI
-            ========================== -->
+            <!-- SAYFA NOKTALARI -->
 
             <div id="sayfa-noktaları">
 

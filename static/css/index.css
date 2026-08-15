@@ -20,14 +20,22 @@ body {
 }
 #app {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     height: 100vh;
     width: 100vw;
     overflow-y: hidden;
     scroll-snap-type: x mandatory;
 }
 
-
+#panels{
+    display: flex;
+    flex: 19;
+    width: 100%;
+    min-height: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+}
 /* =========================
    GENEL BAŞLIKLAR
 ========================= */
@@ -52,14 +60,15 @@ body {
 ========================= */
 #login-bolumu {
     flex: 0 0 100%;
+    width: 100%;
+    height: 100%;
     background-color: #e5e4e2;
-    width: 100vw;
-    height: 100vh;
     padding-top: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
     scroll-snap-align: start;
+    overflow: hidden;
 }
 #login-div{
     display: flex;
@@ -109,14 +118,16 @@ body {
 
 #logout-button {
     display: flex;
-    font-size: 3rem;
+    flex: 0 0 6%;
     width: 36%;
-    height: 6%;
+    min-height: 6%;
     background-color: #bab9b0;
     text-decoration: none;
     align-items: center;
     justify-content: center;
     color: black;
+    font-size: 3rem;
+    margin-bottom: 5%
 }
 #login-bilgilendirme-div {
     display: flex;
@@ -682,4 +693,25 @@ body.css-fullscreen-active {
     border: 3px outset;
     cursor: pointer;
     font-size: 3rem;
+}
+#sayfa-noktaları{
+    display: flex;
+    flex: 1;
+    background-color: #bbbbbb;
+    align-items: center;
+    justify-content: center;
+    gap: 7%
+}
+.sayfa-noktasi {
+    width: 5%;
+    aspect-ratio: 1 / 1;
+    padding: 0;
+    border: 2px solid #555;
+    border-radius: 50%;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.sayfa-noktasi.aktif {
+    background-color: #555;
 }

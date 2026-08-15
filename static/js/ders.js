@@ -47,3 +47,29 @@ function zayif_konular(){
 
 }
 zayif_konular()
+function panel_kaydirma(){
+    const paneller = document.getElementById("other-panels");
+    const noktalar = document.querySelectorAll(".sayfa-noktasi");
+    const panel = document.querySelectorAll("#other-panels > *");
+
+    paneller.addEventListener("scroll", function () {
+
+        const scroll = paneller.scrollLeft;
+
+        const index = Math.round(
+            scroll / paneller.clientWidth
+        );
+
+        noktalar.forEach((nokta, i) => {
+            if (i === index) {
+                nokta.classList.add("aktif");
+            } else {
+                nokta.classList.remove("aktif");
+            }
+        });
+
+
+    });
+
+};
+panel_kaydirma()

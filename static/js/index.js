@@ -615,3 +615,29 @@ function login_sayfasi() {
 }
 
 login_sayfasi();
+function panel_kaydirma(){
+    const paneller = document.getElementById("panels");
+    const noktalar = document.querySelectorAll(".sayfa-noktasi");
+    const panel = document.querySelectorAll("#panels > *");
+
+    paneller.addEventListener("scroll", function () {
+
+        const scroll = paneller.scrollLeft;
+
+        const index = Math.round(
+            scroll / paneller.clientWidth
+        );
+
+        noktalar.forEach((nokta, i) => {
+            if (i === index) {
+                nokta.classList.add("aktif");
+            } else {
+                nokta.classList.remove("aktif");
+            }
+        });
+
+
+    });
+
+};
+panel_kaydirma()
