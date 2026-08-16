@@ -40,83 +40,131 @@ konu_select();
 // =========================
 // TUTORIAL
 // =========================
-function tutorial(){
 
-    title = document.getElementById("tutorial-title")
-    text = document.getElementById("tutorial-text")
+const tutorialBackground = document.getElementById("tutorial");
+const tutorialBox = document.getElementById("tutorial-box");
+const tutorialTitle = document.getElementById("tutorial-title");
+const tutorialText = document.getElementById("tutorial-text");
+const tutorialNextButton = document.getElementById("tutorial-ileri");
+const tutorialBackButton = document.getElementById("tutorial-geri");
+const tutorialSkipButton = document.getElementById("tutorial-atla");
 
-    ileri = document.getElementById("tutorial-ileri")
-    geri = document.getElementById("tutorial-geri")
-    atla = document.getElementById("tutorial-atla")
 
-    tutorialBackground = document.getElementById("tutorial")
-    tutorialBox = document.getElementById("tutorial-box")
+function tutorial() {
 
-    tutorialBox.style.display = "flex"
-    tutorialBackground.style.display = "flex"
+    // Tutorial HTML'i bu sayfada yoksa çık
+    if (
+        tutorialBackground === null ||
+        tutorialBox === null ||
+        tutorialTitle === null ||
+        tutorialText === null ||
+        tutorialNextButton === null ||
+        tutorialBackButton === null ||
+        tutorialSkipButton === null
+    ) {
+        return;
+    }
+
 
     const tutorialSteps = [
-    {
-        title: "Mentrio'ya hoşgeldin.",
-        text: "Haydi uygulamadaki araçları keşfedelim!",
-        panel: null,
-        position: "center"
-    },
+        {
+            title: "Mentrio'ya hoşgeldin.",
+            text: "Haydi uygulamadaki araçları keşfedelim!",
+            panel: null,
+            position: "center"
+        },
 
-    {
-        title: "Dersler bölümü:",
-        text: "Buradan ders sayfalarına giriş yapabilirsin.",
-        panel: "dersler-bolumu",
-        position: "center-left"
-    },
+        {
+            title: "Dersler bölümü:",
+            text: "Buradan ders sayfalarına giriş yapabilirsin.",
+            panel: "dersler-bolumu",
+            position: "center-left"
+        },
 
-    {
-        title: "Bugün Çalışacağın Konular:",
-        text: "Mentrio senin çalışman gerekenleri senin yerine hesaplar. Şuan boş görünüyor, haydi ilk konunu ekle!",
-        panel: "calisilacaklar-bolumu",
-        position: "bottom-center"},
-    {
-        title: "Yanlış Soru Ekleme: ↑",
-        text: "Bu kısma yanlış yaptığın soruların fotoğrafını çekip atabilirsin! Sorular depolanır.",
-        panel: "yanlis-sorular-bolumu",
-        position: "center"
-    },
-    {
-        title: "Yanlış Soruları Çözme: ↓",
-        text: "Eklediğin yanlış sorular sonradan karşına burada çıkartılır.",
-        panel: "yanlis-sorular-bolumu",
-        position: "top-center"
-    }
+        {
+            title: "Bugün Çalışacağın Konular:",
+            text: "Mentrio senin çalışman gerekenleri senin yerine hesaplar. Şuan boş görünüyor, haydi ilk konunu ekle!",
+            panel: "calisilacaklar-bolumu",
+            position: "bottom-center"
+        },
+
+        {
+            title: "Yanlış Soru Ekleme: ↑",
+            text: "Bu kısma yanlış yaptığın soruların fotoğrafını çekip atabilirsin! Sorular depolanır.",
+            panel: "yanlis-sorular-bolumu",
+            position: "center"
+        },
+
+        {
+            title: "Yanlış Soruları Çözme: ↓",
+            text: "Eklediğin yanlış sorular sonradan karşına burada çıkartılır.",
+            panel: "yanlis-sorular-bolumu",
+            position: "top-center"
+        }
     ];
 
-    let currentStep = 0
-    tutorialBox.classList.add(tutorialSteps[currentStep].position);
+
+    let currentStep = 0;
 
 
-    function buton_kilitleme(){
+    // =========================
+    // TUTORIAL'I KAPAT
+    // =========================
 
-        if(currentStep === tutorialSteps.length - 1){
-            ileri.textContent = "Hazırım";
+    function tutorialKapat() {
+
+        tutorialBackground.style.display = "none";
+        tutorialBox.style.display = "none";
+
+        localStorage.setItem(
+            "anasayfaTutorialGoruldu",
+            "true"
+        );
+    }
+
+
+    // =========================
+    // BUTON KONTROLÜ
+    // =========================
+
+    function butonlariGuncelle() {
+
+        if (currentStep === 0) {
+
+            tutorialBackButton.disabled = true;
+
+        } else {
+
+            tutorialBackButton.disabled = false;
         }
-        else if(currentStep === 0){
-            geri.disabled = true
-        }
-        else{
-            ileri.disabled = false
-            geri.disabled = false
+
+
+        if (currentStep === tutorialSteps.length - 1) {
+
+            tutorialNextButton.textContent = "Hazırım";
+
+        } else {
+
+            tutorialNextButton.textContent = "İleri";
         }
     }
 
 
-    function icerik_degistir(){
+    // =========================
+    // İÇERİĞİ GÜNCELLE
+    // =========================
 
-        title.textContent = tutorialSteps[currentStep].title
-        text.textContent = tutorialSteps[currentStep].text
+    function tutorialIceriginiGuncelle() {
 
-        tutorialBackground.style.background = "black"
+        const step = tutorialSteps[currentStep];
 
-        const panel = tutorialSteps[currentStep].panel
-        const position = tutorialSteps[currentStep].position
+
+        tutorialTitle.textContent = step.title;
+        tutorialText.textContent = step.text;
+
+
+        tutorialBackground.style.background = "black";
+
 
         tutorialBox.classList.remove(
             "top-left",
@@ -131,64 +179,105 @@ function tutorial(){
         );
 
 
-        tutorialBox.classList.add(position);
+        tutorialBox.classList.add(step.position);
 
 
-        if(panel !== null){
+        if (step.panel !== null) {
 
-            tutorialBackground.style.background = "none"
+            tutorialBackground.style.background = "none";
 
-            const targetPanel = document.getElementById(panel)
-            const panels = document.getElementById("panels")
 
-            panels.scrollTo({
-                left: targetPanel.offsetLeft,
-                behavior: "smooth"
-            })
+            const hedefPanel = document.getElementById(step.panel);
+            const paneller = document.getElementById("panels");
+
+
+            if (
+                hedefPanel !== null &&
+                paneller !== null
+            ) {
+
+                paneller.scrollTo({
+                    left: hedefPanel.offsetLeft,
+                    behavior: "smooth"
+                });
+            }
         }
     }
 
 
-    buton_kilitleme()
-    atla.addEventListener("click", function (){
-        tutorialBackground.style.display = "none";
-        tutorialBox.style.display = "none";
-        localStorage.setItem("anasayfaTutorialGoruldu", "true")
+    // =========================
+    // BAŞLANGIÇ
+    // =========================
 
-    })
+    tutorialBackground.style.display = "flex";
+    tutorialBox.style.display = "flex";
 
-    ileri.addEventListener("click", function(){
-        if(currentStep === tutorialSteps.length-1){
-            tutorialBackground.style.display = "none";
-            tutorialBox.style.display = "none";
-            localStorage.setItem("anasayfaTutorialGoruldu", "true")
-        }else{
-        currentStep++
-        icerik_degistir()
-        buton_kilitleme()}
+    tutorialIceriginiGuncelle();
+    butonlariGuncelle();
 
 
-    })
+    // =========================
+    // ATLA
+    // =========================
+
+    tutorialSkipButton.addEventListener("click", function () {
+
+        tutorialKapat();
+
+    });
 
 
-    geri.addEventListener("click", function(){
+    // =========================
+    // İLERİ
+    // =========================
 
-        currentStep--
-        icerik_degistir()
-        buton_kilitleme()
+    tutorialNextButton.addEventListener("click", function () {
 
-    })
+        if (currentStep === tutorialSteps.length - 1) {
+
+            tutorialKapat();
+
+            return;
+        }
+
+
+        currentStep++;
+
+        tutorialIceriginiGuncelle();
+        butonlariGuncelle();
+
+    });
+
+
+    // =========================
+    // GERİ
+    // =========================
+
+    tutorialBackButton.addEventListener("click", function () {
+
+        if (currentStep <= 0) {
+            return;
+        }
+
+
+        currentStep--;
+
+        tutorialIceriginiGuncelle();
+        butonlariGuncelle();
+
+    });
 
 }
-if (localStorage.getItem("anasayfaTutorialGoruldu") === null){
-    tutorial()
-}
-else{
-    tutorialBackground = document.getElementById("tutorial")
-    tutorialBox = document.getElementById("tutorial-box")
 
-     tutorialBackground.style.display = "none";
-     tutorialBox.style.display = "none";
+
+// =========================
+// TUTORIAL'I SADECE İLK KEZ GÖSTER
+// =========================
+
+if (
+    localStorage.getItem("anasayfaTutorialGoruldu") === null
+) {
+    tutorial();
 }
 function gunluk_sorulari_ekle() {
 
