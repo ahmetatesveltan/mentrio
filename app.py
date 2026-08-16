@@ -50,62 +50,65 @@ def ders_sayfasi(ders_adi):
 
 @app.route("/ders/<ders_adi>/konu/<konu_adi>")  # KONU SAYFASINI AÇAR
 def konu_sayfasi(ders_adi, konu_adi):
-    @app.route("/ders/<ders_adi>/konu/<konu_adi>")
-    def konu_sayfasi(ders_adi, konu_adi):
+    try:
+        user = session.get("user")
+        data = load_data(user)
+
+        secilen_ders = ders_adi
+        secilen_konu = konu_adi
+
+        ders_key = secilen_ders.capitalize()
+        konu_key = secilen_konu.capitalize()
+
+        print("USER:", repr(user))
+        print("DERS:", repr(ders_key))
+        print("KONU:", repr(konu_key))
+        print("MEVCUT KONULAR:",
+              list(data["Dersler"][ders_key].keys()))
+
+        dogru_bilgisi = data["Dersler"][ders_key][konu_key]["dogru"]
+        yanlis_bilgisi = data["Dersler"][ders_key][konu_key]["yanlis"]
+
+        konu_calisilmayan_gun = konu_calisilmayan_gun_hesaplama(
+            user,
+            secilen_ders,
+            secilen_konu
+        )
+
         try:
-            user = session.get("user")
-            data = load_data(user)
-
-            secilen_ders = ders_adi
-            secilen_konu = konu_adi
-
-            ders_key = secilen_ders.capitalize()
-            konu_key = secilen_konu.capitalize()
-
-            print("USER:", repr(user))
-            print("DERS:", repr(ders_key))
-            print("KONU:", repr(konu_key))
-            print("MEVCUT KONULAR:",
-                  list(data["Dersler"][ders_key].keys()))
-
-            dogru_bilgisi = data["Dersler"][ders_key][konu_key]["dogru"]
-            yanlis_bilgisi = data["Dersler"][ders_key][konu_key]["yanlis"]
-
-            konu_calisilmayan_gun = konu_calisilmayan_gun_hesaplama(
-                user,
-                secilen_ders,
-                secilen_konu
+            yuzde_bilgisi = round(
+                100 * dogru_bilgisi / (yanlis_bilgisi + dogru_bilgisi),
+                2
             )
+        except ZeroDivisionError:
+            yuzde_bilgisi = 0
 
-            try:
-                yuzde_bilgisi = round(
-                    100 * dogru_bilgisi / (yanlis_bilgisi + dogru_bilgisi),
-                    2
-                )
-            except ZeroDivisionError:
-                yuzde_bilgisi = 0
+        return render_template(
+            "konu.html",
+            ders=secilen_ders.capitalize(),
+            konu=secilen_konu.capitalize(),
+            dogru_bilgisi=dogru_bilgisi,
+            yanlis_bilgisi=yanlis_bilgisi,
+            yuzde_bilgisi=yuzde_bilgisi,
+            konu_calisilmayan_gun=konu_calisilmayan_gun
+        )
 
-            return render_template(
-                "konu.html",
-                ders=secilen_ders.capitalize(),
-                konu=secilen_konu.capitalize(),
-                dogru_bilgisi=dogru_bilgisi,
-                yanlis_bilgisi=yanlis_bilgisi,
-                yuzde_bilgisi=yuzde_bilgisi,
-                konu_calisilmayan_gun=konu_calisilmayan_gun
+    except Exception as e:
+        try:
+            mevcut_konular = list(
+                data["Dersler"][ders_adi.capitalize()].keys()
             )
+        except Exception as e2:
+            mevcut_konular = f"Konular okunamadı: {repr(e2)}"
 
-        except Exception as e:
-            return jsonify({
-                "hata": repr(e),
-                "gelen_ders": repr(ders_adi),
-                "gelen_konu": repr(konu_adi),
-                "aranan_ders": repr(ders_adi.capitalize()),
-                "aranan_konu": repr(konu_adi.capitalize()),
-                "mevcut_konular": list(
-                    data["Dersler"][ders_adi.capitalize()].keys()
-                )
-            }), 500
+        return jsonify({
+            "hata": repr(e),
+            "gelen_ders": repr(ders_adi),
+            "gelen_konu": repr(konu_adi),
+            "aranan_ders": repr(ders_adi.capitalize()),
+            "aranan_konu": repr(konu_adi.capitalize()),
+            "mevcut_konular": mevcut_konular
+        })
 
 @app.route("/api/login", methods=["POST"])
 def login_page():
