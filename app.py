@@ -85,8 +85,7 @@ def konu_sayfasi(ders_adi, konu_adi):
         )
 
     except Exception as e:
-        print("HATA:", repr(e))
-        return "Bir hata oluştu.", 500
+        return f"HATA: {repr(e)}", 500
 
 @app.route("/api/login", methods=["POST"])
 def login_page():
