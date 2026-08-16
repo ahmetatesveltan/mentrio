@@ -38,11 +38,158 @@ konu_select();
 
 
 // =========================
-// YANLIŞ SORU EKLEME
+// TUTORIAL
 // =========================
-// =========================
-// YANLIŞ SORU EKLEME
-// =========================
+function tutorial(){
+
+    title = document.getElementById("tutorial-title")
+    text = document.getElementById("tutorial-text")
+
+    ileri = document.getElementById("tutorial-ileri")
+    geri = document.getElementById("tutorial-geri")
+    atla = document.getElementById("tutorial-atla")
+
+    tutorialBackground = document.getElementById("tutorial")
+    tutorialBox = document.getElementById("tutorial-box")
+
+    tutorialBox.style.display = flex
+    tutorialBackground.style.display = flex
+
+    const tutorialSteps = [
+    {
+        title: "Mentrio'ya hoşgeldin.",
+        text: "Haydi uygulamadaki araçları keşfedelim!",
+        panel: null,
+        position: "center"
+    },
+
+    {
+        title: "Dersler bölümü:",
+        text: "Buradan ders sayfalarına giriş yapabilirsin.",
+        panel: "dersler-bolumu",
+        position: "center-left"
+    },
+
+    {
+        title: "Bugün Çalışacağın Konular:",
+        text: "Mentrio senin çalışman gerekenleri senin yerine hesaplar. Şuan boş görünüyor, haydi ilk konunu ekle!",
+        panel: "calisilacaklar-bolumu",
+        position: "bottom-center"},
+    {
+        title: "Yanlış Soru Ekleme: ↑",
+        text: "Bu kısma yanlış yaptığın soruların fotoğrafını çekip atabilirsin! Sorular depolanır.",
+        panel: "yanlis-sorular-bolumu",
+        position: "center"
+    },
+    {
+        title: "Yanlış Soruları Çözme: ↓",
+        text: "Eklediğin yanlış sorular sonradan karşına burada çıkartılır.",
+        panel: "yanlis-sorular-bolumu",
+        position: "top-center"
+    }
+    ];
+
+    let currentStep = 0
+    tutorialBox.classList.add(tutorialSteps[currentStep].position);
+
+
+    function buton_kilitleme(){
+
+        if(currentStep === tutorialSteps.length - 1){
+            ileri.textContent = "Hazırım";
+        }
+        else if(currentStep === 0){
+            geri.disabled = true
+        }
+        else{
+            ileri.disabled = false
+            geri.disabled = false
+        }
+    }
+
+
+    function icerik_degistir(){
+
+        title.textContent = tutorialSteps[currentStep].title
+        text.textContent = tutorialSteps[currentStep].text
+
+        tutorialBackground.style.background = "black"
+
+        const panel = tutorialSteps[currentStep].panel
+        const position = tutorialSteps[currentStep].position
+
+        tutorialBox.classList.remove(
+            "top-left",
+            "top-center",
+            "top-right",
+            "center-left",
+            "center",
+            "center-right",
+            "bottom-left",
+            "bottom-center",
+            "bottom-right"
+        );
+
+
+        tutorialBox.classList.add(position);
+
+
+        if(panel !== null){
+
+            tutorialBackground.style.background = "none"
+
+            const targetPanel = document.getElementById(panel)
+            const panels = document.getElementById("panels")
+
+            panels.scrollTo({
+                left: targetPanel.offsetLeft,
+                behavior: "smooth"
+            })
+        }
+    }
+
+
+    buton_kilitleme()
+    atla.addEventListener("click", function (){
+        tutorialBackground.style.display = "none";
+        tutorialBox.style.display = "none";
+        localStorage.setItem("anasayfaTutorialGoruldu", "true")
+
+    })
+
+    ileri.addEventListener("click", function(){
+        if(currentStep === tutorialSteps.length-1){
+            tutorialBackground.style.display = "none";
+            tutorialBox.style.display = "none";
+            localStorage.setItem("anasayfaTutorialGoruldu", "true")
+        }else{
+        currentStep++
+        icerik_degistir()
+        buton_kilitleme()}
+
+
+    })
+
+
+    geri.addEventListener("click", function(){
+
+        currentStep--
+        icerik_degistir()
+        buton_kilitleme()
+
+    })
+
+}
+if (localStorage.getItem("anasayfaTutorialGoruldu") === null){
+    tutorial()
+}
+else{
+    tutorialBackground = document.getElementById("tutorial")
+    tutorialBox = document.getElementById("tutorial-box")
+
+     tutorialBackground.style.display = "none";
+     tutorialBox.style.display = "none";
+}
 function gunluk_sorulari_ekle() {
 
     const gorselInput = document.getElementById("ys-gorsel-ekle");

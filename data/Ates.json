@@ -2,9 +2,9 @@
     "Dersler": {
         "Matematik": {
             "Fonksiyon": {
-                "dogru": 0,
-                "yanlis": 0,
-                "son_tekrar": "2000-01-01"
+                "dogru": 20,
+                "yanlis": 2,
+                "son_tekrar": "2026-08-16"
             },
             "Permütasyon": {
                 "dogru": 0,
@@ -59,16 +59,7 @@
         "Felsefe": {},
         "Din": {}
     },
-    "Soru Havuzu": {
-        "q0001": {
-            "Ders": "Matematik",
-            "Konu": "Fonksiyon",
-            "Cevap": "C",
-            "Foto": "q0001.jfif",
-            "Tekrar Seviyesi": 0,
-            "Sonraki Tekrar": "2026-08-16"
-        }
-    },
-    "SonrakiSoruID": 2,
+    "Soru Havuzu": {},
+    "SonrakiSoruID": 1,
     "Gunluk Cozulen Sorular": {}
 }

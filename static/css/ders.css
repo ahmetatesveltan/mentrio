@@ -34,6 +34,124 @@ h1{
     background: #e3e3e3;
     text-align: center;
 }
+/* =========================
+   TUTORIAL
+========================= */
+
+#tutorial{
+    position: fixed;
+    display: none;
+    inset: 0;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    background: black;
+}
+
+#tutorial-box {
+    position: absolute;
+    transition:  top 1s ease, left 1s ease, transform 1s ease;;
+    width: 45%;
+    aspect-ratio: 4/3;
+    padding: 2rem;
+    background: white;
+    border-radius: 20px;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20%
+}
+#tutorial-box.top-left {
+    top: 5%;
+    left: 5%;
+    transform: translate(0, 0);
+}
+
+#tutorial-box.top-center {
+    top: 5%;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+#tutorial-box.top-right {
+    top: 5%;
+    left: 95%;
+    transform: translate(-100%, 0);
+}
+
+
+/* CENTER */
+
+#tutorial-box.center-left {
+    top: 50%;
+    left: 5%;
+    transform: translate(0, -50%);
+}
+
+#tutorial-box.center {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#tutorial-box.center-right {
+    top: 50%;
+    left: 95%;
+    transform: translate(-100%, -50%);
+}
+
+
+/* BOTTOM */
+
+#tutorial-box.bottom-left {
+    top: 95%;
+    left: 5%;
+    transform: translate(0, -100%);
+}
+
+#tutorial-box.bottom-center {
+    top: 95%;
+    left: 50%;
+    transform: translate(-50%, -100%);
+}
+
+#tutorial-box.bottom-right {
+    top: 95%;
+    left: 95%;
+    transform: translate(-100%, -100%);
+}
+#tutorial-title {
+    font-size: 2.2rem
+}
+#tutorial-text{
+    font-size: 1.3rem;
+}
+
+#tutorial-buttons{
+    width: 90%;
+    height: 10%;
+    margin-top: 20%;
+    display: flex;
+    justify-content: center;
+    gap: 15%;
+}
+
+#tutorial-buttons button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: clamp(1rem, 1.5vw, 2rem);
+    text-align: center;
+    border: 5px ridge;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 0.7rem;
+}
+.tutorial-target{
+    position: relative !important;
+    z-index: 10000 !important;
+}
 
 #top-panel {
     position: sticky;

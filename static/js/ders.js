@@ -73,3 +73,145 @@ function panel_kaydirma(){
 
 };
 panel_kaydirma()
+
+function tutorial(){
+
+    title = document.getElementById("tutorial-title")
+    text = document.getElementById("tutorial-text")
+
+    ileri = document.getElementById("tutorial-ileri")
+    geri = document.getElementById("tutorial-geri")
+    atla = document.getElementById("tutorial-atla")
+
+    tutorialBackground = document.getElementById("tutorial")
+    tutorialBox = document.getElementById("tutorial-box")
+
+    tutorialBox.style.display = flex
+    tutorialBackground.style.display = flex
+
+
+    const tutorialSteps = [
+    {
+        title: "Ders Sayfası:",
+        text: "Buradan her dersini ayrı ayrı takip edebilirsin.",
+        panel: null,
+        position: "center"
+    },
+
+    {
+        title: "Konuların: ",
+        text: "Bu sekmeye konularını ekleyebilirsin. Konuların kendi sayfalarına da buradan girebilirsin.",
+        panel: "left-panel",
+        position: "bottom-center"
+    },
+
+    {
+        title: "Eksik Konuların:",
+        text: "Mentrio seni için burada zayıf konularını derledi. Haydi göz at!",
+        panel: "middle-panel",
+        position: "center-right"}
+
+    ];
+
+    let currentStep = 0
+    tutorialBox.classList.add(tutorialSteps[currentStep].position);
+
+
+    function buton_kilitleme(){
+
+        if(currentStep === tutorialSteps.length - 1){
+            ileri.textContent = "Hazırım"
+        }
+        else if(currentStep === 0){
+            geri.disabled = true
+        }
+        else{
+            ileri.disabled = false
+            geri.disabled = false
+        }
+    }
+
+
+    function icerik_degistir(){
+
+        title.textContent = tutorialSteps[currentStep].title
+        text.textContent = tutorialSteps[currentStep].text
+
+        tutorialBackground.style.background = "black"
+
+        const panel = tutorialSteps[currentStep].panel
+        const position = tutorialSteps[currentStep].position
+
+        tutorialBox.classList.remove(
+            "top-left",
+            "top-center",
+            "top-right",
+            "center-left",
+            "center",
+            "center-right",
+            "bottom-left",
+            "bottom-center",
+            "bottom-right"
+        );
+
+
+        tutorialBox.classList.add(position);
+
+
+        if(panel !== null){
+
+            tutorialBackground.style.background = "none"
+
+            const targetPanel = document.getElementById(panel)
+            const panels = document.getElementById("other-panels")
+
+            panels.scrollTo({
+                left: targetPanel.offsetLeft,
+                behavior: "smooth"
+            })
+        }
+    }
+
+
+    buton_kilitleme()
+    atla.addEventListener("click", function (){
+        tutorialBackground.style.display = "none";
+        tutorialBox.style.display = "none";
+        localStorage.setItem("DersTutorialGoruldu", "true")
+
+    })
+
+    ileri.addEventListener("click", function(){
+
+        if(currentStep === tutorialSteps.length-1){
+            tutorialBackground.style.display = "none";
+            tutorialBox.style.display = "none";
+            localStorage.setItem("DersTutorialGoruldu", "true")
+        }else{
+        currentStep++
+        icerik_degistir()
+        buton_kilitleme()}
+
+    })
+
+
+    geri.addEventListener("click", function(){
+
+        currentStep--
+        icerik_degistir()
+        buton_kilitleme()
+
+    })
+
+}
+
+if (localStorage.getItem("DersTutorialGoruldu") === null){
+    tutorial()
+}
+else{
+     tutorialBackground = document.getElementById("tutorial")
+     tutorialBox = document.getElementById("tutorial-box")
+
+     tutorialBackground.style.display = "none";
+     tutorialBox.style.display = "none";
+}
