@@ -18,6 +18,7 @@ body {
     flex-direction: row;
     font-family: Arial, sans-serif;
 }
+
 #app {
     display: flex;
     flex-direction: column;
@@ -27,7 +28,7 @@ body {
     scroll-snap-type: x mandatory;
 }
 
-#panels{
+#panels {
     display: flex;
     flex: 19;
     width: 100%;
@@ -36,6 +37,7 @@ body {
     overflow-y: hidden;
     scroll-snap-type: x mandatory;
 }
+
 /* =========================
    GENEL BAŞLIKLAR
 ========================= */
@@ -55,9 +57,11 @@ body {
 
     text-align: center;
 }
+
 /* =========================
-  LOGIN
+   LOGIN
 ========================= */
+
 #login-bolumu {
     flex: 0 0 100%;
     width: 100%;
@@ -70,7 +74,8 @@ body {
     scroll-snap-align: start;
     overflow: hidden;
 }
-#login-div{
+
+#login-div {
     display: flex;
     flex-direction: column;
     width: 80%;
@@ -80,40 +85,44 @@ body {
     gap: 10%;
 }
 
-#login-bolumu h2{
+#login-bolumu h2 {
     font-size: 6rem;
 }
-#login-form{
+
+#login-form {
     display: flex;
     flex-direction: column;
     width: 100%;
     height: 40%;
     align-items: center;
     justify-content: flex-start;
-    gap: 15%
+    gap: 15%;
 }
-#login-form input{
+
+#login-form input {
     width: 60%;
     height: 50%;
     font-size: 4rem;
     text-align: center;
 }
-#login-form button{
+
+#login-form button {
     width: 40%;
     height: 35%;
     font-size: 3rem;
     background-color: #bab9b0;
 }
+
 #login-bildirim-bolumu {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     align-items: center;
-    height:10%;
-
+    height: 10%;
 }
-#login-bildirim-bolumu span{
-    font-size: 3rem
+
+#login-bildirim-bolumu span {
+    font-size: 3rem;
 }
 
 #logout-button {
@@ -127,18 +136,21 @@ body {
     justify-content: center;
     color: black;
     font-size: 3rem;
-    margin-bottom: 5%
+    margin-bottom: 5%;
 }
+
 #login-bilgilendirme-div {
     display: flex;
-    width:80%;
+    width: 80%;
     height: 70%;
     align-items: flex-end;
 }
-#login-bilgilendirme{
+
+#login-bilgilendirme {
     font-size: 5rem;
     text-align: center;
 }
+
 /* =========================
    BUGÜN ÇALIŞILACAKLAR
 ========================= */
@@ -163,17 +175,20 @@ body {
     width: fit-content;
     margin: 20px auto;
 }
-#calisilacaklar-baslik h2{
+
+#calisilacaklar-baslik h2 {
     font-size: 5rem;
 }
+
 #calisilacaklar-bottom {
-    display:flex;
+    display: flex;
     flex-direction: column;
     height: 80%;
     width: 100%;
     justify-content: center;
     align-items: center;
 }
+
 .calisilacak-satir {
     display: flex;
     flex-direction: column;
@@ -181,20 +196,20 @@ body {
     gap: 5px;
     margin: 20px;
     width: 80%;
-    height: 40%
+    height: 40%;
 }
 
-#calisilacak-buton-bolumu{
+#calisilacak-buton-bolumu {
     display: flex;
     justify-content: center;
-    width: 100%
-
+    width: 100%;
 }
+
 .calisilacak-buton {
     display: flex;
     align-items: center;
     justify-content: center;
-    width:100%;
+    width: 100%;
     background-color: #d9fff9;
     border: 3px outset;
     font-family: Papyrus, fantasy;
@@ -203,7 +218,6 @@ body {
     overflow: hidden;
     text-decoration: none;
     color: black;
-
 }
 
 .calisilacak-ustalik {
@@ -212,16 +226,17 @@ body {
     text-align: center;
     width: 100%;
     justify-content: center;
-
 }
-.calisilacak-ustalik h3{
+
+.calisilacak-ustalik h3 {
     font-size: 5rem;
 }
 
 /* =========================
    HAFTALIK HEDEFLER
 ========================= */
-#haftalik-hedef-bolumu{
+
+#haftalik-hedef-bolumu {
     flex: 0 0 100%;
     background-color: #ffeed9;
     width: 100vw;
@@ -232,13 +247,15 @@ body {
     align-items: center;
     scroll-snap-align: start;
 }
-#haftalik-hedef-icerik{
+
+#haftalik-hedef-icerik {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 90%
+    height: 90%;
 }
-#haftalik-hedef-icerik h3{
+
+#haftalik-hedef-icerik h3 {
     font-size: 10rem;
     text-align: center;
 }
@@ -252,7 +269,6 @@ body {
     margin: 20px auto;
     font-size: 5rem;
 }
-
 
 /* =========================
    DERSLER
@@ -269,16 +285,18 @@ body {
     align-items: center;
     scroll-snap-align: start;
 }
+
 #dersler {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    column-gap:20px;
+    column-gap: 20px;
     grid-template-rows: repeat(5, 1fr);
     width: 90%;
     height: 80%;
     justify-content: center;
     align-items: center;
 }
+
 #dersler-baslik-bolumu {
     display: flex;
     justify-content: center;
@@ -286,6 +304,7 @@ body {
     margin: 20px auto;
     height: 10%;
 }
+
 #dersler-baslik {
     font-size: 5rem;
     width: fit-content;
@@ -306,13 +325,11 @@ body {
     color: black;
 }
 
-
-
-
 /* =========================
    DENEME ANALİZLERİ
 ========================= */
-#deneme-analizleri-bolumu{
+
+#deneme-analizleri-bolumu {
     flex: 0 0 100%;
     background-color: #d9fffd;
     width: 100vw;
@@ -323,13 +340,15 @@ body {
     align-items: center;
     scroll-snap-align: start;
 }
-#deneme-analizleri-icerik{
+
+#deneme-analizleri-icerik {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 90%
+    height: 90%;
 }
-#deneme-analizleri-icerik h3{
+
+#deneme-analizleri-icerik h3 {
     font-size: 10rem;
     text-align: center;
 }
@@ -344,11 +363,11 @@ body {
     font-size: 5rem;
 }
 
-
 /* =========================
    YANLIŞ SORULAR
 ========================= */
-#yanlis-sorular-bolumu{
+
+#yanlis-sorular-bolumu {
     flex: 0 0 100%;
     background-color: #ded9ff;
     width: 100vw;
@@ -360,6 +379,7 @@ body {
     box-sizing: border-box;
     scroll-snap-align: start;
 }
+
 #yanlis-sorular-baslik {
     display: flex;
     text-align: center;
@@ -368,12 +388,14 @@ body {
     width: fit-content;
     margin: 20px auto;
     font-size: 5rem;
-    height: 7%
+    height: 7%;
 }
-#ys-giris-bolumu{
+
+#ys-giris-bolumu {
     width: 90%;
     height: 40%;
 }
+
 .ys-giris-ust {
     display: flex;
     justify-content: center;
@@ -381,7 +403,6 @@ body {
     gap: 20px;
     box-sizing: border-box;
     height: 75%;
-
 }
 
 .ys-yazi {
@@ -392,7 +413,8 @@ body {
     justify-content: center;
 }
 
-#ys-giris-dersler, #ys-giris-konular {
+#ys-giris-dersler,
+#ys-giris-konular {
     display: flex;
     flex-direction: column;
     width: 30%;
@@ -414,16 +436,19 @@ body {
     padding: 0;
     text-align: center;
 }
+
 .ys-select-wrapper {
     position: relative;
     width: 100%;
-    height: 15%
+    height: 15%;
 }
+
 .ys-select option {
     font-size: 1.7rem;
     font-weight: bold;
     padding: 0.2rem;
 }
+
 .ys-select-ok {
     position: absolute;
     right: 15px;
@@ -438,7 +463,6 @@ body {
     background-color: #b7ece2;
 }
 
-
 /* Yanlış ekle */
 
 #ys-giris-buton-bolumu {
@@ -448,8 +472,9 @@ body {
     height: 75%;
     justify-content: center;
     align-items: center;
-    gap: 10%
+    gap: 10%;
 }
+
 #ys-giris-submit {
     width: 100%;
     height: 30%;
@@ -458,7 +483,8 @@ body {
     border: 3px outset;
     font-size: 3rem;
 }
-#ys-giris-submit:disabled{
+
+#ys-giris-submit:disabled {
     color: dimgray;
     background-color: #c8eee9;
 }
@@ -473,7 +499,6 @@ body {
     justify-content: center;
 }
 
-
 /* =========================
    YANLIŞ SORU GİRİŞ SEÇENEKLERİ
 ========================= */
@@ -487,34 +512,37 @@ body {
     border-bottom: 2px dotted #2b2b2b;
     height: 25%;
 }
-.ys-sik{
+
+.ys-sik {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 13%;
     height: 30%;
-    gap: 30%
+    gap: 30%;
 }
-.ys-sik label{
+
+.ys-sik label {
     font-size: 3rem;
 }
-.ys-sik input{
+
+.ys-sik input {
     transform: scale(2);
 }
+
 .ys-sik,
 .ys-cikti-sik {
     background-color: #d9fff9;
 }
 
-
-#ys-gorsel-bolumu{
+#ys-gorsel-bolumu {
     display: flex;
     width: 20%;
     height: 30%;
     justify-content: center;
     align-items: center;
-
 }
+
 #ys-gorsel-label {
     display: flex;
     align-items: center;
@@ -531,7 +559,6 @@ body {
     text-align: center;
 }
 
-
 /* =========================
    YANLIŞ SORULAR ÇIKTI
 ========================= */
@@ -542,14 +569,15 @@ body {
     width: 90%;
     height: 60%;
 }
-#ys-cikti-baslik-bolumu{
-    height: 20%
+
+#ys-cikti-baslik-bolumu {
+    height: 20%;
 }
+
 #ys-cikti-baslik {
     font-size: 3rem;
     text-align: center;
 }
-
 
 /* Soru değiştirme okları */
 
@@ -583,7 +611,6 @@ body {
     font-size: 3rem;
 }
 
-
 /* =========================
    SORU GÖRSELİ
 ========================= */
@@ -613,7 +640,6 @@ body {
     object-fit: contain;
 }
 
-
 /* Tam ekran butonu */
 
 #ys-tam-ekran {
@@ -621,18 +647,22 @@ body {
     right: 2%;
     bottom: 2%;
     width: 15%;
-    height: 16%
+    height: 16%;
 }
+
 #ys-cikis-tam-ekran {
     position: absolute;
     right: 2%;
     bottom: 2%;
     width: 15%;
-    height: 8%
+    height: 8%;
 }
-#ys-tam-ekran i, #ys-cikis-tam-ekran i {
+
+#ys-tam-ekran i,
+#ys-cikis-tam-ekran i {
     font-size: 3rem;
 }
+
 .css-fullscreen {
     position: fixed !important;
     top: 0 !important;
@@ -646,6 +676,7 @@ body {
     overflow-y: auto !important;
     overflow-x: hidden !important;
 }
+
 body.css-fullscreen-active {
     overflow: hidden !important;
 }
@@ -670,22 +701,24 @@ body.css-fullscreen-active {
     border-radius: 8px;
     width: 15%;
     height: 30%;
-    gap: 20%
+    gap: 20%;
 }
 
-.ys-cikti-sik label{
+.ys-cikti-sik label {
     font-size: 2.5rem;
 }
-.ys-cikti-sik input{
+
+.ys-cikti-sik input {
     transform: scale(2);
 }
-#ys-cevapla-bolumu{
+
+#ys-cevapla-bolumu {
     display: flex;
     height: 10%;
     justify-content: center;
     align-items: center;
-
 }
+
 #ys-cevapla {
     width: 25%;
     height: 80%;
@@ -694,14 +727,16 @@ body.css-fullscreen-active {
     cursor: pointer;
     font-size: 3rem;
 }
-#sayfa-noktaları{
+
+#sayfa-noktaları {
     display: flex;
     flex: 1;
     background-color: #bbbbbb;
     align-items: center;
     justify-content: center;
-    gap: 7%
+    gap: 7%;
 }
+
 .sayfa-noktasi {
     width: 5%;
     aspect-ratio: 1 / 1;

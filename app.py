@@ -48,29 +48,45 @@ def ders_sayfasi(ders_adi):
                     basari_zayif_konular = basari_zayif_konular,
                     calisma_zayif_konular = calisma_zayif_konular)
 
-@app.route("/ders/<ders_adi>/konu/<konu_adi>") #KONU SAYFASINI AÇAR
+@app.route("/ders/<ders_adi>/konu/<konu_adi>")  # KONU SAYFASINI AÇAR
 def konu_sayfasi(ders_adi, konu_adi):
-    user = session.get("user")
-    data = load_data(user)
-    secilen_ders = ders_adi
-    secilen_konu = konu_adi
-    dogru_bilgisi = data["Dersler"][secilen_ders.capitalize()][secilen_konu.capitalize()]["dogru"]
-    yanlis_bilgisi = data["Dersler"][secilen_ders.capitalize()][secilen_konu.capitalize()]["yanlis"]
-
-    konu_calisilmayan_gun = konu_calisilmayan_gun_hesaplama(user, secilen_ders, secilen_konu)
-
     try:
-        yuzde_bilgisi = round(100*dogru_bilgisi/(yanlis_bilgisi+dogru_bilgisi),2)
-    except ZeroDivisionError:
-        yuzde_bilgisi = 0
+        user = session.get("user")
+        data = load_data(user)
 
-    return render_template("konu.html",
-                           ders= secilen_ders.capitalize(),
-                           konu=secilen_konu.capitalize(),
-                           dogru_bilgisi = dogru_bilgisi,
-                           yanlis_bilgisi = yanlis_bilgisi,
-                           yuzde_bilgisi = yuzde_bilgisi,
-                           konu_calisilmayan_gun = konu_calisilmayan_gun)
+        secilen_ders = ders_adi
+        secilen_konu = konu_adi
+
+        dogru_bilgisi = data["Dersler"][secilen_ders.capitalize()][secilen_konu.capitalize()]["dogru"]
+        yanlis_bilgisi = data["Dersler"][secilen_ders.capitalize()][secilen_konu.capitalize()]["yanlis"]
+
+        konu_calisilmayan_gun = konu_calisilmayan_gun_hesaplama(
+            user,
+            secilen_ders,
+            secilen_konu
+        )
+
+        try:
+            yuzde_bilgisi = round(
+                100 * dogru_bilgisi / (yanlis_bilgisi + dogru_bilgisi),
+                2
+            )
+        except ZeroDivisionError:
+            yuzde_bilgisi = 0
+
+        return render_template(
+            "konu.html",
+            ders=secilen_ders.capitalize(),
+            konu=secilen_konu.capitalize(),
+            dogru_bilgisi=dogru_bilgisi,
+            yanlis_bilgisi=yanlis_bilgisi,
+            yuzde_bilgisi=yuzde_bilgisi,
+            konu_calisilmayan_gun=konu_calisilmayan_gun
+        )
+
+    except Exception as e:
+        print("HATA:", repr(e))
+        return "Bir hata oluştu.", 500
 
 @app.route("/api/login", methods=["POST"])
 def login_page():
