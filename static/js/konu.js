@@ -161,8 +161,8 @@ function tutorial(){
     tutorialBackground = document.getElementById("tutorial")
     tutorialBox = document.getElementById("tutorial-box")
 
-    tutorialBox.style.display = flex
-    tutorialBackground.style.display = flex
+    tutorialBox.style.display = "flex"
+    tutorialBackground.style.display = "flex"
 
     const tutorialSteps = [
     {
