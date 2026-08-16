@@ -140,6 +140,54 @@ body {
     text-align: center;
 }
 /* =========================
+         TUTORIAL
+========================= */
+
+#tutorial{
+    position: fixed;
+    display: flex;
+    inset: 0;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    background: black;
+}
+#tutorial-box {
+    width: 45%;
+    aspect-ratio: 4/3;
+    padding: 2rem;
+    background: white;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap:20%;
+}
+
+#tutorial-yazi{
+    font-size: 1rem
+}
+#tutorial-buttons{
+    width: 90%;
+    height: 10%;
+    margin-top: 20%;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10%
+}
+#tutorial-buttons button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: clamp(1rem, 1.5vw, 2rem);
+    text-align: center;
+    border: 5px ridge;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 0.7rem
+}
+/* =========================
    BUGÜN ÇALIŞILACAKLAR
 ========================= */
 

@@ -641,3 +641,37 @@ function panel_kaydirma(){
 
 };
 panel_kaydirma()
+function tutorial(){
+    next = document.getElementById("next-button")
+
+    tutorialTitle = document.getElementById("tutorial-baslik")
+    tutorialText = document.getElementById("tutorial-yazi")
+
+
+    const tutorialSteps = [{title: "Mentrio'ya hoşgeldin.",
+                                        text: "Haydi uygulamadaki araçları keşfedelim!",
+                                        target: null},
+
+                                        {title: "Dersler bölümü:",
+                                        text: "Buradan ders sayfalarına giriş yapabilirsin. ",
+                                        target: "matematik-buton"},
+
+                                        {title: "Bugün Çalışacağın Konular:",
+                                        text: "Mentrio senin çalışman gerekenleri senin yerine hesaplar. Şuan boş görünüyor, haydi ilk konunu ekle!",
+                                        target: "calisilacaklar-baslik"}
+    ]
+    let currentStep = 0
+
+    function updateTutorial(){
+        tutorialTitle.textContent = tutorialSteps[currentStep].title
+        tutorialText.textContent = tutorialSteps[currentStep].text
+    }
+
+    next.addEventListener("click", function (){
+        currentStep++
+        updateTutorial();
+    })
+
+
+};
+tutorial()
