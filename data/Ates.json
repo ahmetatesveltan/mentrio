@@ -10,15 +10,32 @@
                 "dogru": 0,
                 "yanlis": 0,
                 "son_tekrar": "2000-01-01"
+            },
+            "Analitik geometri": {
+                "dogru": 0,
+                "yanlis": 0,
+                "son_tekrar": "2000-01-01"
             }
         },
         "Geometri": {},
         "Fizik": {},
         "Kimya": {},
         "Biyoloji": {},
-        "Edebiyat": {},
+        "Edebiyat": {
+            "Anlatım bozuklukları": {
+                "dogru": 0,
+                "yanlis": 0,
+                "son_tekrar": "2000-01-01"
+            }
+        },
         "Tarih": {},
-        "Cografya": {},
+        "Cografya": {
+            "Yerleşim yerleri": {
+                "dogru": 0,
+                "yanlis": 0,
+                "son_tekrar": "2000-01-01"
+            }
+        },
         "Felsefe": {},
         "Din": {}
     },

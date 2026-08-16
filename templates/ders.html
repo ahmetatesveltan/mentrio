@@ -31,8 +31,8 @@
                     </div>
                     <div id="left-panel-konular">
                         {% for konu in ders_konulari %}
-                            <a href="/ders/{{secilen_ders.lower()}}/konu/{{konu.lower()}}" class="konu-butonu">{{konu}}</a>
-                        {% endfor %}
+                            <a href="{{ url_for('konu_sayfasi', ders_adi=secilen_ders, konu_adi=konu) }}" class="konu-butonu">{{konu}}</a>
+                        {% endfor %}}
                     </div>
                 </section>
 
