@@ -7,20 +7,22 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 </head>
 <body>
-    <div id="tutorial">
-        <div id="tutorial-box">
+     {% if giris_yapildi %}
+        <div id="tutorial">
+            <div id="tutorial-box">
 
-            <h2 id="tutorial-title">Mentrio'ya hoşgeldin.</h2>
-            <p id="tutorial-text">Haydi uygulamadaki araçları keşfedelim!</p>
+                <h2 id="tutorial-title">Mentrio'ya hoşgeldin.</h2>
+                <p id="tutorial-text">Haydi uygulamadaki araçları keşfedelim!</p>
 
-            <div id="tutorial-buttons">
-                <button id="tutorial-atla">Kapat</button>
-                <button id="tutorial-geri">Geri</button>
-                <button id="tutorial-ileri">İleri</button>
+                <div id="tutorial-buttons">
+                    <button id="tutorial-atla">Kapat</button>
+                    <button id="tutorial-geri">Geri</button>
+                    <button id="tutorial-ileri">İleri</button>
+                </div>
+
             </div>
-
         </div>
-    </div>
+     {% endif %}
     <div id="app">
         <div id="panels"><section id="login-bolumu">
             <h2 id="login-bolumu-baslik">{% if giris_yapildi %}
