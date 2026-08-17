@@ -60,9 +60,9 @@ def konu_sayfasi(ders_adi, konu_adi):
         ders_key = secilen_ders.capitalize()
         konu_key = secilen_konu.capitalize()
 
-        ustalik = ustalik_hesapla(user, data, ders_adi, konu_adi)
-        rank = ustalik_rank(user, data, ders_adi, konu_adi)
-        sayac = soru_havuzu_sayac(user, "Konu", konu_adi)
+        ustalik = ustalik_hesapla(user, data, secilen_ders.capitalize(), secilen_konu.capitalize())
+        rank = ustalik_rank(user, data, secilen_ders.capitalize(), secilen_konu.capitalize())
+        sayac = soru_havuzu_sayac(user, "Konu", secilen_konu.capitalize())
 
         print("USER:", repr(user))
         print("DERS:", repr(ders_key))
