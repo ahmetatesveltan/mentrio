@@ -2,24 +2,24 @@
     "Dersler": {
         "Matematik": {
             "Fonksiyon": {
-                "dogru": 20,
-                "yanlis": 2,
+                "dogru": 32,
+                "yanlis": 3,
                 "son_tekrar": "2026-08-16"
             },
             "Permütasyon": {
-                "dogru": 0,
-                "yanlis": 0,
-                "son_tekrar": "2000-01-01"
+                "dogru": 20,
+                "yanlis": 2,
+                "son_tekrar": "2026-08-17"
             },
             "Analitik geometri": {
-                "dogru": 0,
+                "dogru": 250,
                 "yanlis": 0,
-                "son_tekrar": "2000-01-01"
+                "son_tekrar": "2026-08-17"
             },
             "Koordinat sistemi": {
-                "dogru": 0,
+                "dogru": 3,
                 "yanlis": 0,
-                "son_tekrar": "2000-01-01"
+                "son_tekrar": "2026-08-17"
             }
         },
         "Geometri": {},
@@ -59,7 +59,32 @@
         "Felsefe": {},
         "Din": {}
     },
-    "Soru Havuzu": {},
-    "SonrakiSoruID": 1,
+    "Soru Havuzu": {
+        "q0001": {
+            "Ders": "Matematik",
+            "Konu": "Fonksiyon",
+            "Cevap": "C",
+            "Foto": "q0001.jfif",
+            "Tekrar Seviyesi": 0,
+            "Sonraki Tekrar": "2026-08-18"
+        },
+        "q0002": {
+            "Ders": "Matematik",
+            "Konu": "Permütasyon",
+            "Cevap": "A",
+            "Foto": "q0002.jfif",
+            "Tekrar Seviyesi": 0,
+            "Sonraki Tekrar": "2026-08-18"
+        },
+        "q0003": {
+            "Ders": "Matematik",
+            "Konu": "Permütasyon",
+            "Cevap": "C",
+            "Foto": "q0003.jfif",
+            "Tekrar Seviyesi": 0,
+            "Sonraki Tekrar": "2026-08-18"
+        }
+    },
+    "SonrakiSoruID": 4,
     "Gunluk Cozulen Sorular": {}
 }

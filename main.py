@@ -78,8 +78,9 @@ def konu_tekrari(user, ders, konu):
 
 #USTALIK HESAPLAMA
 
-def ustalik_hesapla(data, ders, konu):
+def ustalik_hesapla(user, data, ders, konu):
     #SORU YÜZDESİ VE KONU TEKRAR SÜRESİ HESAPLAMA, USTALIK BULMA
+    data = load_data(user)
     try:
         toplam_soru_sayisi = data["Dersler"][ders][konu]["dogru"] + data["Dersler"][ders][konu]["yanlis"]
         soru_yuzdesi = data["Dersler"][ders][konu]["dogru"]/ toplam_soru_sayisi
@@ -112,15 +113,29 @@ def ustalik_hesapla(data, ders, konu):
     ustalik = round((soru_basarisi * hatirlama_katsayisi * 100), 2)
     return ustalik
 
+def ustalik_rank(user, data, ders, konu):
+    data = load_data(user)
+    ustalik = ustalik_hesapla(user, data, ders, konu)
+
+    if ustalik <=25:
+        return "F"
+    elif ustalik <=40:
+        return "D"
+    elif ustalik <= 60:
+        return "C"
+    elif ustalik <=80:
+        return "B"
+    else:
+        return "A"
 
 
-def bugun_calisilacaklar(data):
-
+def bugun_calisilacaklar(user, data):
+    data = load_data(user)
     #konular sıralandı
     konular = {}
     for ders in data["Dersler"]:
         for konu in data["Dersler"][ders]:
-            ustalik = ustalik_hesapla(data, ders, konu)
+            ustalik = ustalik_hesapla(user,data, ders, konu)
             konular[ders, konu] = ustalik
     konu_siralamasi_genel = sorted(konular.items(), key=lambda item: item[1], reverse=False)
 
@@ -275,3 +290,12 @@ def konu_calisilmayan_gun_hesaplama(user, ders, konu):
     calisilmayan_gun = (date.today() - son_calisma_tarihi).days
 
     return calisilmayan_gun
+
+def soru_havuzu_sayac(user, durum, deger):
+    data = load_data(user)
+    sayac = 0
+    for soru in data["Soru Havuzu"].keys():
+        print(data["Soru Havuzu"][soru].keys())
+        if data["Soru Havuzu"][soru][durum.capitalize()] == deger.capitalize():
+            sayac+=1
+    return sayac

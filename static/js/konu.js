@@ -95,33 +95,54 @@ function soru_yuklemesi(){
 
 }
 soru_yuklemesi();
-function konu_ozeti(){
+function konu_ozeti() {
     const body = document.body;
     const ders = body.dataset.ders;
     const konu = body.dataset.konu;
 
-    const calisma_butonu = document.getElementById("konu-calisildi")
+    const calisma_butonu = document.getElementById("konu-calisildi");
     const calisma_bilgisi = document.querySelector("#calisma-bilgisi h3");
+    const paneller = document.getElementById("other-panels");
 
-    calisma_butonu.addEventListener("click", function(){
+    if (
+        calisma_butonu === null ||
+        calisma_bilgisi === null ||
+        paneller === null
+    ) {
+        return;
+    }
+
+    // Refresh sonrası sağ panele geç
+    if (sessionStorage.getItem("konu_saga_scroll") === "true") {
+        sessionStorage.removeItem("konu_saga_scroll");
+        paneller.scrollLeft = paneller.clientWidth *2;
+    }
+
+    calisma_butonu.addEventListener("click", function () {
+
         fetch("/api/konu-calisildi", {
             method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({ders: ders,
-                                        konu: konu})
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                ders: ders,
+                konu: konu
+            })
         })
         .then(response => response.json())
         .then(data => {
 
-            calisma_bilgisi.textContent = "Bu konuyu bugün çalıştın. Aferin sana :)"
+            sessionStorage.setItem(
+                "konu_saga_scroll",
+                "true"
+            );
+            window.location.reload();
         });
-
     });
+}
 
-
-};
-konu_ozeti()
-
+konu_ozeti();
 function panel_kaydirma(){
     const paneller = document.getElementById("other-panels");
     const noktalar = document.querySelectorAll(".sayfa-noktasi");
@@ -181,7 +202,13 @@ function tutorial(){
 
     {
         title: "Konu Özetin:",
-        text: "Konu üzerindeki istatistiklerine buradan göz atabilirsin. Ayrıca konuyu çalıştıktan sonra aşağıdaki butona basmayı unutma!",
+        text: "Konu üzerindeki istatistiklerine buradan göz atabilirsin.",
+        panel: "right-panel",
+        position: "bottom-center"},
+
+    {
+        title: "Çalışma Butonu:",
+        text: "Konuyu çalıştıktan sonra bu butona basmayı unutma!",
         panel: "right-panel",
         position: "center"}
 

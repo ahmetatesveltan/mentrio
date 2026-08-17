@@ -21,11 +21,11 @@ def home():
 
     data = load_data(user)
 
-    calisilacak_konular = bugun_calisilacaklar(data) #Çalışılacak 2 konu
+    calisilacak_konular = bugun_calisilacaklar(user, data) #Çalışılacak 2 konu
                                                       #2konunun ustalığı
     calisilacak_ustaliklar = []
     for ders, konu in calisilacak_konular:
-        ustalik = ustalik_hesapla(data, ders, konu)
+        ustalik = ustalik_hesapla(user,data, ders, konu)
         calisilacak_ustaliklar.append(ustalik)
     return render_template("index.html",
                            calisilacak_konular = calisilacak_konular,
@@ -60,6 +60,10 @@ def konu_sayfasi(ders_adi, konu_adi):
         ders_key = secilen_ders.capitalize()
         konu_key = secilen_konu.capitalize()
 
+        ustalik = ustalik_hesapla(user, data, ders_adi, konu_adi)
+        rank = ustalik_rank(user, data, ders_adi, konu_adi)
+        sayac = soru_havuzu_sayac(user, "Konu", konu_adi)
+
         print("USER:", repr(user))
         print("DERS:", repr(ders_key))
         print("KONU:", repr(konu_key))
@@ -90,7 +94,10 @@ def konu_sayfasi(ders_adi, konu_adi):
             dogru_bilgisi=dogru_bilgisi,
             yanlis_bilgisi=yanlis_bilgisi,
             yuzde_bilgisi=yuzde_bilgisi,
-            konu_calisilmayan_gun=konu_calisilmayan_gun
+            konu_calisilmayan_gun=konu_calisilmayan_gun,
+            ustalik = ustalik,
+            ustalik_rank = rank,
+            soru_sayaci = sayac
         )
 
     except Exception as e:

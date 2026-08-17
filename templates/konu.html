@@ -47,8 +47,6 @@
 
             <section id="other-panels">
 
-                <!-- SOL PANEL -->
-
                 <section id="left-panel">
 
                     <div id="left-panel-top">
@@ -58,9 +56,7 @@
                     </div>
 
                     <div id="left-soru-bolumu">
-
                         <div id="left-dogru">
-
                             <div id="left-dogru-baslik">
                                 <h3>Doğru</h3>
                             </div>
@@ -100,28 +96,11 @@
                         </div>
 
 
-                        <div id="left-bilgiler">
 
-                            <p id="left-dogru-bilgi">
-                                Toplam Doğru Sayısı: {{ dogru_bilgisi }}
-                            </p>
-
-                            <p id="left-yanlis-bilgi">
-                                Toplam Yanlış Sayısı: {{ yanlis_bilgisi }}
-                            </p>
-
-                            <p id="left-yuzde-bilgi">
-                                Başarı Yüzdesi: %{{ yuzde_bilgisi }}
-                            </p>
-
-                        </div>
 
                     </div>
 
                 </section>
-
-
-                <!-- ORTA PANEL -->
 
                 <section id="middle-panel">
                     <div id="middle-icerik">
@@ -129,8 +108,6 @@
                     </div>
                 </section>
 
-
-                <!-- SAĞ PANEL -->
 
                 <section id="right-panel">
 
@@ -142,39 +119,52 @@
 
 
                     <div id="right-icerik">
-                        <h3>
-                            Daha Fazla Özellik Yakında Gelecek...
-                        </h3>
+                        <p id="right-ustalik-bilgi">
+                            ● Ustalık: %{{ustalik}} -------- {{ ustalik_rank }}
+                        </p>
+
+                        <p id="right-yuzde-bilgi">
+                            ● Başarı Yüzdesi: %{{ yuzde_bilgisi }}
+                        </p>
+
+                        <p id="right-dogru-bilgi">
+                            ● Toplam Doğru Sayısı: {{ dogru_bilgisi }}
+                        </p>
+
+                        <p id="right-yanlis-bilgi">
+                            ● Toplam Yanlış Sayısı: {{ yanlis_bilgisi }}
+                        </p>
+
+                        <p id="right-toplam-soru-bilgi">
+                            ● Çözülen Soru Sayısı: {{ yanlis_bilgisi + dogru_bilgisi }}
+                        </p>
+
+                        <p id="soru-havuzu-sayac-bilgi">
+                            ● Soru Havuzundaki Soru Sayısı: {{ soru_sayaci }}
+                        </p>
+
+
                     </div>
 
 
                     <div id="calisma-bilgisi">
 
                         {% if konu_calisilmayan_gun == "hiç çalışılmadı" %}
-
                             <h3>
                                 Bu konuyu henüz hiç çalışmadın.
                             </h3>
-
                         {% elif konu_calisilmayan_gun == 0 %}
-
                             <h3>
                                 Bu konuyu bugün çalıştın. Aferin sana :)
                             </h3>
-
                         {% else %}
-
                             <h3>
                                 Bu konuyu en son
                                 {{ konu_calisilmayan_gun }}
                                 gün önce çalıştın. Devam et.
                             </h3>
-
                         {% endif %}
-
                     </div>
-
-
                     <div id="calisildi-div">
                         <button id="konu-calisildi">
                             Çalışınca Bana Bas
