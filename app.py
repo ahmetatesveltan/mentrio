@@ -190,7 +190,7 @@ def cozulecek_sorular_kontrol():                                   #KONTROL EDER
     id = veri["soru_id"]
     data["Gunluk Cozulen Sorular"][bugun].append(id)
     dogru_cevap = data["Soru Havuzu"][id]["Cevap"]
-    dogruluk = soru_havuzu_cozme(data, id, cevap)
+    dogruluk = soru_havuzu_cozme(user, data, id, cevap)
 
     save_data(user, data)
 

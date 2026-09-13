@@ -609,7 +609,6 @@ function gunluk_sorulari_goster() {
 
         } else {
 
-            ysSubmit.disabled = false;
 
             butonA.disabled = false;
             butonB.disabled = false;
@@ -617,6 +616,7 @@ function gunluk_sorulari_goster() {
             butonD.disabled = false;
             butonE.disabled = false;
             butonBOS.disabled = false;
+            submitControl();
         }
     }
 
