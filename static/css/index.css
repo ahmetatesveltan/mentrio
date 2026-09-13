@@ -689,7 +689,8 @@ body {
 }
 
 #ys-cikti-baslik-bolumu {
-    height: 20%;
+    height: 15%;
+
 }
 
 #ys-cikti-baslik {
@@ -707,6 +708,7 @@ body {
     width: 100%;
     height: 15%;
     margin: 0;
+
 }
 
 #ys-sol-ok,
@@ -744,6 +746,7 @@ body {
     overflow: hidden;
     background-color: #eeeeee;
     border: 1px solid #ccc;
+
 }
 
 #ys-cikti-soru:fullscreen {
@@ -808,7 +811,8 @@ body.css-fullscreen-active {
     justify-content: center;
     align-items: center;
     gap: 3%;
-    height: 20%;
+    height: 5%;
+
 }
 
 .ys-cikti-sik {
@@ -818,12 +822,12 @@ body.css-fullscreen-active {
     padding: 2px 6px;
     border-radius: 8px;
     width: 15%;
-    height: 30%;
+    height: 100%;
     gap: 20%;
 }
 
 .ys-cikti-sik label {
-    font-size: 2.5rem;
+    font-size: 2.3rem;
 }
 
 .ys-cikti-sik input {
@@ -832,14 +836,15 @@ body.css-fullscreen-active {
 
 #ys-cevapla-bolumu {
     display: flex;
-    height: 10%;
+    height: 15%;
     justify-content: center;
     align-items: center;
+
 }
 
 #ys-cevapla {
     width: 25%;
-    height: 80%;
+    height: 40%;
     background-color: #d9fff9;
     border: 3px outset;
     cursor: pointer;

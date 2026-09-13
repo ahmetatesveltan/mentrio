@@ -131,44 +131,51 @@ def ustalik_rank(user, data, ders, konu):
 
 def bugun_calisilacaklar(user, data):
     data = load_data(user)
-    #konular sıralandı
-    konular = {}
-    for ders in data["Dersler"]:
-        for konu in data["Dersler"][ders]:
-            ustalik = ustalik_hesapla(user,data, ders, konu)
-            konular[ders, konu] = ustalik
-    konu_siralamasi_genel = sorted(konular.items(), key=lambda item: item[1], reverse=False)
+    bugun = str(date.today())
+    if bugun not in data["Gunluk Konular"]:
 
-    #bugün çalışılacaklar yazılıyor
-    calisma_sirasi = []
-    for (ders, konu), ustalik in konu_siralamasi_genel:
-        son_tarih = datetime.strptime(data["Dersler"][ders][konu]["son_tekrar"], "%Y-%m-%d").date()
-        gecen_gun = (date.today()- son_tarih).days
-        if gecen_gun < 7 and ustalik >25:
-            continue
-        else:
-            calisma_sirasi.append((ders, konu))
-    konu_siralamasi = []
-    for item in konu_siralamasi_genel:
-        konu_siralamasi.append(item[0])
+        #konular sıralandı
+        konular = {}
+        for ders in data["Dersler"]:
+            for konu in data["Dersler"][ders]:
+                ustalik = ustalik_hesapla(user,data, ders, konu)
+                konular[ders, konu] = ustalik
+        konu_siralamasi_genel = sorted(konular.items(), key=lambda item: item[1], reverse=False)
 
-    sonuc = []
+        #bugün çalışılacaklar yazılıyor
+        calisma_sirasi = []
+        for (ders, konu), ustalik in konu_siralamasi_genel:
+            son_tarih = datetime.strptime(data["Dersler"][ders][konu]["son_tekrar"], "%Y-%m-%d").date()
+            gecen_gun = (date.today()- son_tarih).days
+            if gecen_gun < 7 and ustalik >25:
+                continue
+            else:
+                calisma_sirasi.append((ders, konu))
+        konu_siralamasi = []
+        for item in konu_siralamasi_genel:
+            konu_siralamasi.append(item[0])
 
-    if len(konu_siralamasi) == 0:
-        return []
-    elif len(konu_siralamasi) ==1:
-        sonuc.append(konu_siralamasi[0])
-    elif len(calisma_sirasi) >= 2:
-        sonuc.append(calisma_sirasi[0])
-        sonuc.append(calisma_sirasi[1])
-    elif len(calisma_sirasi) ==1 and len(konu_siralamasi) !=1:
-        sonuc.append(calisma_sirasi[0])
-        sonuc.append(konu_siralamasi[1])
-    elif len(calisma_sirasi) ==0 and len(konu_siralamasi) >=2:
-        sonuc.append(konu_siralamasi[0])
-        sonuc.append(konu_siralamasi[1])
+        sonuc = []
 
-    return sonuc
+        if len(konu_siralamasi) == 0:
+            return []
+        elif len(konu_siralamasi) ==1:
+            sonuc.append(konu_siralamasi[0])
+        elif len(calisma_sirasi) >= 2:
+            sonuc.append(calisma_sirasi[0])
+            sonuc.append(calisma_sirasi[1])
+        elif len(calisma_sirasi) ==1 and len(konu_siralamasi) !=1:
+            sonuc.append(calisma_sirasi[0])
+            sonuc.append(konu_siralamasi[1])
+        elif len(calisma_sirasi) ==0 and len(konu_siralamasi) >=2:
+            sonuc.append(konu_siralamasi[0])
+            sonuc.append(konu_siralamasi[1])
+        data["Gunluk Konular"][bugun] = sonuc
+
+        save_data(user, data)
+        return sonuc
+    else:
+        return data["Gunluk Konular"][bugun]
 
 def soru_kaydetme_butonu(user, secilen_ders, secilen_konu, dogru_degeri, yanlis_degeri):
     data = load_data(user)

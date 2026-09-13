@@ -28,9 +28,9 @@
         "Biyoloji": {},
         "Edebiyat": {
             "Anlatım bozuklukları": {
-                "dogru": 0,
+                "dogru": 90,
                 "yanlis": 0,
-                "son_tekrar": "2000-01-01"
+                "son_tekrar": "2026-09-13"
             },
             "Noktalaa işaretleri": {
                 "dogru": 0,
@@ -86,5 +86,17 @@
         }
     },
     "SonrakiSoruID": 4,
-    "Gunluk Cozulen Sorular": {}
+    "Gunluk Cozulen Sorular": {},
+    "Gunluk Konular": {
+        "2026-09-13": [
+            [
+                "Edebiyat",
+                "Anlatım bozuklukları"
+            ],
+            [
+                "Edebiyat",
+                "Noktalaa işaretleri"
+            ]
+        ]
+    }
 }
