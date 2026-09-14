@@ -51,7 +51,8 @@ def konu_ekle(user, ders, konu):
         data["Dersler"][ders][konu.capitalize()] = {
             "dogru": 0,
             "yanlis": 0,
-            "son_tekrar":  "2000-01-01"
+            "son_tekrar":  "2000-01-01",
+            "guven": 0
         }
     save_data(user, data)
 
@@ -139,7 +140,9 @@ def bugun_calisilacaklar(user, data):
         for ders in data["Dersler"]:
             for konu in data["Dersler"][ders]:
                 ustalik = ustalik_hesapla(user,data, ders, konu)
-                konular[ders, konu] = ustalik
+                guven = data["Dersler"][ders][konu]["guven"]
+                skor = (ustalik + 1) * (100*guven + 1)
+                konular[ders, konu] = skor
         konu_siralamasi_genel = sorted(konular.items(), key=lambda item: item[1], reverse=False)
 
         #bugün çalışılacaklar yazılıyor

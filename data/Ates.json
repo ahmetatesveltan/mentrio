@@ -2,60 +2,37 @@
     "Dersler": {
         "Matematik": {
             "Fonksiyon": {
-                "dogru": 32,
-                "yanlis": 3,
-                "son_tekrar": "2026-08-16"
-            },
-            "Permütasyon": {
-                "dogru": 20,
-                "yanlis": 2,
-                "son_tekrar": "2026-08-17"
-            },
-            "Analitik geometri": {
-                "dogru": 250,
+                "dogru": 0,
                 "yanlis": 0,
-                "son_tekrar": "2026-08-17"
+                "son_tekrar": "2000-01-01",
+                "guven": 0.8
             },
-            "Koordinat sistemi": {
-                "dogru": 3,
+            "Trigonometri": {
+                "dogru": 0,
                 "yanlis": 0,
-                "son_tekrar": "2026-08-17"
+                "son_tekrar": "2000-01-01",
+                "guven": 0.6
+            },
+            "Parabol": {
+                "dogru": 0,
+                "yanlis": 0,
+                "son_tekrar": "2000-01-01",
+                "guven": 0.4
+            },
+            "Olasilik": {
+                "dogru": 0,
+                "yanlis": 0,
+                "son_tekrar": "2000-01-01",
+                "guven": 1
             }
         },
         "Geometri": {},
+        "Edebiyat": {},
         "Fizik": {},
         "Kimya": {},
         "Biyoloji": {},
-        "Edebiyat": {
-            "Anlatım bozuklukları": {
-                "dogru": 90,
-                "yanlis": 0,
-                "son_tekrar": "2026-09-13"
-            },
-            "Noktalaa işaretleri": {
-                "dogru": 0,
-                "yanlis": 0,
-                "son_tekrar": "2000-01-01"
-            }
-        },
         "Tarih": {},
-        "Cografya": {
-            "Yerleşim yerleri": {
-                "dogru": 0,
-                "yanlis": 0,
-                "son_tekrar": "2000-01-01"
-            },
-            "Ilk yerleşimler": {
-                "dogru": 0,
-                "yanlis": 0,
-                "son_tekrar": "2000-01-01"
-            },
-            "Dünyanin tari̇hi̇": {
-                "dogru": 0,
-                "yanlis": 0,
-                "son_tekrar": "2000-01-01"
-            }
-        },
+        "Cografya": {},
         "Felsefe": {},
         "Din": {}
     },
@@ -102,6 +79,16 @@
             [
                 "Edebiyat",
                 "Noktalaa işaretleri"
+            ]
+        ],
+        "2026-09-14": [
+            [
+                "Matematik",
+                "Parabol"
+            ],
+            [
+                "Matematik",
+                "Trigonometri"
             ]
         ]
     }
