@@ -117,7 +117,7 @@ def ustalik_hesapla(user, data, ders, konu):
 def ustalik_rank(user, data, ders, konu):
     data = load_data(user)
     ustalik = ustalik_hesapla(user, data, ders, konu)
-
+    print(ustalik)
     if ustalik <=25:
         return "F"
     elif ustalik <=40:

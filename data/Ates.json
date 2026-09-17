@@ -1,6 +1,13 @@
 {
     "Dersler": {
-        "Matematik": {},
+        "Matematik": {
+            "Analitik geometri": {
+                "dogru": 0,
+                "yanlis": 0,
+                "son_tekrar": "2000-01-01",
+                "guven": 0
+            }
+        },
         "Geometri": {},
         "Edebiyat": {},
         "Fizik": {},
