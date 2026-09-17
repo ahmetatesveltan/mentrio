@@ -1,31 +1,6 @@
 {
     "Dersler": {
-        "Matematik": {
-            "Fonksiyon": {
-                "dogru": 0,
-                "yanlis": 0,
-                "son_tekrar": "2000-01-01",
-                "guven": 0.8
-            },
-            "Trigonometri": {
-                "dogru": 0,
-                "yanlis": 0,
-                "son_tekrar": "2000-01-01",
-                "guven": 0.6
-            },
-            "Parabol": {
-                "dogru": 0,
-                "yanlis": 0,
-                "son_tekrar": "2000-01-01",
-                "guven": 0.4
-            },
-            "Olasilik": {
-                "dogru": 0,
-                "yanlis": 0,
-                "son_tekrar": "2000-01-01",
-                "guven": 1
-            }
-        },
+        "Matematik": {},
         "Geometri": {},
         "Edebiyat": {},
         "Fizik": {},
@@ -36,60 +11,8 @@
         "Felsefe": {},
         "Din": {}
     },
-    "Soru Havuzu": {
-        "q0001": {
-            "Ders": "Matematik",
-            "Konu": "Fonksiyon",
-            "Cevap": "C",
-            "Foto": "q0001.jfif",
-            "Tekrar Seviyesi": 0,
-            "Sonraki Tekrar": "2026-09-14"
-        },
-        "q0002": {
-            "Ders": "Matematik",
-            "Konu": "Permütasyon",
-            "Cevap": "A",
-            "Foto": "q0002.jfif",
-            "Tekrar Seviyesi": 0,
-            "Sonraki Tekrar": "2026-09-14"
-        },
-        "q0003": {
-            "Ders": "Matematik",
-            "Konu": "Permütasyon",
-            "Cevap": "C",
-            "Foto": "q0003.jfif",
-            "Tekrar Seviyesi": 1,
-            "Sonraki Tekrar": "2026-09-14"
-        }
-    },
-    "SonrakiSoruID": 4,
-    "Gunluk Cozulen Sorular": {
-        "2026-09-13": [
-            "q0001",
-            "q0002",
-            "q0003"
-        ]
-    },
-    "Gunluk Konular": {
-        "2026-09-13": [
-            [
-                "Edebiyat",
-                "Anlatım bozuklukları"
-            ],
-            [
-                "Edebiyat",
-                "Noktalaa işaretleri"
-            ]
-        ],
-        "2026-09-14": [
-            [
-                "Matematik",
-                "Parabol"
-            ],
-            [
-                "Matematik",
-                "Trigonometri"
-            ]
-        ]
-    }
+    "Soru Havuzu": {},
+    "SonrakiSoruID": 1,
+    "Gunluk Cozulen Sorular": {},
+    "Gunluk Konular": {}
 }
