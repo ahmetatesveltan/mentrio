@@ -1,97 +1,204 @@
+import datetime
 import json
 from datetime import *
 import os
+from dotenv import load_dotenv
+import mysql.connector
+from werkzeug.security import *
 
-def load_data(user):
+
+load_dotenv()
+
+
+def get_connection():
     try:
-        with open(f"data/{user}.json", "r", encoding="utf-8") as f:
-            return json.load(f)
-
-    except json.JSONDecodeError:
-        print("JSON dosyası boş veya bozuk!")
+        connection = mysql.connector.connect(
+            host=os.getenv("DB_HOST"),
+            port=os.getenv("DB_PORT"),
+            user=os.getenv("DB_USER"),
+            password=os.getenv("DB_PASSWORD"),
+            database=os.getenv("DB_NAME")
+        )
+        return connection
+    except Exception as e:
+        print(f"Bağlantıda hata çıktı: {e} " )
         return None
 
-def save_data(user, data):
-    temp_path = f"data/{user}_temp.json"
-    user_path = f"data/{user}.json"
 
-    with open(temp_path, "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=4, ensure_ascii=False)
+def register(username, password):
+    connection = get_connection()
+    if not username.strip():
+        return
+    cursor = connection.cursor()
 
-    os.replace(temp_path, user_path)
+    password_hash = generate_password_hash(password, method='pbkdf2:sha1', salt_length=8)
+
+    cursor.execute(
+        """
+            INSERT INTO users (username, password_hash)
+            VALUES(%s, %s)
+        """,
+        (username, password_hash)
+    )
+    connection.commit()
+
+def login(username, password):
+    connection = get_connection()
+
+    cursor = connection.cursor()
+
+    cursor.execute(
+        """
+            SELECT EXISTS (
+                SELECT 1
+                FROM users
+                WHERE username = %s
+            )
+        """,
+        (username,)
+    )
+    user_exists = cursor.fetchone()[0]
+    if user_exists == 0:
+        return "user_not_found"
+    else:
+        cursor.execute(
+            """
+                SELECT password_hash FROM users WHERE username = %s
+            """,
+            (username,)
+        )
+        password_hash = cursor.fetchone()[0]
+        password_validation = check_password_hash(password_hash, password)
+        if password_validation == False:
+            return "wrong_password"
+        else:
+            return "logging_in"
 
 
-#DERS EKLEME
-def ders_ekle(user, ders):
-    data = load_data(user)
-    if ders not in data["Dersler"]:
-            data["Dersler"][ders] = {}
+def username_to_userid(user):
+    if user == None:
+        return
+    connection = get_connection()
 
-    save_data(user, data)
-def ders_listesi(user):
-    data = load_data(user)
-    dersler = []
-    for ders in data["Dersler"]:
-        dersler.append(ders)
-    return dersler
-def konu_listesi(user, ders):
-    data = load_data(user)
-    konular = []
-    for konu in data["Dersler"][ders].keys():
-        konular.append(konu)
-    return konular
+    cursor = connection.cursor()
 
+    cursor.execute(
+        "SELECT id FROM users WHERE username = %s",
+        (user,)
+
+    )
+    user_id = cursor.fetchone()[0]
+
+    return user_id
 
 #KONU EKLEME
 def konu_ekle(user, ders, konu):
-    data = load_data(user)
+
+    connection = get_connection()
+    cursor = connection.cursor()
+
+    user_id = username_to_userid(user)
+
+    cursor.execute(
+        "SELECT id FROM subjects WHERE name=%s",
+        (ders,)
+    )
+    ders_id = cursor.fetchone()[0]
 
 
-    if konu not in data["Dersler"][ders]:
-        data["Dersler"][ders][konu.capitalize()] = {
-            "dogru": 0,
-            "yanlis": 0,
-            "son_tekrar":  "2000-01-01"
-        }
-    save_data(user, data)
+    cursor.execute(
+        "INSERT INTO topics (name, subject_id, user_id )"
+        "VALUES (%s, %s, %s)",
+        (konu, ders_id, user_id)
+    )
+
+    connection.commit()
+
+    cursor.execute(
+        "SELECT * FROM topics WHERE name = %s",
+        (konu,)
+    )
+
+
 
 #SORU EKLEME
-def soru_ekle(user, ders, konu, dogru, yanlis):
-    data = load_data(user)
-    #DOĞRU VE YANLIŞ SAYISI EKLEME
-    try:
-        data["Dersler"][ders][konu]["dogru"] += dogru
-        data["Dersler"][ders][konu]["yanlis"] += yanlis
-    except KeyError:
-        print("Bu ders veya konu programa henüz ekli değil. Lütfen önce sisteme ekleyin.")
+def soru_ekle(user, konu, dogru, yanlis):
 
+    connection = get_connection()
+    cursor = connection.cursor()
 
-    save_data(user, data)
+    user_id = username_to_userid(user)
+
+    cursor.execute(
+        """
+        UPDATE topics 
+        SET correct_answer = correct_answer + %s,
+            wrong_answer = wrong_answer + %s
+        WHERE name = %s AND user_id = %s
+        """,
+        (dogru, yanlis, konu, user_id,),
+    )
+    connection.commit()
+
 
 
 #SON KONU TEKRAR TARİHİ EKLEME
-def konu_tekrari(user, ders, konu):
-    data = load_data(user)
-    data["Dersler"][ders][konu]["son_tekrar"] = str(date.today())
+def konu_tekrari(user, konu):
+    bugun = str(date.today())
 
-    save_data(user, data)
+    connection = get_connection()
+    cursor = connection.cursor()
+
+    user_id = username_to_userid(user)
+
+    cursor.execute(
+        """
+        UPDATE topics
+        SET revision = %s 
+        WHERE name = %s AND user_id = %s
+        """,
+        (bugun, konu, user_id)
+    )
+    connection.commit()
+
 
 #USTALIK HESAPLAMA
 
-def ustalik_hesapla(user, data, ders, konu):
+def ustalik_hesapla(user, konu):
     #SORU YÜZDESİ VE KONU TEKRAR SÜRESİ HESAPLAMA, USTALIK BULMA
-    data = load_data(user)
+
+    connection = get_connection()
+    cursor = connection.cursor()
+
+    user_id = username_to_userid(user)
+
     try:
-        toplam_soru_sayisi = data["Dersler"][ders][konu]["dogru"] + data["Dersler"][ders][konu]["yanlis"]
-        soru_yuzdesi = data["Dersler"][ders][konu]["dogru"]/ toplam_soru_sayisi
-        soru_basarisi = (toplam_soru_sayisi/(toplam_soru_sayisi+50) * soru_yuzdesi)
+        cursor.execute(
+            """
+                SELECT correct_answer, wrong_answer FROM topics
+                WHERE user_id = %s AND name = %s
+            """,
+            (user_id, konu,)
+        )
+        dogru, yanlis = cursor.fetchone()
+
+        toplam_soru = dogru+yanlis
+        basari_yuzdesi = dogru/toplam_soru
+        soru_basarisi = (toplam_soru/(toplam_soru+50) * basari_yuzdesi)
     except ZeroDivisionError:
         soru_basarisi = 0
 
 
-    son_tekrar_gecici = data["Dersler"][ders][konu]["son_tekrar"]
-    son_tekrar_tarihi = datetime.strptime(son_tekrar_gecici,"%Y-%m-%d" ).date()
+    cursor.execute(
+        """
+            SELECT revision FROM topics WHERE user_id = %s AND name = %s
+        """,
+        (user_id, konu)
+    )
+    son_tekrar_tarihi = cursor.fetchone()[0]
     tekrar_edilmeyen_gun = date.today() - son_tekrar_tarihi
+
+
 
     if tekrar_edilmeyen_gun.days >= 90:
         hatirlama_katsayisi = 0.35
@@ -113,9 +220,10 @@ def ustalik_hesapla(user, data, ders, konu):
     ustalik = round((soru_basarisi * hatirlama_katsayisi * 100), 2)
     return ustalik
 
-def ustalik_rank(user, data, ders, konu):
-    data = load_data(user)
-    ustalik = ustalik_hesapla(user, data, ders, konu)
+
+def ustalik_rank(user, konu):
+
+    ustalik = ustalik_hesapla(user, konu)
 
     if ustalik <=25:
         return "F"
@@ -129,130 +237,340 @@ def ustalik_rank(user, data, ders, konu):
         return "A"
 
 
-def bugun_calisilacaklar(user, data):
-    data = load_data(user)
+def bugun_calisilacaklar(user):
+
+
+    connection = get_connection()
+    cursor = connection.cursor()
+
+    user_id = username_to_userid(user)
+    bugun = date.today()
+
+    cursor.execute(
+        """
+            SELECT EXISTS(
+                SELECT 1
+                FROM daily_topics
+                WHERE daily_date = %s
+                AND user_id = %s
+            )
+        """,
+        (bugun, user_id)
+    )
+    if cursor.fetchone()[0] == 1:
+
+        cursor.execute(
+            """
+                SELECT topic1, topic2 
+                FROM daily_topics
+                WHERE daily_date = %s
+                AND user_id = %s
+            """,
+            (bugun, user_id)
+        )
+        konular = cursor.fetchall()
+
+        sonuc = []
+
+        for konu_tuple in konular[0]:
+            konu = str(konu_tuple)
+            if konu == "None":
+                pass
+            else:
+                sonuc.append(konu)
+
+        print(sonuc)
+        return sonuc
     #konular sıralandı
     konular = {}
-    for ders in data["Dersler"]:
-        for konu in data["Dersler"][ders]:
-            ustalik = ustalik_hesapla(user,data, ders, konu)
-            konular[ders, konu] = ustalik
+    cursor.execute(
+        """
+            SELECT name, subject_id FROM topics WHERE user_id = %s
+        """,
+        (user_id,)
+    )
+    konu_listesi = cursor.fetchall()
+
+
+    for konu_name in konu_listesi:
+        konu = str(konu_name[0])
+
+
+        ustalik = ustalik_hesapla(user, konu)
+        konular[konu] = ustalik
     konu_siralamasi_genel = sorted(konular.items(), key=lambda item: item[1], reverse=False)
+
 
     #bugün çalışılacaklar yazılıyor
     calisma_sirasi = []
-    for (ders, konu), ustalik in konu_siralamasi_genel:
-        son_tarih = datetime.strptime(data["Dersler"][ders][konu]["son_tekrar"], "%Y-%m-%d").date()
-        gecen_gun = (date.today()- son_tarih).days
-        if gecen_gun < 7 and ustalik >25:
-            continue
-        else:
-            calisma_sirasi.append((ders, konu))
-    konu_siralamasi = []
-    for item in konu_siralamasi_genel:
-        konu_siralamasi.append(item[0])
+    for konu, ustalik in konu_siralamasi_genel:
+        cursor.execute(
+            """
+            SELECT revision
+            FROM topics
+            WHERE user_id = %s
+              AND name = %s
+            """,
+            (user_id, konu)
+        )
+        son_tekrar_tarihi = cursor.fetchone()[0]
+        tekrar_edilmeyen_gun = date.today() - son_tekrar_tarihi
+
+        if tekrar_edilmeyen_gun.days >= 7 or ustalik <=25:
+            calisma_sirasi.append(konu)
+
+
 
     sonuc = []
 
-    if len(konu_siralamasi) == 0:
+    if len(calisma_sirasi) == 0:
         return []
-    elif len(konu_siralamasi) ==1:
-        sonuc.append(konu_siralamasi[0])
+    elif len(calisma_sirasi) ==1:
+        sonuc.append(calisma_sirasi[0])
     elif len(calisma_sirasi) >= 2:
         sonuc.append(calisma_sirasi[0])
         sonuc.append(calisma_sirasi[1])
-    elif len(calisma_sirasi) ==1 and len(konu_siralamasi) !=1:
-        sonuc.append(calisma_sirasi[0])
-        sonuc.append(konu_siralamasi[1])
-    elif len(calisma_sirasi) ==0 and len(konu_siralamasi) >=2:
-        sonuc.append(konu_siralamasi[0])
-        sonuc.append(konu_siralamasi[1])
+    elif len(calisma_sirasi) ==1 and len(konu_siralamasi_genel) !=1:
+        sonuc.append(konu_siralamasi_genel[0][0])
+        sonuc.append(konu_siralamasi_genel[1][0])
+    elif len(calisma_sirasi) ==0 and len(konu_siralamasi_genel) >=2:
+        sonuc.append(konu_siralamasi_genel[0])
+        sonuc.append(konu_siralamasi_genel[1])
+
+
+    cursor.execute(
+        """
+            SELECT EXISTS (
+                SELECT 1 
+                FROM daily_topics
+                WHERE user_id = %s
+                AND daily_date = %s
+            )
+        """,
+        (user_id, bugun)
+    )
+    bugun_kontrol = cursor.fetchone()[0]
+
+    if bugun_kontrol == 0:
+        topic_sayisi = len(sonuc)
+        if topic_sayisi == 2:
+            cursor.execute(
+                """
+                    INSERT INTO daily_topics(user_id, daily_date, topic1, topic2)
+                    VALUES (%s, %s, %s, %s)
+                """,
+                (user_id, bugun, sonuc[0], sonuc[1])
+            )
+        elif topic_sayisi == 1:
+            cursor.execute(
+                """
+                    INSERT INTO daily_topics(user_id, daily_date, topic1, topic2)
+                    VALUES (%s, %s, %s, %s)
+                """,
+                (user_id, bugun, sonuc[0], None)
+            )
+
+    connection.commit()
 
     return sonuc
+bugun_calisilacaklar("ibis")
+def soru_havuzuna_ekle(user,konu, cevap, gorsel):
 
-def soru_kaydetme_butonu(user, secilen_ders, secilen_konu, dogru_degeri, yanlis_degeri):
-    data = load_data(user)
 
-    data["Dersler"][secilen_ders][secilen_konu]["dogru"] += dogru_degeri
-    data["Dersler"][secilen_ders][secilen_konu]["yanlis"] += yanlis_degeri
+    connection = get_connection()
+    cursor = connection.cursor()
 
-    save_data(user, data)
+    user_id = username_to_userid(user)
 
-def soru_havuzuna_ekle(user, ders, konu, cevap, gorsel):
-    data = load_data(user)
-
-    sifir_str = "0"
-    sonraki_id = data["SonrakiSoruID"]
-
-    soru_id = f"q{(4 - len(str(sonraki_id))) * sifir_str}{sonraki_id}"
     uzanti = os.path.splitext(gorsel.filename)[1]
 
-    dosya_ismi = soru_id + uzanti
-
-    gorsel.save(f"static/questions/{user.lower()}/{dosya_ismi}")
-
-    data["Soru Havuzu"][soru_id] = {"Ders": ders,
-                           "Konu":konu,
-                           "Cevap": cevap,
-                           "Foto": dosya_ismi,
-                           "Tekrar Seviyesi": 0,
-                           "Sonraki Tekrar": str((date.today() + timedelta(days=1)))
-    }
-    data["SonrakiSoruID"] +=1
-    save_data(user, data)
+    cursor.execute(
+        """
+            SELECT id FROM topics WHERE user_id = %s AND name = %s
+        """,
+        (user_id, konu)
+    )
+    topic_id = cursor.fetchone()[0]
 
 
-def soru_havuzu_tekrar(data):
+    cursor.execute(
+        """
+            INSERT INTO questions 
+            (user_id, topic_id, answer)
+            VALUES (%s, %s, %s)
+        """,
+        (user_id,topic_id, cevap)
+    )
 
-    calisilacak_sorular = []
-    for i, val in data["Soru Havuzu"].items():
-        sonraki_tekrar = datetime.strptime(val["Sonraki Tekrar"],"%Y-%m-%d").date()
-        if sonraki_tekrar <= date.today():
-            calisilacak_sorular.append((i, sonraki_tekrar))
+    connection.commit()
+    question_id = cursor.lastrowid
 
-    calisilacak_sorular.sort(key=lambda id: id[1])
+    cursor.execute(
+        """
+            INSERT INTO solved_questions 
+            (user_id, question_id, solved_date)
+            VALUES (%s, %s, %s)
 
-    return (calisilacak_sorular[:10])
+        """,
+        (user_id, question_id, str(date.today()))
+    )
+    connection.commit()
+    dosya_ismi = f"{question_id}{uzanti}"
 
-def soru_havuzu_cozme(user, data, soru, cevap):
+    cursor.execute(
+        """
+            UPDATE questions
+            SET photo = %s WHERE question_id = %s
+        """,
+        (dosya_ismi, question_id)
+    )
+    connection.commit()
+    return {"gorsel_dosya_ismi":dosya_ismi}
+
+
+def soru_havuzu_tekrar(user):
+
+    connection = get_connection()
+    cursor = connection.cursor()
+
+    user_id = username_to_userid(user)
+
+    cursor.execute(
+        """
+            SELECT question_id, next_revision 
+            FROM questions WHERE user_id = %s 
+            AND next_revision <= %s
+            ORDER BY next_revision ASC
+            LIMIT 10
+        """,
+        (user_id, date.today())
+    )
+
+    calisilacak_sorular = [row[0] for row in cursor.fetchall()]
+
+
+    return calisilacak_sorular
+
+
+
+def soru_havuzu_cozme(user, soru, cevap):
+
+    connection = get_connection()
+    cursor = connection.cursor()
+    user_id = username_to_userid(user)
+
+
+    cursor.execute(
+        """
+           SELECT answer, revision_level FROM questions WHERE question_id = %s;
+        """,
+        (soru,)
+    )
+
+    dogru_cevap, tekrar_seviyesi = cursor.fetchone()
+
     if cevap == "BOS":
         dogruluk = "BOS"
-    elif cevap == data["Soru Havuzu"][soru]["Cevap"] == cevap:
+    elif cevap == dogru_cevap:
         dogruluk = True
     else:
         dogruluk = False
 
     tekrar_araliklari = [1,7,14,30]
-    tekrar_seviyesi = data["Soru Havuzu"][soru]["Tekrar Seviyesi"]
-    if tekrar_seviyesi<=len(tekrar_araliklari):
+
+    if tekrar_seviyesi < 4:
         if dogruluk == True:
-            data["Soru Havuzu"][soru]["Sonraki Tekrar"] = str(date.today() + timedelta(days=tekrar_araliklari[tekrar_seviyesi] ) )
-            data["Soru Havuzu"][soru]["Tekrar Seviyesi"] +=1
-            tekrar_seviyesi =  data["Soru Havuzu"][soru]["Tekrar Seviyesi"]
+            sonraki_tekrar = str(date.today() + timedelta(days=tekrar_araliklari[tekrar_seviyesi] ) )
+            yeni_tekrar_seviyesi = tekrar_seviyesi + 1
         else:
-            data["Soru Havuzu"][soru]["Sonraki Tekrar"] = str(date.today() + timedelta(days=1))
-            data["Soru Havuzu"][soru]["Tekrar Seviyesi"] =0
-            tekrar_seviyesi = data["Soru Havuzu"][soru]["Tekrar Seviyesi"]
+            sonraki_tekrar = str(date.today() + timedelta(days=1))
+            yeni_tekrar_seviyesi = 0
 
-    if tekrar_seviyesi > len(tekrar_araliklari)-1:
-        data["Soru Havuzu"].pop(soru)
-    save_data(user,data)
+        cursor.execute(
+            """
+                UPDATE questions
+                SET next_revision = %s,
+                    revision_level = %s
+                WHERE question_id = %s
+            """,
+            (sonraki_tekrar, yeni_tekrar_seviyesi, soru)
+        )
+        cursor.execute(
+            """
+                INSERT INTO solved_questions
+                (user_id, question_id, solved_date)
+                VALUES (%s, %s, %s)
+            """,
+            (user_id, soru, date.today())
+        )
 
+    else:
+        cursor.execute(
+            """
+            DELETE FROM solved_questions
+            WHERE question_id = %s
+            """,
+            (soru,)
+        )
 
+        cursor.execute(
+            """
+            DELETE FROM questions
+            WHERE question_id = %s
+            """,
+            (soru,)
+        )
+
+    connection.commit()
     return dogruluk
-def konu_basari_siralama(user, secilen_ders):
-    data = load_data(user)
+
+
+def konu_basari_siralama(user, ders):
+
+    connection = get_connection()
+    cursor = connection.cursor()
+
+    user_id = username_to_userid(user)
+
+    cursor.execute(
+        """
+        SELECT id
+        FROM subjects
+        WHERE name = %s
+        """,
+        (ders,)
+    )
+
+    subject_id = cursor.fetchone()[0]
+
+
     konu_soru_siralama = {}  # Soru yüzdesi kısmı
 
+    cursor.execute(
+        """
+            SELECT name FROM topics WHERE user_id = %s AND subject_id = %s
+        """,
+    (user_id, subject_id)
+    )
+    konular = cursor.fetchall()
 
-    for konu in data["Dersler"][secilen_ders]:
-        dogru_sayisi = data["Dersler"][secilen_ders][konu]["dogru"]
-        yanlis_sayisi = data["Dersler"][secilen_ders][konu]["yanlis"]
-        toplam_soru_sayisi = dogru_sayisi + yanlis_sayisi
-        tecrube_katsayisi = toplam_soru_sayisi / (toplam_soru_sayisi + 50)
+
+    for konu_tuple in konular:
+        konu = str(konu_tuple[0]) #Fetchall tuple döndürüyor. Sadece konu ismi alındı.
+
+        cursor.execute(
+            """
+                SELECT correct_answer, wrong_answer FROM topics WHERE user_id = %s AND name = %s
+            """,
+            (user_id, konu)
+        )
+        dogru, yanlis = cursor.fetchone()
+
+        toplam_soru_sayisi = dogru + yanlis
+        tecrube_katsayisi = toplam_soru_sayisi / (toplam_soru_sayisi +50)
 
         try:
-            soru_yuzdesi = 100 * dogru_sayisi / toplam_soru_sayisi
+            soru_yuzdesi = 100 * dogru / toplam_soru_sayisi
             soru_basarisi = tecrube_katsayisi * soru_yuzdesi
         except ZeroDivisionError:
             soru_yuzdesi = 0
@@ -266,36 +584,98 @@ def konu_basari_siralama(user, secilen_ders):
 
     return konu_soru_siralama[:5]
 
-def konu_calisma_sure_siralama(user, secilen_ders):
+
+def konu_calisma_sure_siralama(user, ders):
+
+    connection = get_connection()
+    cursor = connection.cursor()
+
+    user_id = username_to_userid(user)
+
+    cursor.execute(
+        """
+        SELECT id
+        FROM subjects
+        WHERE name = %s
+        """,
+        (ders,)
+    )
+
+    subject_id = cursor.fetchone()[0]
+
+
     calisilmayan_gunler = {}
-    data = load_data(user)
-    for konu in data["Dersler"][secilen_ders]:
-        son_calisma = data["Dersler"][secilen_ders][konu]["son_tekrar"]
-        son_calisma_tarihi = datetime.strptime(son_calisma, "%Y-%m-%d").date()
-        if datetime.strftime(son_calisma_tarihi, "%Y-%m-%d") == "2000-01-01":
-            calisilmayan_gun = "Henüz Çalışılmadı"
-        else:
-            calisilmayan_gun = f"{(date.today() - son_calisma_tarihi).days} Gün"
+
+    cursor.execute(
+        """
+            SELECT name FROM topics WHERE user_id = %s AND subject_id = %s
+        """,
+        (user_id, subject_id)
+    )
+    konular = cursor.fetchall()
+
+    for konu_tuple in konular:
+        konu = str(konu_tuple[0])
+
+
+        cursor.execute(
+            """
+                SELECT revision FROM topics WHERE user_id = %s AND name = %s
+            """,
+            (user_id, konu)
+        )
+        son_calisma_tarihi = cursor.fetchone()[0]
+
+        calisilmayan_gun = (date.today() - son_calisma_tarihi).days
         calisilmayan_gunler[konu] = calisilmayan_gun
     calisilmayan_gunler = sorted(calisilmayan_gunler.items(), key=lambda item: item[1], reverse=True)
 
-    return calisilmayan_gunler
+    return calisilmayan_gunler[:5]
 
-def konu_calisilmayan_gun_hesaplama(user, ders, konu):
-    data= load_data(user)
-    son_calisma = data["Dersler"][ders.capitalize()][konu.capitalize()]["son_tekrar"]
-    if son_calisma == "2000-01-01":
+
+def konu_calisilmayan_gun_hesaplama(user, konu):
+    connection = get_connection()
+    cursor = connection.cursor()
+
+    user_id = username_to_userid(user)
+
+    cursor.execute(
+        """
+            SELECT revision FROM topics WHERE name = %s AND user_id = %s
+        """,
+        (konu, user_id)
+    )
+    son_calisma = cursor.fetchone()[0]
+
+
+    if str(son_calisma) == "2000-01-01":
+
         return "hiç çalışılmadı"
-    son_calisma_tarihi = datetime.strptime(son_calisma, "%Y-%m-%d").date()
-    calisilmayan_gun = (date.today() - son_calisma_tarihi).days
+    else:
+        calisilmayan_gun = (date.today() - son_calisma).days
 
-    return calisilmayan_gun
+        return calisilmayan_gun
 
-def soru_havuzu_sayac(user, durum, deger):
-    data = load_data(user)
-    sayac = 0
-    for soru in data["Soru Havuzu"].keys():
-        print(data["Soru Havuzu"][soru].keys())
-        if data["Soru Havuzu"][soru][durum.capitalize()] == deger.capitalize():
-            sayac+=1
-    return sayac
+def soru_havuzu_sayac(user, konu):
+    connection = get_connection()
+    cursor = connection.cursor()
+
+    user_id = username_to_userid(user)
+
+    cursor.execute(
+        """
+            SELECT id FROM topics WHERE user_id = %s AND name = %s
+        """,
+        (user_id, konu)
+    )
+    topic_id = cursor.fetchone()[0]
+
+    cursor.execute(
+        """
+            SELECT question_id FROM questions WHERE user_id = %s AND topic_id = %s
+        """,
+        (user_id, topic_id)
+    )
+    return len(cursor.fetchall())
+
+

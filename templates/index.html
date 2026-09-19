@@ -33,15 +33,29 @@
             {% if giris_yapildi %}
                 <div id="login-bilgilendirme-div"><h3 id="login-bilgilendirme">Hoşgeldin, {{user}}. Devam etmek için yana kaydır.</h3></div>
             {% endif %}
-            <div id="login-div">
-                {% if not giris_yapildi %}
-                        <form id="login-form">
-                            <input type="text" id="kullanici-input" placeholder="Kullanıcı adı">
-                            <button id="login-submit" type="submit" >Giriş Yap</button>
-                        </form>
-                {% endif %}
-            </div>
-            <div id="login-bildirim-bolumu"><span id="login-bildirim"></span></div>
+
+            {% if not giris_yapildi %}
+                <div id="login-div">
+                    <form id="login-form">
+                        <input type="text" id="kullanici-input" placeholder="Kullanıcı adı">
+                        <input type="text" id="sifre-input" placeholder="Şifrenizi girin.">
+                        <button id="login-submit" type="submit" >Giriş Yap</button>
+                    </form>
+                </div>
+                <div id="login-bildirim-bolumu"><span id="login-bildirim"></span></div>
+                <div id="register-div">
+                    <form id="register-form">
+                        <input type="text" id="register-username" placeholder="Kullanıcı adı">
+                        <input type="text" id="register-password" placeholder="Şifrenizi girin.">
+                        <button id="register-submit" type="submit" >Kaydol</button>
+                    </form>
+                </div>
+                <div id="register-bildirim-bolumu"><span id="register-bildirim"></span></div>
+            {% endif %}
+
+
+
+
             {% if giris_yapildi %}
                 <a id="logout-button" href="api/logout">Çıkış Yap</a>
             {% endif %}
@@ -52,16 +66,18 @@
                 <div id="calisilacaklar-baslik">
                     <h2 class="baslik">BUGÜN ÇALIŞILACAKLAR</h2>
                 </div>
-                <div id="calisilacaklar-bottom">{% for ders, konu in calisilacak_konular %}
-                    <div class="calisilacak-satir">
-                            <div id="calisilacak-buton-bolumu">
-                                <a class="calisilacak-buton" href="/ders/{{calisilacak_konular[loop.index0][0].lower()}}/konu/{{calisilacak_konular[loop.index0][1].lower()}}"  id="calisilacak[loop.index]">{{calisilacak_konular[loop.index0][1]}}</a>
-                            </div>
-                            <div class="calisilacak-ustalik">
-                                <h3>Ustalık: % {{ calisilacak_ustaliklar[loop.index0] }}</h3>
-                            </div>
-                    </div>
-                {% endfor %}</div>
+                <div id="calisilacaklar-bottom">
+                    {% for konu, ders in calisilacak_konu_bilgileri.items() %}
+                        <div class="calisilacak-satir">
+                                <div id="calisilacak-buton-bolumu">
+                                    <a class="calisilacak-buton" href="/ders/{{ders}}/konu/{{konu}}"  id="calisilacak[loop.index]">{{konu}}</a>
+                                </div>
+                                <div class="calisilacak-ustalik">
+                                    <h3>Ustalık: % {{ calisilacak_ustaliklar[loop.index0] }}</h3>
+                                </div>
+                        </div>
+                    {% endfor %}
+                </div>
 
             </section>
 
@@ -204,8 +220,6 @@
                             <label for="ysc-E" >E</label>
                             <input type=radio id="ysc-E" name=ys-cikti-sikları value="E">
                         </div>
-
-
                     </div>
                     <div id="ys-cevapla-bolumu"><button disabled id="ys-cevapla">Cevapla</button></div>
                 </div>

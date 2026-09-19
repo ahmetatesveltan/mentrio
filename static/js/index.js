@@ -578,8 +578,9 @@ function gunluk_sorulari_goster() {
             }
 
             aktifSoru = sorular[aktifIndex];
+            gorselAdi = sorular[aktifIndex]["gorsel_adi"]
 
-            let gorselYolu = "/static/questions/" + aktifSoru.Foto;
+            let gorselYolu = "/static/questions/" + gorselAdi;
 
             soru_gorseli.src = gorselYolu;
 
@@ -635,8 +636,8 @@ function gunluk_sorulari_goster() {
         }
 
         aktifSoru = sorular[aktifIndex];
-
-        let gorselYolu = "/static/questions/" + aktifSoru.Foto;
+        gorselAdi = sorular[aktifIndex]["gorsel_adi"]
+        let gorselYolu = "/static/questions/" + gorselAdi;
 
         soru_gorseli.src = gorselYolu;
 
@@ -661,9 +662,9 @@ function gunluk_sorulari_goster() {
         }
 
         aktifSoru = sorular[aktifIndex];
+        gorselAdi = sorular[aktifIndex]["gorsel_adi"]
 
-        let gorselYolu = "/static/questions/" + aktifSoru.Foto;
-
+        let gorselYolu = "/static/questions/" + gorselAdi;
         soru_gorseli.src = gorselYolu;
 
         label.textContent =
@@ -783,13 +784,15 @@ gunluk_sorulari_goster();
 // =========================
 function login_sayfasi() {
 
-    const input = document.getElementById("kullanici-input");
+    const kullanici_input = document.getElementById("kullanici-input");
+    const sifre_input = document.getElementById("sifre-input")
     const submit = document.getElementById("login-submit");
     const bildirim = document.getElementById("login-bildirim");
     const baslik = document.getElementById("login-bolumu-baslik")
 
     if (
-        input === null ||
+        kullanici_input === null ||
+        sifre_input === null ||
         submit === null ||
         bildirim === null
     ) {
@@ -800,7 +803,8 @@ function login_sayfasi() {
 
         e.preventDefault();
 
-        const user = input.value;
+        const user = kullanici_input.value;
+        const password = sifre_input.value;
 
         fetch("/api/login", {
             method: "POST",
@@ -808,7 +812,8 @@ function login_sayfasi() {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                user: user
+                user: user,
+                password: password
             })
         })
             .then(function (response) {
@@ -819,7 +824,7 @@ function login_sayfasi() {
                 let giris_basarisi = data["giris_basarisi"];
                 let kullanici = data["kullanici"];
 
-                if (giris_basarisi === true) {
+                if (giris_basarisi === "giris_yapildi") {
 
                     bildirim.textContent =
                         "Giriş başarılı. Hoşgeldin " + kullanici + ".";
@@ -834,12 +839,18 @@ function login_sayfasi() {
 
 
                 } else {
+                    if (giris_basarisi === "kullanici_bulunamadi") {
+                        bildirim.textContent =
+                            "Kullanıcı adı bulunamadı. Tekrar deneyin.";
 
-                    bildirim.textContent =
-                        "Kullanıcı adı bulunamadı. Tekrar deneyin.";
+                        bildirim.style.color = "#ca1602";
+                    }
+                    if (giris_basarisi === "yanlis_sifre"){
+                        bildirim.textContent =
+                            "Girdiğiniz şifre yanlış. Tekrar deneyin.";
 
-                    bildirim.style.color = "#ca1602";
-
+                         bildirim.style.color = "#ca1602";
+                    }
 
                 }
                 setTimeout(function () {
@@ -851,6 +862,80 @@ function login_sayfasi() {
 }
 
 login_sayfasi();
+
+function register_sayfasi(){
+
+    const kullanici_input = document.getElementById("register-username");
+    const sifre_input = document.getElementById("register-password")
+    const submit = document.getElementById("register-submit");
+    const bildirim = document.getElementById("register-bildirim");
+
+    if (
+        kullanici_input === null ||
+        sifre_input === null ||
+        submit === null ||
+        bildirim === null
+    ) {
+        return;
+    }
+    submit.addEventListener("click", function (e){
+
+        e.preventDefault()
+
+        username = kullanici_input.value;
+        password = sifre_input.value;
+
+        fetch("/api/register", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                username: username,
+                password: password
+            })
+        })
+            .then(function (response) {
+                return response.json();
+            })
+        .then(function (data) {
+
+            let kayit_basarisi = data["kayit_basarisi"]
+
+
+            if (kayit_basarisi === "bos_username"){
+                bildirim.textContent =
+                    "Boş kullanıcı adı seçilemez. ";
+
+                bildirim.style.color = "#ca1602";
+            }
+
+            else if (kayit_basarisi === "basarili") {
+                bildirim.textContent =
+                    "Kaydın yapıldı. Hoşgeldin " + username + ".";
+
+                bildirim.style.color = "#14b82b";
+
+                setTimeout(function () {
+                    window.location.reload("/");
+                }, 4000);
+            } else {
+                bildirim.textContent =
+                    "Bu kullanıcı adı seçilmiş. Başkasını deneyin.";
+
+                bildirim.style.color = "#ca1602";
+            }
+            setTimeout(function () {
+                        bildirim.textContent = "";
+            }, 3000);
+        })
+
+    })
+
+}
+register_sayfasi();
+
+
 function panel_kaydirma(){
     const paneller = document.getElementById("panels");
     const noktalar = document.querySelectorAll(".sayfa-noktasi");
