@@ -21,8 +21,7 @@ def get_connection():
         )
         return connection
     except Exception as e:
-        print(f"Bağlantıda hata çıktı: {e} " )
-        return None
+        raise e
 
 
 def register(username, password):
